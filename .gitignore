@@ -1,0 +1,14 @@
+node_modules/
+dist/
+*.log
+
+# Local tool config, not project source
+.claude/
+.impeccable/
+
+# Generated/scraped data - regenerate via data/scraper/*.mjs, don't commit as source
+data/generated/
+data/raw/
+
+# Vite public dir junction into data/generated
+ui/public/gamedata
