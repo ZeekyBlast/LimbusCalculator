@@ -3,3 +3,7 @@ export * from "./offenseDefenseAdvantage";
 export * from "./parryBonus";
 export * from "./criticalModifier";
 export * from "./damage";
+export * from "./clash";
+export * from "./uptieResolver";
+export * from "./statusEffects";
+export * from "./fixedDamageAilment";

@@ -1,6 +1,7 @@
 node_modules/
 dist/
 *.log
+*.tsbuildinfo
 
 # Local tool config, not project source
 .claude/

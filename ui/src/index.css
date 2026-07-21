@@ -1,9 +1,100 @@
 @import "tailwindcss";
 
+@theme {
+  --color-ink: #0b0b0d;
+  --color-paper: #1c1a17;
+  --color-paper-light: #262320;
+  --color-gold: #c9a227;
+  --color-gold-bright: #e8c766;
+  --color-blood: #8c1c1c;
+  --color-blood-bright: #b8332f;
+  --color-bone: #e4dfd3;
+  --color-bone-dim: #a8a196;
+
+  --font-display: 'Big Shoulders Display', sans-serif;
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
 :root {
-  color-scheme: light dark;
+  color-scheme: dark;
 }
 
 body {
   margin: 0;
+  background: var(--color-ink);
+  color: var(--color-bone);
+  font-family: var(--font-body);
+  background-image:
+    repeating-linear-gradient(180deg, rgba(201, 162, 39, 0.02) 0px, rgba(201, 162, 39, 0.02) 1px, transparent 1px, transparent 32px);
+}
+
+::selection {
+  background: var(--color-gold);
+  color: var(--color-ink);
+}
+
+*:focus-visible {
+  outline: 2px solid var(--color-gold-bright);
+  outline-offset: 2px;
+}
+
+/* Ledger-style tabular numerals for every stat/damage readout. */
+.ledger-number {
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Rubber-stamp verdict mark. */
+.stamp {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 3px solid currentColor;
+  border-radius: 6px;
+  padding: 0.25em 0.6em;
+  display: inline-block;
+  transform: rotate(-4deg);
+  opacity: 0;
+  animation: stamp-in 0.35s ease-out 0.1s forwards;
+}
+
+@keyframes stamp-in {
+  0% {
+    opacity: 0;
+    transform: rotate(-4deg) scale(1.6);
+  }
+  60% {
+    opacity: 1;
+    transform: rotate(-4deg) scale(0.94);
+  }
+  100% {
+    opacity: 1;
+    transform: rotate(-4deg) scale(1);
+  }
+}
+
+/* Coin flip. */
+.coin-flip {
+  animation: coin-spin 0.5s ease-out;
+}
+
+@keyframes coin-spin {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(720deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp {
+    animation: none;
+    opacity: 1;
+  }
+  .coin-flip {
+    animation: none;
+  }
 }

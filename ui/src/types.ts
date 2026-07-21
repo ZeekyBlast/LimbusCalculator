@@ -1,3 +1,9 @@
+export interface UptieOverride<T> {
+    u1?: T;
+    u2?: T;
+    u3?: T;
+}
+
 export interface Skill {
     sin?: string;
     skillLevel?: number;
@@ -5,12 +11,15 @@ export interface Skill {
     damageType?: string;
     icon?: string;
     basePower?: number;
+    basePowerUptie?: UptieOverride<number>;
     coinPower?: number;
+    coinPowerUptie?: UptieOverride<number>;
     coinCount?: number;
     atkWeightMod?: number;
     atkWeight?: number;
     hitCount?: number;
     skillEffect?: string;
+    skillEffectUptie?: UptieOverride<string>;
     coinEffects?: string[];
 }
 
@@ -27,8 +36,10 @@ export interface Identity {
     sinner?: string;
     quote?: string;
     rarity?: number;
+    releaseDate?: string;
     hp?: number;
     hpGrowth?: number;
+    speed?: { u4?: string; u2?: string; u1?: string };
     defenseLevelMod?: number;
     resistances?: { slash?: string; pierce?: string; blunt?: string };
     staggerThresholds?: { u4?: number; u3?: number; u2u1?: number };

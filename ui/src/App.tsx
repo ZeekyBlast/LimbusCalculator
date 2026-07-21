@@ -1,218 +1,126 @@
 import { useEffect, useMemo, useState } from 'react'
-import { computeFinalDamage, resistanceModifier, offenseDefenseAdvantage, parryRoundBonus } from '@formula/index'
-import type { Identity, Skill } from './types'
-
-const RESISTANCE_PRESETS: { label: string; value: number }[] = [
-  { label: 'Nullify (0%)', value: 0 },
-  { label: 'Fatal (200%)', value: 2 },
-  { label: 'Weak (150%)', value: 1.5 },
-  { label: 'Normal (100%)', value: 1 },
-  { label: 'Endure (50%)', value: 0.5 },
-  { label: 'Ineffective (25%)', value: 0.25 },
-]
-
-// Wiki filenames replace ":", "【", "】" with a single space - matches data/scraper/image-paths.mjs.
-function titleToFilenameBase(title: string) {
-  return title.replace(/[:【】]+/g, ' ').replace(/\s+/g, ' ').trim()
-}
-
-function portraitUrl(title: string) {
-  return `/gamedata/images/portraits/${encodeURIComponent(titleToFilenameBase(title))}.png`
-}
+import { resistanceModifier, resolveUptie } from '@formula/index'
+import { useIdentities } from './lib/identities'
+import { CombatantPicker } from './components/CombatantPicker'
+import { ClashSetup, DEFAULT_COMBATANT_SETUP, type CombatantSetup } from './components/ClashSetup'
+import { ClashArena, type ResolvedCombatant } from './components/ClashArena'
+import { LandingPage } from './components/LandingPage'
 
 function App() {
-  const [identities, setIdentities] = useState<Identity[]>([])
-  const [selectedTitle, setSelectedTitle] = useState<string>('')
-  const [selectedSkillIndex, setSelectedSkillIndex] = useState(0)
+  const { identities, loading, error } = useIdentities()
+  const [view, setView] = useState<'landing' | 'simulator'>('landing')
 
-  const [sinResistancePct, setSinResistancePct] = useState(1)
-  const [typeResistancePct, setTypeResistancePct] = useState(1)
-  const [offenseLevel, setOffenseLevel] = useState(10)
-  const [defenseLevel, setDefenseLevel] = useState(10)
-  const [parryRounds, setParryRounds] = useState(0)
-  const [coinRollOverride, setCoinRollOverride] = useState<number | null>(null)
+  const [attackerTitle, setAttackerTitle] = useState('')
+  const [attackerSkillIndex, setAttackerSkillIndex] = useState(0)
+  const [defenderTitle, setDefenderTitle] = useState('')
+  const [defenderSkillIndex, setDefenderSkillIndex] = useState(0)
+
+  const [attackerSetup, setAttackerSetup] = useState<CombatantSetup>(DEFAULT_COMBATANT_SETUP)
+  const [defenderSetup, setDefenderSetup] = useState<CombatantSetup>(DEFAULT_COMBATANT_SETUP)
+  const [uptieTier, setUptieTier] = useState<1 | 2 | 3 | 4>(4)
 
   useEffect(() => {
-    fetch('/gamedata/identities.json')
-      .then(res => res.json())
-      .then((data: Identity[]) => {
-        setIdentities(data)
-        if (data.length > 0) setSelectedTitle(data[0].title)
-      })
-      .catch(err => console.error('Failed to load identities.json', err))
-  }, [])
+    if (identities.length > 0 && !attackerTitle) setAttackerTitle(identities[0].title)
+    if (identities.length > 1 && !defenderTitle) setDefenderTitle(identities[1].title)
+  }, [identities, attackerTitle, defenderTitle])
 
-  const identity = useMemo(() => identities.find(i => i.title === selectedTitle), [identities, selectedTitle])
-  const skill: Skill | undefined = identity?.skills[selectedSkillIndex]
+  const attackerIdentity = useMemo(() => identities.find(i => i.title === attackerTitle), [identities, attackerTitle])
+  const defenderIdentity = useMemo(() => identities.find(i => i.title === defenderTitle), [identities, defenderTitle])
+  const attackerSkill = attackerIdentity?.skills[attackerSkillIndex]
+  const defenderSkill = defenderIdentity?.skills[defenderSkillIndex]
 
-  const defaultCoinRoll = (skill?.basePower ?? 0) + (skill?.coinPower ?? 0)
-  const coinRoll = coinRollOverride ?? defaultCoinRoll
+  const attacker: ResolvedCombatant | undefined = useMemo(() => {
+    if (!attackerIdentity || !attackerSkill) return undefined
+    return {
+      label: 'Attacker',
+      name: `${attackerIdentity.title} - ${attackerSkill.name}`,
+      title: attackerIdentity.title,
+      basePower: resolveUptie(attackerSkill.basePower ?? 0, attackerSkill.basePowerUptie, uptieTier),
+      coinPower: resolveUptie(attackerSkill.coinPower ?? 0, attackerSkill.coinPowerUptie, uptieTier),
+      coinCount: attackerSkill.coinCount ?? 1,
+      offenseLevel: attackerSetup.offenseLevel,
+      defenseLevel: attackerSetup.defenseLevel,
+      sanityPoints: attackerSetup.sanityPoints,
+      sinResistanceModifier: resistanceModifier(attackerSetup.sinResistancePct),
+      damageTypeResistanceModifier: resistanceModifier(attackerSetup.typeResistancePct),
+    }
+  }, [attackerIdentity, attackerSkill, attackerSetup, uptieTier])
 
-  const A = resistanceModifier(sinResistancePct)
-  const B = resistanceModifier(typeResistancePct)
-  const C = offenseDefenseAdvantage(offenseLevel, defenseLevel)
-  const D = parryRoundBonus(parryRounds)
+  const defender: ResolvedCombatant | undefined = useMemo(() => {
+    if (!defenderIdentity || !defenderSkill) return undefined
+    return {
+      label: 'Defender',
+      name: `${defenderIdentity.title} - ${defenderSkill.name}`,
+      title: defenderIdentity.title,
+      basePower: resolveUptie(defenderSkill.basePower ?? 0, defenderSkill.basePowerUptie, uptieTier),
+      coinPower: resolveUptie(defenderSkill.coinPower ?? 0, defenderSkill.coinPowerUptie, uptieTier),
+      coinCount: defenderSkill.coinCount ?? 1,
+      offenseLevel: defenderSetup.offenseLevel,
+      defenseLevel: defenderSetup.defenseLevel,
+      sanityPoints: defenderSetup.sanityPoints,
+      sinResistanceModifier: resistanceModifier(defenderSetup.sinResistancePct),
+      damageTypeResistanceModifier: resistanceModifier(defenderSetup.typeResistancePct),
+    }
+  }, [defenderIdentity, defenderSkill, defenderSetup, uptieTier])
 
-  const finalDamage = computeFinalDamage({
-    coinRoll,
-    staticModifiers: { sinResistance: A, damageTypeResistance: B, offenseDefenseAdvantage: C, parryBonus: D, critical: 0 },
-    dynamicModifiers: { skillEffects: 0, buffs: 0 },
-  })
+  if (view === 'landing') {
+    return <LandingPage onEnter={() => setView('simulator')} identityCount={identities.length} />
+  }
 
   return (
-    <div className="min-h-screen bg-neutral-950 text-neutral-100 p-6">
-      <h1 className="text-2xl font-semibold mb-1">Limbus Calculator</h1>
-      <p className="text-neutral-400 text-sm mb-6">
-        Data + formula wiring check &mdash; {identities.length} identities loaded from the wiki scrape.
-      </p>
+    <div className="min-h-screen bg-ink text-bone p-6 max-w-6xl mx-auto">
+      <header className="mb-8 border-b-2 border-gold/40 pb-4">
+        <div className="flex items-baseline justify-between flex-wrap gap-2">
+          <h1 className="font-display text-4xl font-extrabold uppercase tracking-wide text-gold-bright">Limbus Clash Simulator</h1>
+          <div className="flex items-center gap-3">
+            <span className="font-mono text-xs text-bone-dim uppercase tracking-widest">Case File &mdash; Dept. of Combat Analysis</span>
+            <button
+              onClick={() => setView('landing')}
+              className="font-mono text-xs uppercase tracking-widest text-bone-dim hover:text-gold-bright border border-paper-light rounded-sm px-2 py-1 transition-colors"
+            >
+              &larr; Overview
+            </button>
+          </div>
+        </div>
+        <p className="text-bone-dim text-sm mt-1">
+          {loading && 'Loading identities...'}
+          {error && `Failed to load identities: ${error}`}
+          {!loading && !error && `${identities.length} identities on record. Both sides use Attack Skills - the clash resolves coin-by-coin.`}
+        </p>
+      </header>
+
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+        <CombatantPicker
+          role="Attacker"
+          identities={identities}
+          selectedTitle={attackerTitle}
+          onTitleChange={setAttackerTitle}
+          selectedSkillIndex={attackerSkillIndex}
+          onSkillIndexChange={setAttackerSkillIndex}
+          uptieTier={uptieTier}
+        />
+        <CombatantPicker
+          role="Defender"
+          identities={identities}
+          selectedTitle={defenderTitle}
+          onTitleChange={setDefenderTitle}
+          selectedSkillIndex={defenderSkillIndex}
+          onSkillIndexChange={setDefenderSkillIndex}
+          uptieTier={uptieTier}
+        />
+      </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <section className="lg:col-span-1">
-          <label className="block text-sm text-neutral-400 mb-1">Identity</label>
-          <select
-            className="w-full bg-neutral-900 border border-neutral-700 rounded px-3 py-2"
-            value={selectedTitle}
-            onChange={e => {
-              setSelectedTitle(e.target.value)
-              setSelectedSkillIndex(0)
-            }}
-          >
-            {identities.map(i => (
-              <option key={i.title} value={i.title}>
-                {i.title}
-              </option>
-            ))}
-          </select>
+        <ClashSetup
+          attackerSetup={attackerSetup}
+          onAttackerChange={setAttackerSetup}
+          defenderSetup={defenderSetup}
+          onDefenderChange={setDefenderSetup}
+          uptieTier={uptieTier}
+          onUptieTierChange={setUptieTier}
+        />
 
-          {identity && (
-            <div className="mt-4">
-              <img
-                src={portraitUrl(identity.title)}
-                alt={identity.title}
-                className="w-full rounded border border-neutral-800"
-                onError={e => (e.currentTarget.style.display = 'none')}
-              />
-              <p className="text-sm text-neutral-400 mt-2 italic">{identity.quote}</p>
-              <dl className="text-sm mt-3 grid grid-cols-2 gap-x-4 gap-y-1">
-                <dt className="text-neutral-500">HP</dt>
-                <dd>{identity.hp}</dd>
-                <dt className="text-neutral-500">Slash / Pierce / Blunt</dt>
-                <dd>
-                  {identity.resistances?.slash} / {identity.resistances?.pierce} / {identity.resistances?.blunt}
-                </dd>
-              </dl>
-            </div>
-          )}
-        </section>
-
-        <section className="lg:col-span-1">
-          <label className="block text-sm text-neutral-400 mb-1">Skill</label>
-          <select
-            className="w-full bg-neutral-900 border border-neutral-700 rounded px-3 py-2"
-            value={selectedSkillIndex}
-            onChange={e => {
-              setSelectedSkillIndex(Number(e.target.value))
-              setCoinRollOverride(null)
-            }}
-          >
-            {identity?.skills.map((s, idx) => (
-              <option key={idx} value={idx}>
-                S{s.skillLevel} &mdash; {s.name} ({s.sin}, {s.damageType})
-              </option>
-            ))}
-          </select>
-
-          {skill && (
-            <div className="mt-4 text-sm space-y-1">
-              <p>
-                Base Power {skill.basePower} + Coin Power {skill.coinPower} &times; {skill.coinCount} coin(s)
-              </p>
-              <p className="text-neutral-400">{skill.skillEffect}</p>
-              {skill.coinEffects?.map((e, i) => (
-                <p key={i} className="text-neutral-400">
-                  {e}
-                </p>
-              ))}
-            </div>
-          )}
-        </section>
-
-        <section className="lg:col-span-1 bg-neutral-900 border border-neutral-800 rounded p-4">
-          <h2 className="font-semibold mb-3">Damage Preview</h2>
-
-          <label className="block text-sm text-neutral-400 mb-1">Coin Roll</label>
-          <input
-            type="number"
-            className="w-full bg-neutral-800 border border-neutral-700 rounded px-3 py-1.5 mb-3"
-            value={coinRoll}
-            onChange={e => setCoinRollOverride(Number(e.target.value))}
-          />
-          <p className="text-xs text-neutral-500 -mt-2 mb-3">
-            Defaults to Base Power + Coin Power (not the actual heads/tails RNG &mdash; override to test specific rolls).
-          </p>
-
-          <label className="block text-sm text-neutral-400 mb-1">{identity?.sinner}'s {skill?.sin} Resistance</label>
-          <select
-            className="w-full bg-neutral-800 border border-neutral-700 rounded px-3 py-1.5 mb-3"
-            value={sinResistancePct}
-            onChange={e => setSinResistancePct(Number(e.target.value))}
-          >
-            {RESISTANCE_PRESETS.map(p => (
-              <option key={p.label} value={p.value}>
-                {p.label}
-              </option>
-            ))}
-          </select>
-
-          <label className="block text-sm text-neutral-400 mb-1">{skill?.damageType} Type Resistance</label>
-          <select
-            className="w-full bg-neutral-800 border border-neutral-700 rounded px-3 py-1.5 mb-3"
-            value={typeResistancePct}
-            onChange={e => setTypeResistancePct(Number(e.target.value))}
-          >
-            {RESISTANCE_PRESETS.map(p => (
-              <option key={p.label} value={p.value}>
-                {p.label}
-              </option>
-            ))}
-          </select>
-
-          <label className="block text-sm text-neutral-400 mb-1">
-            Offense Level {offenseLevel} vs Defense Level {defenseLevel}
-          </label>
-          <input
-            type="range"
-            min={0}
-            max={40}
-            value={offenseLevel}
-            onChange={e => setOffenseLevel(Number(e.target.value))}
-            className="w-full"
-          />
-          <input
-            type="range"
-            min={0}
-            max={40}
-            value={defenseLevel}
-            onChange={e => setDefenseLevel(Number(e.target.value))}
-            className="w-full mb-3"
-          />
-
-          <label className="block text-sm text-neutral-400 mb-1">Parry Rounds: {parryRounds}</label>
-          <input
-            type="range"
-            min={0}
-            max={20}
-            value={parryRounds}
-            onChange={e => setParryRounds(Number(e.target.value))}
-            className="w-full mb-4"
-          />
-
-          <div className="border-t border-neutral-800 pt-3">
-            <p className="text-xs text-neutral-500">A={A.toFixed(3)} B={B.toFixed(3)} C={C.toFixed(3)} D={D.toFixed(3)}</p>
-            <p className="text-3xl font-bold mt-1">{finalDamage}</p>
-            <p className="text-xs text-neutral-500">Final Damage</p>
-          </div>
-        </section>
+        {attacker && defender && <ClashArena attacker={attacker} defender={defender} />}
       </div>
     </div>
   )
