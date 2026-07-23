@@ -1,5 +1,6 @@
 import type { ReactNode } from 'react'
 import { statIconUrl, uptieBadgeUrl, hideOnError } from '../lib/images'
+import { Combobox } from './Combobox'
 
 const RESISTANCE_PRESETS: { label: string; value: number }[] = [
   { label: 'Nullify (0%)', value: 0 },
@@ -10,88 +11,81 @@ const RESISTANCE_PRESETS: { label: string; value: number }[] = [
   { label: 'Ineffective (25%)', value: 0.25 },
 ]
 
+const RESISTANCE_GROUPS = [{ options: RESISTANCE_PRESETS }]
+
+function resistanceLabel(pct: number): string {
+  return RESISTANCE_PRESETS.find(p => p.value === pct)?.label ?? `${pct * 100}%`
+}
+
 export interface CombatantSetup {
   sinResistancePct: number
   typeResistancePct: number
-  offenseLevel: number
-  defenseLevel: number
+  /** Identity's own Level (1-60, matches the game's cap). Drives HP, Defense, and both the clash-round and post-clash damage formulas. */
+  level: number
   sanityPoints: number
 }
 
 interface ClashSetupProps {
   label: string
+  idPrefix: string
   setup: CombatantSetup
   onChange: (setup: CombatantSetup) => void
 }
 
-function FieldLabel({ stat, children }: { stat: 'coin' | 'defense' | 'hp' | 'speed' | 'stagger'; children: ReactNode }) {
+function FieldLabel({ stat, htmlFor, children }: { stat: 'coin' | 'defense' | 'hp' | 'speed' | 'stagger'; htmlFor: string; children: ReactNode }) {
   return (
-    <label className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-bone-dim mb-1">
-      <img src={statIconUrl(stat)} alt="" className="w-3.5 h-3.5 opacity-80" onError={hideOnError} />
+    <label htmlFor={htmlFor} className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-bone-dim mb-1">
+      <img src={statIconUrl(stat)} alt="" loading="lazy" className="w-3.5 h-3.5 opacity-80" onError={hideOnError} />
       {children}
     </label>
   )
 }
 
-function CombatantSetupFields({ label, setup, onChange }: ClashSetupProps) {
+function CombatantSetupFields({ label, idPrefix, setup, onChange }: ClashSetupProps) {
   return (
     <div className="border border-paper-light bg-paper rounded-sm p-4">
       <h3 className="font-display text-lg uppercase tracking-wide text-gold mb-3 border-b border-paper-light pb-1.5">{label}</h3>
 
-      <FieldLabel stat="defense">Sin Resistance (if hit)</FieldLabel>
-      <select
-        className="w-full bg-ink border border-paper-light rounded-sm px-3 py-1.5 mb-3 text-bone focus:border-gold transition-colors"
+      <FieldLabel stat="defense" htmlFor={`${idPrefix}-sin-resistance`}>Sin Resistance (if hit)</FieldLabel>
+      <Combobox
+        id={`${idPrefix}-sin-resistance`}
+        ariaLabel={`${label}: Sin Resistance if hit`}
+        groups={RESISTANCE_GROUPS}
         value={setup.sinResistancePct}
-        onChange={e => onChange({ ...setup, sinResistancePct: Number(e.target.value) })}
-      >
-        {RESISTANCE_PRESETS.map(p => (
-          <option key={p.label} value={p.value}>
-            {p.label}
-          </option>
-        ))}
-      </select>
+        onChange={v => onChange({ ...setup, sinResistancePct: v })}
+        triggerLabel={resistanceLabel(setup.sinResistancePct)}
+        className="mb-3"
+      />
 
-      <FieldLabel stat="defense">Damage Type Resistance (if hit)</FieldLabel>
-      <select
-        className="w-full bg-ink border border-paper-light rounded-sm px-3 py-1.5 mb-3 text-bone focus:border-gold transition-colors"
+      <FieldLabel stat="defense" htmlFor={`${idPrefix}-type-resistance`}>Damage Type Resistance (if hit)</FieldLabel>
+      <Combobox
+        id={`${idPrefix}-type-resistance`}
+        ariaLabel={`${label}: Damage Type Resistance if hit`}
+        groups={RESISTANCE_GROUPS}
         value={setup.typeResistancePct}
-        onChange={e => onChange({ ...setup, typeResistancePct: Number(e.target.value) })}
-      >
-        {RESISTANCE_PRESETS.map(p => (
-          <option key={p.label} value={p.value}>
-            {p.label}
-          </option>
-        ))}
-      </select>
+        onChange={v => onChange({ ...setup, typeResistancePct: v })}
+        triggerLabel={resistanceLabel(setup.typeResistancePct)}
+        className="mb-3"
+      />
 
-      <FieldLabel stat="speed">
-        Offense Level: <span className="ledger-number text-gold-bright">{setup.offenseLevel}</span>
+      <FieldLabel stat="speed" htmlFor={`${idPrefix}-level`}>
+        Level: <span className="ledger-number text-gold-bright">{setup.level}</span>
       </FieldLabel>
       <input
+        id={`${idPrefix}-level`}
         type="range"
-        min={0}
+        min={1}
         max={60}
-        value={setup.offenseLevel}
-        onChange={e => onChange({ ...setup, offenseLevel: Number(e.target.value) })}
+        value={setup.level}
+        onChange={e => onChange({ ...setup, level: Number(e.target.value) })}
         className="w-full mb-3 accent-gold"
       />
 
-      <FieldLabel stat="defense">
-        Defense Level: <span className="ledger-number text-gold-bright">{setup.defenseLevel}</span>
-      </FieldLabel>
-      <input
-        type="range"
-        min={0}
-        max={60}
-        value={setup.defenseLevel}
-        onChange={e => onChange({ ...setup, defenseLevel: Number(e.target.value) })}
-        className="w-full mb-3 accent-gold"
-      />
-
-      <FieldLabel stat="coin">
+      <FieldLabel stat="coin" htmlFor={`${idPrefix}-sanity`}>
         Sanity: <span className="ledger-number text-gold-bright">{setup.sanityPoints} SP</span> ({50 + setup.sanityPoints}% heads)
       </FieldLabel>
       <input
+        id={`${idPrefix}-sanity`}
         type="range"
         min={-45}
         max={45}
@@ -122,20 +116,20 @@ export function ClashSetup({ attackerSetup, onAttackerChange, defenderSetup, onD
             <button
               key={tier}
               onClick={() => onUptieTierChange(tier)}
-              className={`w-9 h-9 rounded-sm border flex items-center justify-center transition-colors ${
+              className={`w-11 h-11 rounded-sm border flex items-center justify-center transition-colors ${
                 tier === uptieTier ? 'border-gold-bright bg-gold/20' : 'border-paper-light bg-paper hover:border-gold/50'
               }`}
               aria-pressed={tier === uptieTier}
               title={`Uptie ${tier}`}
             >
-              <img src={uptieBadgeUrl(tier)} alt={`Uptie ${tier}`} className="w-6 h-6" onError={hideOnError} />
+              <img src={uptieBadgeUrl(tier)} alt={`Uptie ${tier}`} loading="lazy" className="w-6 h-6" onError={hideOnError} />
             </button>
           ))}
         </div>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        <CombatantSetupFields label="Attacker Requisition" setup={attackerSetup} onChange={onAttackerChange} />
-        <CombatantSetupFields label="Defender Requisition" setup={defenderSetup} onChange={onDefenderChange} />
+        <CombatantSetupFields label="Attacker Requisition" idPrefix="attacker" setup={attackerSetup} onChange={onAttackerChange} />
+        <CombatantSetupFields label="Defender Requisition" idPrefix="defender" setup={defenderSetup} onChange={onDefenderChange} />
       </div>
     </section>
   )
@@ -144,7 +138,6 @@ export function ClashSetup({ attackerSetup, onAttackerChange, defenderSetup, onD
 export const DEFAULT_COMBATANT_SETUP: CombatantSetup = {
   sinResistancePct: 1,
   typeResistancePct: 1,
-  offenseLevel: 10,
-  defenseLevel: 10,
+  level: 60,
   sanityPoints: 0,
 }

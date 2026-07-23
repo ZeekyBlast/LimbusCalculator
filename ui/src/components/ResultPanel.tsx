@@ -30,6 +30,11 @@ export function ResultPanel({ result }: ResultPanelProps) {
       <p className="ledger-number text-xs text-bone-dim">
         {coins.map(c => c.damage).join(' + ')} = {totalDamage}
       </p>
+      {clash.crackedCoins > 0 && (
+        <p className="text-xs text-bone-dim italic mt-2">
+          {loser.label} has {clash.crackedCoins} Unbreakable coin{clash.crackedCoins > 1 ? 's' : ''} left, cracked rather than broken &mdash; counter-attack not yet modeled.
+        </p>
+      )}
     </div>
   )
 }

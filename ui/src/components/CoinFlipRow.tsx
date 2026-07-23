@@ -39,7 +39,7 @@ export function CoinFlipRow({ coins, revealedCount, onRevealNext }: CoinFlipRowP
       {onRevealNext && (
         <button
           onClick={onRevealNext}
-          className="px-4 py-1.5 bg-blood hover:bg-blood-bright border border-blood-bright rounded-sm text-sm font-display uppercase tracking-wide transition-colors"
+          className="px-4 py-2.5 bg-blood hover:bg-blood-bright border border-blood-bright rounded-sm text-sm font-display uppercase tracking-wide transition-colors"
         >
           Reveal Next Coin ({revealedCount}/{coins.length})
         </button>

@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState } from 'react'
-import { resistanceModifier, resolveUptie } from '@formula/index'
+import { resistanceModifier, resolveUptie, countUnbreakableCoins } from '@formula/index'
 import { useIdentities } from './lib/identities'
 import { CombatantPicker } from './components/CombatantPicker'
 import { ClashSetup, DEFAULT_COMBATANT_SETUP, type CombatantSetup } from './components/ClashSetup'
@@ -38,8 +38,9 @@ function App() {
       basePower: resolveUptie(attackerSkill.basePower ?? 0, attackerSkill.basePowerUptie, uptieTier),
       coinPower: resolveUptie(attackerSkill.coinPower ?? 0, attackerSkill.coinPowerUptie, uptieTier),
       coinCount: attackerSkill.coinCount ?? 1,
-      offenseLevel: attackerSetup.offenseLevel,
-      defenseLevel: attackerSetup.defenseLevel,
+      unbreakableCoinCount: countUnbreakableCoins(attackerSkill.coinEffects),
+      offenseLevel: attackerSetup.level,
+      defenseLevel: attackerSetup.level + (attackerIdentity.defenseLevelMod ?? 0),
       sanityPoints: attackerSetup.sanityPoints,
       sinResistanceModifier: resistanceModifier(attackerSetup.sinResistancePct),
       damageTypeResistanceModifier: resistanceModifier(attackerSetup.typeResistancePct),
@@ -55,8 +56,9 @@ function App() {
       basePower: resolveUptie(defenderSkill.basePower ?? 0, defenderSkill.basePowerUptie, uptieTier),
       coinPower: resolveUptie(defenderSkill.coinPower ?? 0, defenderSkill.coinPowerUptie, uptieTier),
       coinCount: defenderSkill.coinCount ?? 1,
-      offenseLevel: defenderSetup.offenseLevel,
-      defenseLevel: defenderSetup.defenseLevel,
+      unbreakableCoinCount: countUnbreakableCoins(defenderSkill.coinEffects),
+      offenseLevel: defenderSetup.level,
+      defenseLevel: defenderSetup.level + (defenderIdentity.defenseLevelMod ?? 0),
       sanityPoints: defenderSetup.sanityPoints,
       sinResistanceModifier: resistanceModifier(defenderSetup.sinResistancePct),
       damageTypeResistanceModifier: resistanceModifier(defenderSetup.typeResistancePct),
@@ -64,7 +66,7 @@ function App() {
   }, [defenderIdentity, defenderSkill, defenderSetup, uptieTier])
 
   if (view === 'landing') {
-    return <LandingPage onEnter={() => setView('simulator')} identityCount={identities.length} />
+    return <LandingPage onEnter={() => setView('simulator')} identities={identities} />
   }
 
   return (
@@ -89,7 +91,7 @@ function App() {
         </p>
       </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
         <CombatantPicker
           role="Attacker"
           identities={identities}
@@ -98,6 +100,7 @@ function App() {
           selectedSkillIndex={attackerSkillIndex}
           onSkillIndexChange={setAttackerSkillIndex}
           uptieTier={uptieTier}
+          level={attackerSetup.level}
         />
         <CombatantPicker
           role="Defender"
@@ -107,6 +110,7 @@ function App() {
           selectedSkillIndex={defenderSkillIndex}
           onSkillIndexChange={setDefenderSkillIndex}
           uptieTier={uptieTier}
+          level={defenderSetup.level}
         />
       </div>
 

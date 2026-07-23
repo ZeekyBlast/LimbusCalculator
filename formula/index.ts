@@ -7,3 +7,4 @@ export * from "./clash";
 export * from "./uptieResolver";
 export * from "./statusEffects";
 export * from "./fixedDamageAilment";
+export * from "./unbreakableCoin";

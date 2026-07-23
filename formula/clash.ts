@@ -16,6 +16,16 @@
  * Level bonus is a flat, asymmetric bonus distinct from offenseDefenseAdvantage.ts's C(x)
  * damage multiplier: "the Skill with higher Level gains 1 Power per 3 Level difference,
  * rounded down" - only the higher side gains anything, the lower side gets no penalty.
+ *
+ * Unbreakable Coin (limbuscompany.wiki.gg's Status Effects page): "This Coin does not break
+ * upon Clash Lose... Upon Clash Lose, fix the Coin Power of the unbroken Coin to 1." Cracked
+ * Unbreakable Coins "trigger after losing a Clash (in a similar manner to Counter Skills), but
+ * with their Coin Power fixed to 1." So a side's *breakable* coins are what determine when it
+ * loses the clash - unbreakable coins keep flipping every round but are never removed. Once a
+ * side's breakable coins hit 0, the clash ends there; any remaining unbreakable coins on that
+ * side are reported as "cracked" rather than zeroed. The cracked-coin counter-attack itself
+ * (its exact trigger/damage resolution isn't documented anywhere found) is NOT modeled here -
+ * only the coin-pool/win-condition mechanic, which is fully sourced above.
  */
 
 const MAX_PARRY_ROUNDS = 99;
@@ -40,7 +50,10 @@ export function clashPowerLevelBonus(myLevel: number, otherLevel: number): numbe
 export interface ClashCombatant {
     basePower: number;
     coinPower: number;
+    /** Total coins, including any unbreakable ones counted in unbreakableCoinCount. */
     coinCount: number;
+    /** Subset of coinCount that's Unbreakable - never removed on a lost round. Defaults to 0. */
+    unbreakableCoinCount?: number;
     level: number;
     sanityPoints?: number;
 }
@@ -61,6 +74,8 @@ export interface ClashResult {
     winner: "a" | "b" | "draw";
     winnerCoinsRemaining: number;
     parryRounds: number;
+    /** Unbreakable coins still active on the loser when its breakable coins ran out. 0 for a draw. */
+    crackedCoins: number;
 }
 
 export function simulateClash(a: ClashCombatant, b: ClashCombatant, rng: () => number = Math.random): ClashResult {
@@ -69,15 +84,19 @@ export function simulateClash(a: ClashCombatant, b: ClashCombatant, rng: () => n
     const aLevelBonus = clashPowerLevelBonus(a.level, b.level);
     const bLevelBonus = clashPowerLevelBonus(b.level, a.level);
 
-    let aCoinsRemaining = a.coinCount;
-    let bCoinsRemaining = b.coinCount;
+    let aUnbreakableRemaining = a.unbreakableCoinCount ?? 0;
+    let bUnbreakableRemaining = b.unbreakableCoinCount ?? 0;
+    let aBreakableRemaining = a.coinCount - aUnbreakableRemaining;
+    let bBreakableRemaining = b.coinCount - bUnbreakableRemaining;
     let parryRounds = 0;
 
     const rounds: ClashRoundResult[] = [];
 
-    for (let round = 1; aCoinsRemaining > 0 && bCoinsRemaining > 0; round++) {
-        const aHeads = flipCoins(aCoinsRemaining, aChance, rng);
-        const bHeads = flipCoins(bCoinsRemaining, bChance, rng);
+    for (let round = 1; aBreakableRemaining > 0 && bBreakableRemaining > 0; round++) {
+        const aActive = aBreakableRemaining + aUnbreakableRemaining;
+        const bActive = bBreakableRemaining + bUnbreakableRemaining;
+        const aHeads = flipCoins(aActive, aChance, rng);
+        const bHeads = flipCoins(bActive, bChance, rng);
         const aPower = a.basePower + aLevelBonus + aHeads * a.coinPower;
         const bPower = b.basePower + bLevelBonus + bHeads * b.coinPower;
 
@@ -85,20 +104,30 @@ export function simulateClash(a: ClashCombatant, b: ClashCombatant, rng: () => n
         if (tie) {
             parryRounds++;
         } else if (aPower < bPower) {
-            aCoinsRemaining--;
+            aBreakableRemaining--;
         } else {
-            bCoinsRemaining--;
+            bBreakableRemaining--;
         }
 
-        rounds.push({ round, aHeads, bHeads, aPower, bPower, aCoinsRemaining, bCoinsRemaining, tie });
+        rounds.push({
+            round,
+            aHeads,
+            bHeads,
+            aPower,
+            bPower,
+            aCoinsRemaining: aBreakableRemaining + aUnbreakableRemaining,
+            bCoinsRemaining: bBreakableRemaining + bUnbreakableRemaining,
+            tie,
+        });
 
         if (parryRounds >= MAX_PARRY_ROUNDS) {
-            return { rounds, winner: "draw", winnerCoinsRemaining: 0, parryRounds };
+            return { rounds, winner: "draw", winnerCoinsRemaining: 0, parryRounds, crackedCoins: 0 };
         }
     }
 
-    const winner = aCoinsRemaining > 0 ? "a" : "b";
-    const winnerCoinsRemaining = aCoinsRemaining > 0 ? aCoinsRemaining : bCoinsRemaining;
+    const winner = aBreakableRemaining > 0 ? "a" : "b";
+    const winnerCoinsRemaining = winner === "a" ? aBreakableRemaining + aUnbreakableRemaining : bBreakableRemaining + bUnbreakableRemaining;
+    const crackedCoins = winner === "a" ? bUnbreakableRemaining : aUnbreakableRemaining;
 
-    return { rounds, winner, winnerCoinsRemaining, parryRounds };
+    return { rounds, winner, winnerCoinsRemaining, parryRounds, crackedCoins };
 }

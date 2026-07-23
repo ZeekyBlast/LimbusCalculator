@@ -3,6 +3,7 @@ import { simulateClash, flipCoins, offenseDefenseAdvantage, parryRoundBonus, com
 import { spriteUrl, hideOnError } from '../lib/images'
 import { CoinFlipRow } from './CoinFlipRow'
 import { ResultPanel } from './ResultPanel'
+import { ClashRoundSequence } from './ClashRoundSequence'
 
 export interface ResolvedCombatant {
   label: string
@@ -12,6 +13,7 @@ export interface ResolvedCombatant {
   basePower: number
   coinPower: number
   coinCount: number
+  unbreakableCoinCount: number
   offenseLevel: number
   defenseLevel: number
   sanityPoints: number
@@ -36,8 +38,22 @@ export interface FullClashResult {
 
 function runFullClash(attacker: ResolvedCombatant, defender: ResolvedCombatant): FullClashResult {
   const clash = simulateClash(
-    { basePower: attacker.basePower, coinPower: attacker.coinPower, coinCount: attacker.coinCount, level: attacker.offenseLevel, sanityPoints: attacker.sanityPoints },
-    { basePower: defender.basePower, coinPower: defender.coinPower, coinCount: defender.coinCount, level: defender.offenseLevel, sanityPoints: defender.sanityPoints },
+    {
+      basePower: attacker.basePower,
+      coinPower: attacker.coinPower,
+      coinCount: attacker.coinCount,
+      unbreakableCoinCount: attacker.unbreakableCoinCount,
+      level: attacker.offenseLevel,
+      sanityPoints: attacker.sanityPoints,
+    },
+    {
+      basePower: defender.basePower,
+      coinPower: defender.coinPower,
+      coinCount: defender.coinCount,
+      unbreakableCoinCount: defender.unbreakableCoinCount,
+      level: defender.offenseLevel,
+      sanityPoints: defender.sanityPoints,
+    },
   )
 
   const winner = clash.winner === 'a' ? attacker : defender
@@ -81,6 +97,7 @@ function SpritePane({ combatant, pose }: { combatant: ResolvedCombatant; pose: '
           key={pose}
           src={spriteUrl(combatant.title, pose)}
           alt={combatant.title}
+          loading="lazy"
           className={`max-w-full max-h-full object-contain ${pose === 'hurt' ? 'grayscale-[40%]' : ''}`}
           onError={hideOnError}
         />
@@ -104,7 +121,11 @@ export function ClashArena({ attacker, defender }: ClashArenaProps) {
     const fullResult = runFullClash(attacker, defender)
     setResult(fullResult)
     setRevealedCoins(0)
-    setPhase(fullResult.coins.length > 0 ? 'revealing' : 'done')
+    setPhase('clashing')
+  }
+
+  function onRoundSequenceComplete() {
+    setPhase(prev => (prev === 'clashing' && result ? (result.coins.length > 0 ? 'revealing' : 'done') : prev))
   }
 
   function revealNextCoin() {
@@ -126,10 +147,10 @@ export function ClashArena({ attacker, defender }: ClashArenaProps) {
   return (
     <section className="lg:col-span-3 border border-paper-light bg-paper rounded-sm overflow-hidden">
       <header className="flex items-center justify-between border-b border-paper-light bg-ink/40 px-4 py-2">
-        <span className="font-display text-lg tracking-wide uppercase text-gold">Clash Arena</span>
+        <h2 className="font-display text-lg tracking-wide uppercase text-gold">Clash Arena</h2>
         <button
           onClick={startClash}
-          disabled={phase === 'revealing'}
+          disabled={phase === 'clashing' || phase === 'revealing'}
           className="px-5 py-1.5 bg-gold hover:bg-gold-bright text-ink rounded-sm font-display font-bold uppercase tracking-wide transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
           Clash
@@ -139,13 +160,17 @@ export function ClashArena({ attacker, defender }: ClashArenaProps) {
       <div className="p-4">
         <div className="flex items-center justify-center gap-16 mb-4 pb-4 border-b border-paper-light/60">
           <SpritePane combatant={attacker} pose={poseFor(attacker)} />
-          <span className="font-display text-2xl text-blood-bright/80">VS</span>
+          <span className="font-display text-2xl text-blood-bright">VS</span>
           <SpritePane combatant={defender} pose={poseFor(defender)} />
         </div>
 
         {phase === 'idle' && <p className="text-bone-dim text-sm">Set up both sides above, then press Clash.</p>}
 
-        {result && phase !== 'idle' && (
+        {result && phase === 'clashing' && (
+          <ClashRoundSequence attacker={attacker} defender={defender} clash={result.clash} onComplete={onRoundSequenceComplete} />
+        )}
+
+        {result && (phase === 'revealing' || phase === 'done') && (
           <div>
             <p className="ledger-number text-xs text-bone-dim mb-3 uppercase tracking-wide">
               Rounds: {result.clash.rounds.length} &mdash; Parry rounds: {result.clash.parryRounds} &mdash;{' '}

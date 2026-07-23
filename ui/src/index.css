@@ -89,6 +89,88 @@ body {
   }
 }
 
+/* Clash round-sequence coin pool: a homogeneous chip per coin, breakable vs Unbreakable at rest. */
+.pool-coin {
+  width: 20px;
+  height: 20px;
+  border-radius: 9999px;
+  background: linear-gradient(135deg, var(--color-bone), var(--color-bone-dim));
+  border: 1.5px solid var(--color-paper-light);
+}
+
+/* Unbreakable: a riveted double ring, distinct before it's ever tested. */
+.pool-coin-unbreakable {
+  border: 2px solid var(--color-gold-bright);
+  box-shadow: inset 0 0 0 2px var(--color-ink);
+}
+
+/* Broken (a lost breakable coin): shrinks to nothing with a brief blood-red flash. */
+.pool-coin-broken {
+  opacity: 0;
+  transform: scale(0.2) rotate(25deg);
+  animation: pool-coin-break 0.32s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes pool-coin-break {
+  0% {
+    opacity: 1;
+    transform: scale(1) rotate(0deg);
+    background: linear-gradient(135deg, var(--color-blood-bright), var(--color-blood));
+  }
+  100% {
+    opacity: 0;
+    transform: scale(0.2) rotate(25deg);
+  }
+}
+
+/* Cracked (Unbreakable coin that survived a clash loss): stays, visibly damaged, doesn't vanish. */
+.pool-coin-cracked {
+  position: relative;
+  border-color: var(--color-blood-bright);
+  background: linear-gradient(135deg, var(--color-bone-dim), var(--color-paper-light));
+  animation: pool-coin-shake 0.4s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.pool-coin-cracked::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background:
+    linear-gradient(105deg, transparent 46%, var(--color-blood-bright) 48%, transparent 52%),
+    linear-gradient(15deg, transparent 46%, var(--color-blood-bright) 48%, transparent 52%);
+  opacity: 0.85;
+}
+
+@keyframes pool-coin-shake {
+  0%, 100% { transform: translateX(0); }
+  20% { transform: translateX(-2px); }
+  40% { transform: translateX(2px); }
+  60% { transform: translateX(-1px); }
+  80% { transform: translateX(1px); }
+}
+
+/* Round-by-round Clash Power readout - refreshes each round, keyed by value in the component. */
+.round-readout {
+  animation: round-readout-in 0.25s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+@keyframes round-readout-in {
+  0% { opacity: 0; transform: translateY(-3px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Parry (tie round): a quick stamped flash, no coin lost. */
+.parry-flash {
+  animation: parry-flash-in 0.55s ease-out forwards;
+}
+
+@keyframes parry-flash-in {
+  0% { opacity: 0; transform: translate(-50%, -6px) rotate(-4deg) scale(1.3); }
+  30% { opacity: 1; transform: translate(-50%, 0) rotate(-4deg) scale(1); }
+  100% { opacity: 0; transform: translate(-50%, 0) rotate(-4deg) scale(1); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .stamp {
     animation: none;
@@ -96,5 +178,14 @@ body {
   }
   .coin-flip {
     animation: none;
+  }
+  .pool-coin-broken,
+  .pool-coin-cracked,
+  .round-readout {
+    animation: none;
+  }
+  .parry-flash {
+    animation: none;
+    opacity: 1;
   }
 }

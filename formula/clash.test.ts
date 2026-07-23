@@ -131,6 +131,58 @@ describe("simulateClash", () => {
     });
 });
 
+describe("simulateClash with Unbreakable Coins", () => {
+    const combatant = (overrides: Partial<ClashCombatant> = {}): ClashCombatant => ({
+        basePower: 5,
+        coinPower: 3,
+        coinCount: 2,
+        level: 10,
+        sanityPoints: 0,
+        ...overrides,
+    });
+
+    it("keeps an unbreakable coin through a lost round instead of removing it", () => {
+        // A: 1 breakable coin. B: 1 breakable + 1 unbreakable, always tails (loses every round).
+        // A always heads -> A wins every round. B's breakable coin (index accounting only, not
+        // literal index) is the one that gets removed; the unbreakable one keeps flipping.
+        const rng = () => 0.1; // < any reasonable heads chance -> always heads for both
+        const a = combatant({ coinCount: 1, coinPower: 0 }); // A: heads always, but coinPower 0 so aPower = basePower = 5
+        const b = combatant({ coinCount: 2, unbreakableCoinCount: 1, coinPower: 0, basePower: 4 }); // bPower = 4 always < 5
+
+        const result = simulateClash(a, b, rng);
+
+        // B's single breakable coin is the only thing that can hit 0; clash ends there.
+        expect(result.winner).toBe("a");
+        expect(result.crackedCoins).toBe(1); // B's 1 unbreakable coin survives, reported as cracked
+        expect(result.rounds).toHaveLength(1);
+        expect(result.rounds[0].bCoinsRemaining).toBe(1); // the unbreakable coin still "remaining"
+    });
+
+    it("an all-unbreakable side never has its coins removed, even across many lost rounds", () => {
+        const rng = () => 0.9; // tails for both, but coinPower 0 makes power = basePower regardless
+        const a = combatant({ coinCount: 1, coinPower: 0, basePower: 10 });
+        const b = combatant({ coinCount: 3, unbreakableCoinCount: 3, coinPower: 0, basePower: 1 });
+
+        // B has 0 breakable coins from the start - the loop condition itself already treats B as lost.
+        const result = simulateClash(a, b, rng);
+
+        expect(result.winner).toBe("a");
+        expect(result.crackedCoins).toBe(3);
+        expect(result.rounds).toHaveLength(0);
+    });
+
+    it("defaults to fully breakable when unbreakableCoinCount is omitted (no behavior change)", () => {
+        const seq = [0.1, 0.9, 0.9, 0.1, 0.9];
+        let i = 0;
+        const rng = () => seq[i++];
+        const a = combatant({ coinCount: 1 });
+        const b = combatant({ coinCount: 2 });
+        const result = simulateClash(a, b, rng);
+        expect(result.crackedCoins).toBe(0);
+        expect(result.winner).toBe("a");
+    });
+});
+
 describe("one-sided attack phase (per-coin minimum damage)", () => {
     // The wiki: "an Attack Skill will always deal a minimum of 1 damage per Coin, even if the
     // Attack Skill displays having rolled a 0." computeFinalDamage's existing minimum-damage

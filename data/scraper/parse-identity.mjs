@@ -6,15 +6,16 @@ function toNumber(str) {
     return Number.isNaN(n) ? undefined : n;
 }
 
-function parseSkill(raw) {
+function parseSkill(raw, variantLabel) {
     if (!raw) return undefined;
     const t = parseTemplate(raw);
     if (!t) return undefined;
     const p = t.params;
     return {
+        variantLabel,
         sin: p.sin,
         skillLevel: toNumber(p.slevel),
-        name: p.name,
+        name: cleanText(p.name),
         damageType: p.type,
         icon: p.icon,
         basePower: toNumber(p.spower),
@@ -92,7 +93,15 @@ export function parseIdentityPage(title, wikitext) {
         defenseLevelMod: toNumber(p.defmod),
         resistances: { slash: p.slash, pierce: p.pierce, blunt: p.blunt },
         staggerThresholds: { u4: toNumber(p.stagger1), u3: toNumber(p.stagger2), u2u1: toNumber(p.stagger3) },
-        skills: [parseSkill(p.skill1), parseSkill(p.skill2), parseSkill(p.skill3), parseSkill(p.skill4)].filter(Boolean),
+        // Some Skills have condition-gated alternate versions the wiki lists as separate
+        // sub-tabs, e.g. Skill 3's dashboard swaps to "Skill 3-2" under some effect -
+        // these aren't optional flavor, they're real selectable moves missing from just skill1..skill4.
+        skills: [
+            "skill1", "skill1-2", "skill1-3",
+            "skill2", "skill2-2", "skill2-3",
+            "skill3", "skill3-2", "skill3-3", "skill3-4",
+            "skill4",
+        ].map(key => parseSkill(p[key], key.includes("-") ? key.split("-")[1] : undefined)).filter(Boolean),
         defenseSkill: parseSkill(p.defense),
         passives: [1, 2, 3].map(n => parsePassive(p[`passive${n}`])).filter(Boolean),
     };

@@ -5,6 +5,8 @@ export interface UptieOverride<T> {
 }
 
 export interface Skill {
+    /** Set only on a condition-gated alternate version of a skill slot, e.g. "2" for Skill 3-2. */
+    variantLabel?: string;
     sin?: string;
     skillLevel?: number;
     name?: string;

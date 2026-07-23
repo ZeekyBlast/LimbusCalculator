@@ -138,5 +138,7 @@ export function cleanText(text) {
     out = out.replace(/\[\[([^\]]+)\]\]/g, "$1");
     out = out.replace(/'''/g, "").replace(/''/g, "");
     out = out.replace(/<br\s*\/?>/gi, "\n");
+    // Strip any remaining HTML tags (e.g. <b>空間斬</b> in dual English/native skill names) - keep the inner text.
+    out = out.replace(/<\/?[a-zA-Z][^>]*>/g, "");
     return out.trim();
 }
