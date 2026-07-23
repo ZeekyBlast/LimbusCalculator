@@ -1,10 +1,25 @@
 import { useEffect, useMemo, useState } from 'react'
 import { resistanceModifier, resolveUptie, countUnbreakableCoins } from '@formula/index'
 import { useIdentities } from './lib/identities'
-import { CombatantPicker } from './components/CombatantPicker'
-import { ClashSetup, DEFAULT_COMBATANT_SETUP, type CombatantSetup } from './components/ClashSetup'
-import { ClashArena, type ResolvedCombatant } from './components/ClashArena'
+import { CombatantDossier, DEFAULT_COMBATANT_SETUP, type CombatantSetup } from './components/CombatantDossier'
+import { ClashArena } from './components/ClashArena'
 import { LandingPage } from './components/LandingPage'
+import { useClash, type ResolvedCombatant } from './lib/useClash'
+
+const FALLBACK_COMBATANT: ResolvedCombatant = {
+  label: '',
+  name: '',
+  title: '',
+  basePower: 0,
+  coinPower: 0,
+  coinCount: 0,
+  unbreakableCoinCount: 0,
+  offenseLevel: 1,
+  defenseLevel: 1,
+  sanityPoints: 0,
+  sinResistanceModifier: 1,
+  damageTypeResistanceModifier: 1,
+}
 
 function App() {
   const { identities, loading, error } = useIdentities()
@@ -65,6 +80,13 @@ function App() {
     }
   }, [defenderIdentity, defenderSkill, defenderSetup, uptieTier])
 
+  // useClash needs stable combatant objects even before identities finish loading; the fallback
+  // is never reached in practice since the Clash button only renders once both are resolved.
+  const { phase, result, revealedCoins, startClash, onRoundSequenceComplete, revealNextCoin, poseFor } = useClash(
+    attacker ?? FALLBACK_COMBATANT,
+    defender ?? FALLBACK_COMBATANT,
+  )
+
   if (view === 'landing') {
     return <LandingPage onEnter={() => setView('simulator')} identities={identities} />
   }
@@ -91,8 +113,8 @@ function App() {
         </p>
       </header>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-6">
-        <CombatantPicker
+      <div className="grid grid-cols-1 lg:grid-cols-[1fr_320px_1fr] gap-6 items-start">
+        <CombatantDossier
           role="Attacker"
           identities={identities}
           selectedTitle={attackerTitle}
@@ -100,9 +122,27 @@ function App() {
           selectedSkillIndex={attackerSkillIndex}
           onSkillIndexChange={setAttackerSkillIndex}
           uptieTier={uptieTier}
-          level={attackerSetup.level}
+          setup={attackerSetup}
+          onSetupChange={setAttackerSetup}
+          pose={attacker ? poseFor(attacker) : 'idle'}
         />
-        <CombatantPicker
+
+        {attacker && defender && (
+          <ClashArena
+            attacker={attacker}
+            defender={defender}
+            uptieTier={uptieTier}
+            onUptieTierChange={setUptieTier}
+            phase={phase}
+            result={result}
+            revealedCoins={revealedCoins}
+            startClash={startClash}
+            onRoundSequenceComplete={onRoundSequenceComplete}
+            revealNextCoin={revealNextCoin}
+          />
+        )}
+
+        <CombatantDossier
           role="Defender"
           identities={identities}
           selectedTitle={defenderTitle}
@@ -110,21 +150,10 @@ function App() {
           selectedSkillIndex={defenderSkillIndex}
           onSkillIndexChange={setDefenderSkillIndex}
           uptieTier={uptieTier}
-          level={defenderSetup.level}
+          setup={defenderSetup}
+          onSetupChange={setDefenderSetup}
+          pose={defender ? poseFor(defender) : 'idle'}
         />
-      </div>
-
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <ClashSetup
-          attackerSetup={attackerSetup}
-          onAttackerChange={setAttackerSetup}
-          defenderSetup={defenderSetup}
-          onDefenderChange={setDefenderSetup}
-          uptieTier={uptieTier}
-          onUptieTierChange={setUptieTier}
-        />
-
-        {attacker && defender && <ClashArena attacker={attacker} defender={defender} />}
       </div>
     </div>
   )

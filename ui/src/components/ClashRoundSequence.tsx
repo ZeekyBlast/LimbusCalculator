@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import type { ClashResult } from '@formula/index'
-import type { ResolvedCombatant } from './ClashArena'
+import type { ResolvedCombatant } from '../lib/useClash'
 
 interface PoolCoin {
   id: number

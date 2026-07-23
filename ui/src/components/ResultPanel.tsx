@@ -1,4 +1,4 @@
-import type { FullClashResult } from './ClashArena'
+import type { FullClashResult } from '../lib/useClash'
 
 interface ResultPanelProps {
   result: FullClashResult

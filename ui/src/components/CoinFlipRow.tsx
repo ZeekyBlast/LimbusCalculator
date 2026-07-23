@@ -1,4 +1,4 @@
-import type { OneSidedCoinResult } from './ClashArena'
+import type { OneSidedCoinResult } from '../lib/useClash'
 
 interface CoinFlipRowProps {
   coins: OneSidedCoinResult[]

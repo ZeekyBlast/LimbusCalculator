@@ -1,19 +1,50 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, type ReactNode } from 'react'
 import type { Identity } from '../types'
-import { portraitUrl, skillIconUrl, sinIconUrl, damageTypeIconUrl, sinnerIconUrl, statusEffectIconUrl, uptie4BorderFrameUrls, hideOnError } from '../lib/images'
+import type { Pose } from '../lib/useClash'
+import {
+  portraitUrl,
+  spriteUrl,
+  skillIconUrl,
+  sinIconUrl,
+  damageTypeIconUrl,
+  sinnerIconUrl,
+  statusEffectIconUrl,
+  statIconUrl,
+  uptie4BorderFrameUrls,
+  hideOnError,
+} from '../lib/images'
 import { useStatusEffectManifest, matchStatusEffectIcons } from '../lib/statusEffectIcons'
 import { Combobox, type ComboboxGroup } from './Combobox'
 import { SINNER_ORDER } from '../lib/sinners'
 
-interface CombatantPickerProps {
-  role: string
-  identities: Identity[]
-  selectedTitle: string
-  onTitleChange: (title: string) => void
-  selectedSkillIndex: number
-  onSkillIndexChange: (index: number) => void
-  uptieTier: 1 | 2 | 3 | 4
+const RESISTANCE_PRESETS: { label: string; value: number }[] = [
+  { label: 'Nullify (0%)', value: 0 },
+  { label: 'Fatal (200%)', value: 2 },
+  { label: 'Weak (150%)', value: 1.5 },
+  { label: 'Normal (100%)', value: 1 },
+  { label: 'Endure (50%)', value: 0.5 },
+  { label: 'Ineffective (25%)', value: 0.25 },
+]
+
+const RESISTANCE_GROUPS = [{ options: RESISTANCE_PRESETS }]
+
+function resistanceLabel(pct: number): string {
+  return RESISTANCE_PRESETS.find(p => p.value === pct)?.label ?? `${pct * 100}%`
+}
+
+export interface CombatantSetup {
+  sinResistancePct: number
+  typeResistancePct: number
+  /** Identity's own Level (1-60, matches the game's cap). Drives HP, Defense, and both the clash-round and post-clash damage formulas. */
   level: number
+  sanityPoints: number
+}
+
+export const DEFAULT_COMBATANT_SETUP: CombatantSetup = {
+  sinResistancePct: 1,
+  typeResistancePct: 1,
+  level: 60,
+  sanityPoints: 0,
 }
 
 const UPTIE4_FRAMES = uptie4BorderFrameUrls()
@@ -57,6 +88,35 @@ function Uptie4Border() {
       className="absolute inset-0 w-full h-full object-cover pointer-events-none mix-blend-screen"
       onError={hideOnError}
     />
+  )
+}
+
+/** Battle-pose chip, bottom-left of the portrait - the only place the sprite (idle/moving/hurt) shows up now; there's no separate arena character row anymore. */
+function PoseBadge({ title, pose }: { title: string; pose: Pose }) {
+  return (
+    <div
+      className={`absolute bottom-1.5 left-1.5 w-10 h-14 rounded-sm overflow-hidden border shadow-lg bg-ink/70 flex items-end justify-center transition-colors ${
+        pose === 'hurt' ? 'border-blood-bright' : pose === 'moving' ? 'border-gold-bright' : 'border-paper-light'
+      }`}
+    >
+      <img
+        key={pose}
+        src={spriteUrl(title, pose)}
+        alt=""
+        loading="lazy"
+        className={`max-w-full max-h-full object-contain object-bottom ${pose === 'hurt' ? 'grayscale-[40%]' : ''}`}
+        onError={hideOnError}
+      />
+    </div>
+  )
+}
+
+function FieldLabel({ stat, htmlFor, children }: { stat: 'coin' | 'defense' | 'hp' | 'speed' | 'stagger'; htmlFor: string; children: ReactNode }) {
+  return (
+    <label htmlFor={htmlFor} className="flex items-center gap-1.5 text-xs uppercase tracking-wide text-bone-dim mb-1">
+      <img src={statIconUrl(stat)} alt="" loading="lazy" className="w-3.5 h-3.5 opacity-80" onError={hideOnError} />
+      {children}
+    </label>
   )
 }
 
@@ -115,15 +175,43 @@ function SkillEffectText({ skill, manifest }: { skill: { skillEffect?: string; c
   )
 }
 
-export function CombatantPicker({ role, identities, selectedTitle, onTitleChange, selectedSkillIndex, onSkillIndexChange, uptieTier, level }: CombatantPickerProps) {
+interface CombatantDossierProps {
+  role: string
+  identities: Identity[]
+  selectedTitle: string
+  onTitleChange: (title: string) => void
+  selectedSkillIndex: number
+  onSkillIndexChange: (index: number) => void
+  uptieTier: 1 | 2 | 3 | 4
+  setup: CombatantSetup
+  onSetupChange: (setup: CombatantSetup) => void
+  pose: Pose
+}
+
+export function CombatantDossier({
+  role,
+  identities,
+  selectedTitle,
+  onTitleChange,
+  selectedSkillIndex,
+  onSkillIndexChange,
+  uptieTier,
+  setup,
+  onSetupChange,
+  pose,
+}: CombatantDossierProps) {
   const identity = identities.find(i => i.title === selectedTitle)
   const skill = identity?.skills[selectedSkillIndex]
   const effectManifest = useStatusEffectManifest()
   const personnelId = `personnel-${role}`
   const skillSelectId = `assigned-skill-${role}`
+  const sinResistanceId = `${role}-sin-resistance`
+  const typeResistanceId = `${role}-type-resistance`
+  const levelId = `${role}-level`
+  const sanityId = `${role}-sanity`
 
   return (
-    <section className="border border-paper-light bg-paper rounded-sm overflow-hidden">
+    <section className="border border-paper-light bg-paper rounded-sm overflow-hidden h-fit">
       <header className="flex items-center justify-between border-b border-paper-light bg-ink/40 px-4 py-2">
         <h2 className="font-display text-lg tracking-wide uppercase text-gold">{role}</h2>
         <span className="font-mono text-xs text-bone-dim">DOSSIER</span>
@@ -152,6 +240,8 @@ export function CombatantPicker({ role, identities, selectedTitle, onTitleChange
               <img src={portraitUrl(identity.title)} alt={identity.title} loading="lazy" className="w-full h-full object-cover object-top" onError={hideOnError} />
               <div className="absolute inset-0 bg-gradient-to-t from-ink/90 via-transparent to-transparent" />
 
+              <PoseBadge title={identity.title} pose={pose} />
+
               {uptieTier === 4 && (
                 <div className="absolute bottom-1.5 right-1.5 w-10 h-14 rounded-sm overflow-hidden border border-gold-bright/80 shadow-lg">
                   <img src={portraitUrl(identity.title)} alt="" loading="lazy" className="absolute inset-0 w-full h-full object-cover" onError={hideOnError} />
@@ -173,12 +263,12 @@ export function CombatantPicker({ role, identities, selectedTitle, onTitleChange
           <table className="w-full mt-3 text-xs ledger-number border-t border-paper-light">
             <tbody>
               <tr className="border-b border-paper-light/60">
-                <td className="py-1 text-bone-dim font-body">HP (Lv {level})</td>
-                <td className="py-1 text-right">{Math.round((identity.hp ?? 0) + (identity.hpGrowth ?? 0) * level)}</td>
+                <td className="py-1 text-bone-dim font-body">HP (Lv {setup.level})</td>
+                <td className="py-1 text-right">{Math.round((identity.hp ?? 0) + (identity.hpGrowth ?? 0) * setup.level)}</td>
               </tr>
               <tr className="border-b border-paper-light/60">
                 <td className="py-1 text-bone-dim font-body">Defense</td>
-                <td className="py-1 text-right">{level + (identity.defenseLevelMod ?? 0)}</td>
+                <td className="py-1 text-right">{setup.level + (identity.defenseLevelMod ?? 0)}</td>
               </tr>
               <tr>
                 <td className="py-1 text-bone-dim font-body">Slash / Pierce / Blunt</td>
@@ -189,6 +279,60 @@ export function CombatantPicker({ role, identities, selectedTitle, onTitleChange
             </tbody>
           </table>
         )}
+
+        <div className="grid grid-cols-2 gap-3 mt-4 pt-3 border-t border-paper-light">
+          <div>
+            <FieldLabel stat="defense" htmlFor={sinResistanceId}>Sin Resist (if hit)</FieldLabel>
+            <Combobox
+              id={sinResistanceId}
+              ariaLabel={`${role}: Sin Resistance if hit`}
+              groups={RESISTANCE_GROUPS}
+              value={setup.sinResistancePct}
+              onChange={v => onSetupChange({ ...setup, sinResistancePct: v })}
+              triggerLabel={resistanceLabel(setup.sinResistancePct)}
+            />
+          </div>
+          <div>
+            <FieldLabel stat="defense" htmlFor={typeResistanceId}>Type Resist (if hit)</FieldLabel>
+            <Combobox
+              id={typeResistanceId}
+              ariaLabel={`${role}: Damage Type Resistance if hit`}
+              groups={RESISTANCE_GROUPS}
+              value={setup.typeResistancePct}
+              onChange={v => onSetupChange({ ...setup, typeResistancePct: v })}
+              triggerLabel={resistanceLabel(setup.typeResistancePct)}
+            />
+          </div>
+
+          <div>
+            <FieldLabel stat="speed" htmlFor={levelId}>
+              Level: <span className="ledger-number text-gold-bright">{setup.level}</span>
+            </FieldLabel>
+            <input
+              id={levelId}
+              type="range"
+              min={1}
+              max={60}
+              value={setup.level}
+              onChange={e => onSetupChange({ ...setup, level: Number(e.target.value) })}
+              className="w-full accent-gold"
+            />
+          </div>
+          <div>
+            <FieldLabel stat="coin" htmlFor={sanityId}>
+              Sanity: <span className="ledger-number text-gold-bright">{setup.sanityPoints} SP</span>
+            </FieldLabel>
+            <input
+              id={sanityId}
+              type="range"
+              min={-45}
+              max={45}
+              value={setup.sanityPoints}
+              onChange={e => onSetupChange({ ...setup, sanityPoints: Number(e.target.value) })}
+              className="w-full accent-gold"
+            />
+          </div>
+        </div>
 
         <label htmlFor={skillSelectId} className="block text-xs uppercase tracking-wide text-bone-dim mb-1 mt-4">Assigned Skill</label>
         <Combobox
