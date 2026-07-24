@@ -6,6 +6,8 @@ import { ClashArena } from './components/ClashArena'
 import { LandingPage } from './components/LandingPage'
 import { useClash, type ResolvedCombatant } from './lib/useClash'
 import { DEFAULT_EFFECTS_SETUP, type CombatantEffectsSetup } from './lib/effectSetup'
+import { RosterPanel } from './components/RosterPanel'
+import { DEFAULT_ROSTER, type Roster } from './lib/roster'
 
 const FALLBACK_COMBATANT: ResolvedCombatant = {
   label: '',
@@ -36,6 +38,8 @@ function App() {
   const [attackerEffects, setAttackerEffects] = useState<CombatantEffectsSetup>(DEFAULT_EFFECTS_SETUP)
   const [defenderEffects, setDefenderEffects] = useState<CombatantEffectsSetup>(DEFAULT_EFFECTS_SETUP)
   const [uptieTier, setUptieTier] = useState<1 | 2 | 3 | 4>(4)
+  const [attackerRoster, setAttackerRoster] = useState<Roster>(DEFAULT_ROSTER)
+  const [defenderRoster, setDefenderRoster] = useState<Roster>(DEFAULT_ROSTER)
 
   useEffect(() => {
     if (identities.length > 0 && !attackerTitle) setAttackerTitle(identities[0].title)
@@ -166,6 +170,23 @@ function App() {
           effects={defenderEffects}
           onEffectsChange={setDefenderEffects}
           pose={defender ? poseFor(defender) : 'idle'}
+        />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
+        <RosterPanel
+          role="Attacker"
+          identities={identities}
+          roster={attackerRoster}
+          onRosterChange={setAttackerRoster}
+          deployedIdentity={attackerIdentity}
+        />
+        <RosterPanel
+          role="Defender"
+          identities={identities}
+          roster={defenderRoster}
+          onRosterChange={setDefenderRoster}
+          deployedIdentity={defenderIdentity}
         />
       </div>
     </div>
