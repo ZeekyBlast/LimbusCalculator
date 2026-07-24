@@ -12,11 +12,13 @@ import {
   sumCoinPowerBonus,
   resolveBleedThroughRounds,
   resolveRuptureOverHits,
+  resolveBurnTrigger,
   resolvePoiseCrit,
   criticalDamageModifier,
   type ClashResult,
 } from '@formula/index'
 import { toEffectStacks, type CombatantEffectsSetup } from './effectSetup'
+import { applyHpDamage, type SideBattleState } from './battleState'
 
 export interface ResolvedCombatant {
   label: string
@@ -53,6 +55,9 @@ export interface FullClashResult {
   defenderBleedDamage: number
   /** Rupture damage on the loser only, once per post-win coin (each is one "hit"). 0 on a draw. */
   ruptureDamage: number
+  /** Turn End Burn tick, applied after the clash's own damage/triggers - 0 for a side with no Burn Count left, or already defeated. */
+  attackerBurnDamage: number
+  defenderBurnDamage: number
 }
 
 export type ClashPhase = 'idle' | 'clashing' | 'revealing' | 'done'
@@ -164,6 +169,10 @@ function runFullClash(
       attackerBleedDamage: aBleed.totalDamage,
       defenderBleedDamage: bBleed.totalDamage,
       ruptureDamage: rupture.totalDamage,
+      // Burn is Turn End, not part of the clash itself - startClash() fills these in once it
+      // knows whether each side is already defeated (runFullClash has no battle-state awareness).
+      attackerBurnDamage: 0,
+      defenderBurnDamage: 0,
     },
     nextAttackerEffects,
     nextDefenderEffects,
@@ -177,6 +186,9 @@ export function useClash(
   attackerEffects: CombatantEffectsSetup,
   defenderEffects: CombatantEffectsSetup,
   onEffectsConsumed: (attacker: CombatantEffectsSetup, defender: CombatantEffectsSetup) => void,
+  attackerBattle: SideBattleState,
+  defenderBattle: SideBattleState,
+  onTurnResolved: (attacker: SideBattleState, defender: SideBattleState) => void,
 ) {
   const [phase, setPhase] = useState<ClashPhase>('idle')
   const [result, setResult] = useState<FullClashResult | null>(null)
@@ -184,10 +196,49 @@ export function useClash(
 
   function startClash() {
     const run = runFullClash(attacker, defender, attackerEffects, defenderEffects)
-    setResult(run.result)
-    onEffectsConsumed(run.nextAttackerEffects, run.nextDefenderEffects)
+
+    // Clash-phase HP damage: the loser takes the winner's coin damage plus their own Rupture;
+    // Bleed applies to both sides regardless of who won (already reflected in these totals).
+    // On a draw, totalDamage/ruptureDamage are both 0, so which side `loser` nominally points
+    // to doesn't matter here.
+    const attackerClashDamage =
+      run.result.attackerBleedDamage + (run.result.loser.label === 'Attacker' ? run.result.totalDamage + run.result.ruptureDamage : 0)
+    const defenderClashDamage =
+      run.result.defenderBleedDamage + (run.result.loser.label === 'Defender' ? run.result.totalDamage + run.result.ruptureDamage : 0)
+
+    let nextAttackerBattle = applyHpDamage(attackerBattle, attackerClashDamage)
+    let nextDefenderBattle = applyHpDamage(defenderBattle, defenderClashDamage)
+
+    // Turn End: Burn ticks after the clash's own triggers (Bleed per toss, Rupture per hit,
+    // both already resolved above) - only for a side that's still standing.
+    const nextAttackerEffects = { ...run.nextAttackerEffects }
+    const nextDefenderEffects = { ...run.nextDefenderEffects }
+    let attackerBurnDamage = 0
+    let defenderBurnDamage = 0
+    if (!nextAttackerBattle.defeated) {
+      const burn = resolveBurnTrigger(nextAttackerEffects.burn)
+      attackerBurnDamage = burn.damage
+      nextAttackerEffects.burn = burn.nextState
+      nextAttackerBattle = applyHpDamage(nextAttackerBattle, burn.damage)
+    }
+    if (!nextDefenderBattle.defeated) {
+      const burn = resolveBurnTrigger(nextDefenderEffects.burn)
+      defenderBurnDamage = burn.damage
+      nextDefenderEffects.burn = burn.nextState
+      nextDefenderBattle = applyHpDamage(nextDefenderBattle, burn.damage)
+    }
+
+    setResult({ ...run.result, attackerBurnDamage, defenderBurnDamage })
+    onEffectsConsumed(nextAttackerEffects, nextDefenderEffects)
+    onTurnResolved(nextAttackerBattle, nextDefenderBattle)
     setRevealedCoins(0)
     setPhase('clashing')
+  }
+
+  function reset() {
+    setPhase('idle')
+    setResult(null)
+    setRevealedCoins(0)
   }
 
   function onRoundSequenceComplete() {
@@ -210,5 +261,5 @@ export function useClash(
     return 'idle'
   }
 
-  return { phase, result, revealedCoins, startClash, onRoundSequenceComplete, revealNextCoin, poseFor }
+  return { phase, result, revealedCoins, startClash, reset, onRoundSequenceComplete, revealNextCoin, poseFor }
 }

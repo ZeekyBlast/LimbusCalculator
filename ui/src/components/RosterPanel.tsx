@@ -3,12 +3,9 @@ import { portraitUrl, sinnerIconUrl, statIconUrl, hideOnError } from '../lib/ima
 import { Combobox } from './Combobox'
 import { SINNER_ORDER } from '../lib/sinners'
 import type { Roster } from '../lib/roster'
+import { maxHp } from '../lib/battleState'
 
 const NONE = ''
-
-function maxHp(identity: Identity, level: number): number {
-  return Math.round((identity.hp ?? 0) + (identity.hpGrowth ?? 0) * level)
-}
 
 interface RosterPanelProps {
   role: string

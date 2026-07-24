@@ -47,6 +47,8 @@ interface ClashArenaProps {
   startClash: () => void
   onRoundSequenceComplete: () => void
   revealNextCoin: () => void
+  resetEncounter: () => void
+  encounterOver: boolean
 }
 
 export function ClashArena({
@@ -60,34 +62,44 @@ export function ClashArena({
   startClash,
   onRoundSequenceComplete,
   revealNextCoin,
+  resetEncounter,
+  encounterOver,
 }: ClashArenaProps) {
   return (
     <section className="border border-paper-light bg-paper rounded-sm overflow-hidden h-fit lg:sticky lg:top-6">
       <header className="border-b border-paper-light bg-ink/40 px-4 py-2">
         <div className="flex items-center justify-between mb-2">
           <h2 className="font-display text-lg tracking-wide uppercase text-gold">Clash</h2>
-          <div className="flex gap-1">
-            {([1, 2, 3, 4] as const).map(tier => (
-              <button
-                key={tier}
-                onClick={() => onUptieTierChange(tier)}
-                className={`w-8 h-8 rounded-sm border flex items-center justify-center transition-colors ${
-                  tier === uptieTier ? 'border-gold-bright bg-gold/20' : 'border-paper-light bg-paper hover:border-gold/50'
-                }`}
-                aria-pressed={tier === uptieTier}
-                title={`Uptie ${tier}`}
-              >
-                <img src={uptieBadgeUrl(tier)} alt={`Uptie ${tier}`} loading="lazy" className="w-5 h-5" onError={hideOnError} />
-              </button>
-            ))}
+          <div className="flex items-center gap-2">
+            <div className="flex gap-1">
+              {([1, 2, 3, 4] as const).map(tier => (
+                <button
+                  key={tier}
+                  onClick={() => onUptieTierChange(tier)}
+                  className={`w-8 h-8 rounded-sm border flex items-center justify-center transition-colors ${
+                    tier === uptieTier ? 'border-gold-bright bg-gold/20' : 'border-paper-light bg-paper hover:border-gold/50'
+                  }`}
+                  aria-pressed={tier === uptieTier}
+                  title={`Uptie ${tier}`}
+                >
+                  <img src={uptieBadgeUrl(tier)} alt={`Uptie ${tier}`} loading="lazy" className="w-5 h-5" onError={hideOnError} />
+                </button>
+              ))}
+            </div>
+            <button
+              onClick={resetEncounter}
+              className="font-mono text-[10px] uppercase tracking-widest text-bone-dim hover:text-gold-bright border border-paper-light rounded-sm px-2 py-1 transition-colors"
+            >
+              New Encounter
+            </button>
           </div>
         </div>
         <button
           onClick={startClash}
-          disabled={phase === 'clashing' || phase === 'revealing'}
+          disabled={phase === 'clashing' || phase === 'revealing' || encounterOver}
           className="w-full py-2 bg-gold hover:bg-gold-bright text-ink rounded-sm font-display font-bold uppercase tracking-wide transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
         >
-          {phase === 'done' ? 'Clash Again' : 'Clash'}
+          {encounterOver ? 'Encounter Over' : phase === 'done' ? 'Clash Again' : 'Clash'}
         </button>
       </header>
 

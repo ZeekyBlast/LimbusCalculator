@@ -8,6 +8,7 @@ import { useClash, type ResolvedCombatant } from './lib/useClash'
 import { DEFAULT_EFFECTS_SETUP, type CombatantEffectsSetup } from './lib/effectSetup'
 import { RosterPanel } from './components/RosterPanel'
 import { DEFAULT_ROSTER, type Roster } from './lib/roster'
+import { initSideBattleState, type SideBattleState } from './lib/battleState'
 
 const FALLBACK_COMBATANT: ResolvedCombatant = {
   label: '',
@@ -23,6 +24,8 @@ const FALLBACK_COMBATANT: ResolvedCombatant = {
   sinResistanceModifier: 1,
   damageTypeResistanceModifier: 1,
 }
+
+const FALLBACK_BATTLE: SideBattleState = { currentHp: 0, maxHp: 0, defeated: false }
 
 function App() {
   const { identities, loading, error } = useIdentities()
@@ -40,6 +43,8 @@ function App() {
   const [uptieTier, setUptieTier] = useState<1 | 2 | 3 | 4>(4)
   const [attackerRoster, setAttackerRoster] = useState<Roster>(DEFAULT_ROSTER)
   const [defenderRoster, setDefenderRoster] = useState<Roster>(DEFAULT_ROSTER)
+  const [attackerBattle, setAttackerBattle] = useState<SideBattleState | null>(null)
+  const [defenderBattle, setDefenderBattle] = useState<SideBattleState | null>(null)
 
   useEffect(() => {
     if (identities.length > 0 && !attackerTitle) setAttackerTitle(identities[0].title)
@@ -50,6 +55,15 @@ function App() {
   const defenderIdentity = useMemo(() => identities.find(i => i.title === defenderTitle), [identities, defenderTitle])
   const attackerSkill = attackerIdentity?.skills[attackerSkillIndex]
   const defenderSkill = defenderIdentity?.skills[defenderSkillIndex]
+
+  // Seeds HP once per encounter (guarded by `!...Battle`) - resetEncounter() nulls it out to
+  // reseed, but adjusting the Level slider mid-encounter does NOT refill HP.
+  useEffect(() => {
+    if (attackerIdentity && !attackerBattle) setAttackerBattle(initSideBattleState(attackerIdentity, attackerSetup.level))
+  }, [attackerIdentity, attackerSetup.level, attackerBattle])
+  useEffect(() => {
+    if (defenderIdentity && !defenderBattle) setDefenderBattle(initSideBattleState(defenderIdentity, defenderSetup.level))
+  }, [defenderIdentity, defenderSetup.level, defenderBattle])
 
   const attacker: ResolvedCombatant | undefined = useMemo(() => {
     if (!attackerIdentity || !attackerSkill) return undefined
@@ -87,9 +101,9 @@ function App() {
     }
   }, [defenderIdentity, defenderSkill, defenderSetup, uptieTier])
 
-  // useClash needs stable combatant objects even before identities finish loading; the fallback
-  // is never reached in practice since the Clash button only renders once both are resolved.
-  const { phase, result, revealedCoins, startClash, onRoundSequenceComplete, revealNextCoin, poseFor } = useClash(
+  // useClash needs stable combatant/battle objects even before identities finish loading; the
+  // fallbacks are never reached in practice since the Clash button only renders once resolved.
+  const { phase, result, revealedCoins, startClash, reset, onRoundSequenceComplete, revealNextCoin, poseFor } = useClash(
     attacker ?? FALLBACK_COMBATANT,
     defender ?? FALLBACK_COMBATANT,
     attackerEffects,
@@ -98,7 +112,23 @@ function App() {
       setAttackerEffects(nextAttacker)
       setDefenderEffects(nextDefender)
     },
+    attackerBattle ?? FALLBACK_BATTLE,
+    defenderBattle ?? FALLBACK_BATTLE,
+    (nextAttacker, nextDefender) => {
+      setAttackerBattle(nextAttacker)
+      setDefenderBattle(nextDefender)
+    },
   )
+
+  const encounterOver = Boolean(attackerBattle?.defeated || defenderBattle?.defeated)
+
+  function resetEncounter() {
+    setAttackerBattle(null)
+    setDefenderBattle(null)
+    setAttackerEffects(DEFAULT_EFFECTS_SETUP)
+    setDefenderEffects(DEFAULT_EFFECTS_SETUP)
+    reset()
+  }
 
   if (view === 'landing') {
     return <LandingPage onEnter={() => setView('simulator')} identities={identities} />
@@ -140,6 +170,7 @@ function App() {
           effects={attackerEffects}
           onEffectsChange={setAttackerEffects}
           pose={attacker ? poseFor(attacker) : 'idle'}
+          battle={attackerBattle}
         />
 
         {attacker && defender && (
@@ -154,6 +185,8 @@ function App() {
             startClash={startClash}
             onRoundSequenceComplete={onRoundSequenceComplete}
             revealNextCoin={revealNextCoin}
+            resetEncounter={resetEncounter}
+            encounterOver={encounterOver}
           />
         )}
 
@@ -170,6 +203,7 @@ function App() {
           effects={defenderEffects}
           onEffectsChange={setDefenderEffects}
           pose={defender ? poseFor(defender) : 'idle'}
+          battle={defenderBattle}
         />
       </div>
 

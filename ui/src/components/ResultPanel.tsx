@@ -17,6 +17,19 @@ function BleedLines({ result }: { result: FullClashResult }) {
   )
 }
 
+function BurnLines({ result }: { result: FullClashResult }) {
+  const { winner, loser, attackerBurnDamage, defenderBurnDamage } = result
+  const attacker = winner.label === 'Attacker' ? winner : loser
+  const defender = winner.label === 'Defender' ? winner : loser
+  if (attackerBurnDamage === 0 && defenderBurnDamage === 0) return null
+  return (
+    <div className="text-xs text-bone-dim italic mt-2 space-y-0.5">
+      {attackerBurnDamage > 0 && <p>{attacker.label} burns for {attackerBurnDamage} at Turn End.</p>}
+      {defenderBurnDamage > 0 && <p>{defender.label} burns for {defenderBurnDamage} at Turn End.</p>}
+    </div>
+  )
+}
+
 export function ResultPanel({ result }: ResultPanelProps) {
   const { clash, winner, loser, coins, totalDamage, ruptureDamage } = result
 
@@ -28,6 +41,7 @@ export function ResultPanel({ result }: ResultPanelProps) {
           <p className="text-xs text-bone-dim">Hit the 99 parry round cap with no resolution.</p>
         </div>
         <BleedLines result={result} />
+        <BurnLines result={result} />
       </div>
     )
   }
@@ -52,6 +66,7 @@ export function ResultPanel({ result }: ResultPanelProps) {
         </p>
       )}
       <BleedLines result={result} />
+      <BurnLines result={result} />
       {clash.crackedCoins > 0 && (
         <p className="text-xs text-bone-dim italic mt-2">
           {loser.label} has {clash.crackedCoins} Unbreakable coin{clash.crackedCoins > 1 ? 's' : ''} left, cracked rather than broken &mdash; counter-attack not yet modeled.

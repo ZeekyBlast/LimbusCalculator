@@ -17,6 +17,7 @@ import { useStatusEffectManifest, matchStatusEffectIcons } from '../lib/statusEf
 import { Combobox, type ComboboxGroup } from './Combobox'
 import { SINNER_ORDER } from '../lib/sinners'
 import { STACKABLE_EFFECTS, type CombatantEffectsSetup } from '../lib/effectSetup'
+import { maxHp, type SideBattleState } from '../lib/battleState'
 
 const RESISTANCE_PRESETS: { label: string; value: number }[] = [
   { label: 'Nullify (0%)', value: 0 },
@@ -246,7 +247,7 @@ function StatusEffectsEditor({ idPrefix, effects, onChange }: { idPrefix: string
           ))}
         </div>
         <p className="text-bone-dim italic mt-2">
-          Burn ticks at Turn End - outside a single clash, so it's tracked here but not triggered by Clash. Poise's own Turn End decrement is skipped for the same reason; its Crit-triggered decrement still applies.
+          Burn ticks at Turn End once an encounter is running (after the first Clash). Poise's own Turn End decrement is still skipped - only its Crit-triggered decrement applies.
         </p>
       </div>
     </details>
@@ -302,6 +303,8 @@ interface CombatantDossierProps {
   effects: CombatantEffectsSetup
   onEffectsChange: (effects: CombatantEffectsSetup) => void
   pose: Pose
+  /** Live HP for the current encounter - null pre-encounter, when the dossier still only shows static Max HP. */
+  battle: SideBattleState | null
 }
 
 export function CombatantDossier({
@@ -317,6 +320,7 @@ export function CombatantDossier({
   effects,
   onEffectsChange,
   pose,
+  battle,
 }: CombatantDossierProps) {
   const identity = identities.find(i => i.title === selectedTitle)
   const skill = identity?.skills[selectedSkillIndex]
@@ -377,12 +381,30 @@ export function CombatantDossier({
           </div>
         )}
 
+        {identity && battle && (
+          <div className="mt-3">
+            <div className="flex items-center justify-between text-xs ledger-number mb-1">
+              <span className="text-bone-dim uppercase tracking-wide font-body">HP</span>
+              <span className={battle.defeated ? 'text-blood-bright' : 'text-gold-bright'}>
+                {battle.currentHp} / {battle.maxHp}
+              </span>
+            </div>
+            <div className="h-1.5 rounded-full overflow-hidden bg-paper-light w-full">
+              <div
+                className={`h-full transition-all ${battle.defeated ? 'bg-blood-bright' : 'bg-gold-bright'}`}
+                style={{ width: `${battle.maxHp > 0 ? (battle.currentHp / battle.maxHp) * 100 : 0}%` }}
+              />
+            </div>
+            {battle.defeated && <span className="stamp text-blood-bright mt-2 inline-block">Defeated</span>}
+          </div>
+        )}
+
         {identity && (
           <table className="w-full mt-3 text-xs ledger-number border-t border-paper-light">
             <tbody>
               <tr className="border-b border-paper-light/60">
                 <td className="py-1 text-bone-dim font-body">HP (Lv {setup.level})</td>
-                <td className="py-1 text-right">{Math.round((identity.hp ?? 0) + (identity.hpGrowth ?? 0) * setup.level)}</td>
+                <td className="py-1 text-right">{maxHp(identity, setup.level)}</td>
               </tr>
               <tr className="border-b border-paper-light/60">
                 <td className="py-1 text-bone-dim font-body">Defense</td>
