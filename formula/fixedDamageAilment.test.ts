@@ -1,5 +1,12 @@
 import { describe, it, expect } from "vitest";
-import { clampAilmentValue, resolveBleedTrigger, resolveBurnTrigger, resolveRuptureTrigger } from "./fixedDamageAilment";
+import {
+    clampAilmentValue,
+    resolveBleedTrigger,
+    resolveBurnTrigger,
+    resolveRuptureTrigger,
+    resolveBleedThroughRounds,
+    resolveRuptureOverHits,
+} from "./fixedDamageAilment";
 
 describe("clampAilmentValue", () => {
     it("clamps to [0, 99]", () => {
@@ -66,5 +73,42 @@ describe("resolveRuptureTrigger", () => {
             }
         }
         expect(total).toBe(1188);
+    });
+});
+
+describe("resolveBleedThroughRounds", () => {
+    it("triggers once per active coin each round, decrementing Count across the whole clash", () => {
+        // Side "a" starts with 3 coins, loses one in round 1 (2 remaining), wins round 2 (still 2), loses round 3 (1 remaining).
+        const rounds = [
+            { aCoinsRemaining: 2, bCoinsRemaining: 3 },
+            { aCoinsRemaining: 2, bCoinsRemaining: 2 },
+            { aCoinsRemaining: 1, bCoinsRemaining: 2 },
+        ];
+        const { totalDamage, nextState } = resolveBleedThroughRounds(rounds, 3, "a", { potency: 10, count: 99 });
+        // Active coins per round for "a": round 1 = initial 3, round 2 = 2 (post round-1), round 3 = 2 (post round-2) = 7 triggers.
+        expect(totalDamage).toBe(70);
+        expect(nextState.count).toBe(92);
+    });
+
+    it("stops once Count runs out mid-clash instead of going negative", () => {
+        const rounds = [{ aCoinsRemaining: 1, bCoinsRemaining: 1 }, { aCoinsRemaining: 0, bCoinsRemaining: 1 }];
+        const { totalDamage, nextState } = resolveBleedThroughRounds(rounds, 2, "a", { potency: 5, count: 2 });
+        // Round 1 has 2 active coins but only 2 Count available; round 2 has 1 active coin but Count is already 0.
+        expect(totalDamage).toBe(10);
+        expect(nextState.count).toBe(0);
+    });
+});
+
+describe("resolveRuptureOverHits", () => {
+    it("triggers once per hit, heads or tails", () => {
+        const { totalDamage, nextState } = resolveRuptureOverHits(4, { potency: 8, count: 10 });
+        expect(totalDamage).toBe(32);
+        expect(nextState.count).toBe(6);
+    });
+
+    it("caps at remaining Count when hits exceed it", () => {
+        const { totalDamage, nextState } = resolveRuptureOverHits(10, { potency: 8, count: 3 });
+        expect(totalDamage).toBe(24);
+        expect(nextState.count).toBe(0);
     });
 });

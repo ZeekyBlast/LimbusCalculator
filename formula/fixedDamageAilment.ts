@@ -54,3 +54,36 @@ export function resolveBurnTrigger(state: AilmentState) {
 export function resolveRuptureTrigger(state: AilmentState) {
     return resolveAilmentTrigger(state);
 }
+
+/**
+ * Walks a full clash's round-by-round loop (formula/clash.ts's `ClashResult.rounds`) applying
+ * Bleed once per coin the bleeding side tosses that round - both sides toss their whole active
+ * pool every round regardless of who wins it (ties/losses included), so a round with N active
+ * coins triggers Bleed N times, each decrementing Count by 1 until it hits 0.
+ */
+export function resolveBleedThroughRounds(
+    rounds: { aCoinsRemaining: number; bCoinsRemaining: number }[],
+    initialCoinCount: number,
+    side: "a" | "b",
+    state: AilmentState,
+): { totalDamage: number; nextState: AilmentState } {
+    let current = state;
+    let totalDamage = 0;
+    let activeThisRound = initialCoinCount;
+    for (const round of rounds) {
+        const triggers = Math.min(current.count, activeThisRound);
+        totalDamage += current.potency * triggers;
+        current = { potency: current.potency, count: current.count - triggers };
+        activeThisRound = side === "a" ? round.aCoinsRemaining : round.bCoinsRemaining;
+    }
+    return { totalDamage, nextState: current };
+}
+
+/** Rupture triggers once per hit - each of the clash loser's post-win revealed coins is one hit, heads or tails. */
+export function resolveRuptureOverHits(hitCount: number, state: AilmentState): { totalDamage: number; nextState: AilmentState } {
+    const triggers = Math.min(state.count, hitCount);
+    return {
+        totalDamage: state.potency * triggers,
+        nextState: { potency: state.potency, count: state.count - triggers },
+    };
+}

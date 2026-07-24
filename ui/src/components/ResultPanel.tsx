@@ -4,14 +4,30 @@ interface ResultPanelProps {
   result: FullClashResult
 }
 
+function BleedLines({ result }: { result: FullClashResult }) {
+  const { winner, loser, attackerBleedDamage, defenderBleedDamage } = result
+  const attacker = winner.label === 'Attacker' ? winner : loser
+  const defender = winner.label === 'Defender' ? winner : loser
+  if (attackerBleedDamage === 0 && defenderBleedDamage === 0) return null
+  return (
+    <div className="text-xs text-bone-dim italic mt-2 space-y-0.5">
+      {attackerBleedDamage > 0 && <p>{attacker.label} bleeds for {attackerBleedDamage} over the clash.</p>}
+      {defenderBleedDamage > 0 && <p>{defender.label} bleeds for {defenderBleedDamage} over the clash.</p>}
+    </div>
+  )
+}
+
 export function ResultPanel({ result }: ResultPanelProps) {
-  const { clash, winner, loser, coins, totalDamage } = result
+  const { clash, winner, loser, coins, totalDamage, ruptureDamage } = result
 
   if (clash.winner === 'draw') {
     return (
-      <div className="border-t border-paper-light pt-4 mt-2 flex items-center gap-4">
-        <span className="stamp text-bone-dim">Draw</span>
-        <p className="text-xs text-bone-dim">Hit the 99 parry round cap with no resolution.</p>
+      <div className="border-t border-paper-light pt-4 mt-2">
+        <div className="flex items-center gap-4">
+          <span className="stamp text-bone-dim">Draw</span>
+          <p className="text-xs text-bone-dim">Hit the 99 parry round cap with no resolution.</p>
+        </div>
+        <BleedLines result={result} />
       </div>
     )
   }
@@ -30,6 +46,12 @@ export function ResultPanel({ result }: ResultPanelProps) {
       <p className="ledger-number text-xs text-bone-dim">
         {coins.map(c => c.damage).join(' + ')} = {totalDamage}
       </p>
+      {ruptureDamage > 0 && (
+        <p className="text-xs text-bone-dim italic mt-2">
+          {loser.label}'s Rupture adds {ruptureDamage} more, bypassing resistance and level scaling.
+        </p>
+      )}
+      <BleedLines result={result} />
       {clash.crackedCoins > 0 && (
         <p className="text-xs text-bone-dim italic mt-2">
           {loser.label} has {clash.crackedCoins} Unbreakable coin{clash.crackedCoins > 1 ? 's' : ''} left, cracked rather than broken &mdash; counter-attack not yet modeled.

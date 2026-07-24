@@ -7,8 +7,14 @@ import {
   computeFinalDamage,
   headsChance,
   clashPowerLevelBonus,
+  calculateDynamicModifier,
+  sumCoinRollBonus,
+  sumCoinPowerBonus,
+  resolveBleedThroughRounds,
+  resolveRuptureOverHits,
   type ClashResult,
 } from '@formula/index'
+import { toEffectStacks, type CombatantEffectsSetup } from './effectSetup'
 
 export interface ResolvedCombatant {
   label: string
@@ -39,6 +45,11 @@ export interface FullClashResult {
   loser: ResolvedCombatant
   coins: OneSidedCoinResult[]
   totalDamage: number
+  /** Self-inflicted Bleed damage, ticked once per coin each side tosses across every round of the clash - independent of who wins. */
+  attackerBleedDamage: number
+  defenderBleedDamage: number
+  /** Rupture damage on the loser only, once per post-win coin (each is one "hit"). 0 on a draw. */
+  ruptureDamage: number
 }
 
 export type ClashPhase = 'idle' | 'clashing' | 'revealing' | 'done'
@@ -50,7 +61,18 @@ export function expectedRoundPower(c: ResolvedCombatant, opponentOffenseLevel: n
   return c.basePower + levelBonus + c.coinCount * headsChance(c.sanityPoints) * c.coinPower
 }
 
-function runFullClash(attacker: ResolvedCombatant, defender: ResolvedCombatant): FullClashResult {
+interface RunResult {
+  result: FullClashResult
+  nextAttackerEffects: CombatantEffectsSetup
+  nextDefenderEffects: CombatantEffectsSetup
+}
+
+function runFullClash(
+  attacker: ResolvedCombatant,
+  defender: ResolvedCombatant,
+  attackerEffects: CombatantEffectsSetup,
+  defenderEffects: CombatantEffectsSetup,
+): RunResult {
   const clash = simulateClash(
     {
       basePower: attacker.basePower,
@@ -72,8 +94,19 @@ function runFullClash(attacker: ResolvedCombatant, defender: ResolvedCombatant):
 
   const winner = clash.winner === 'a' ? attacker : defender
   const loser = clash.winner === 'a' ? defender : attacker
+  const winnerEffects = clash.winner === 'a' ? attackerEffects : defenderEffects
+  const loserEffects = clash.winner === 'a' ? defenderEffects : attackerEffects
   const winnerChance = (50 + Math.min(Math.max(winner.sanityPoints, -45), 45)) / 100
   const parryBonus = parryRoundBonus(clash.parryRounds)
+
+  // Fragile/Protection live on whoever's getting hit (the loser); Damage Up/Down, Power Up, and
+  // Coin Boost/Drop live on whoever's dealing the hit (the winner) - Syx's blog Md term (G+H)
+  // combines both sides' contributions for a single damage instance, regardless of source.
+  const combinedStacks = [...toEffectStacks(winnerEffects), ...toEffectStacks(loserEffects)]
+  const dynamicModifier = calculateDynamicModifier(combinedStacks, false)
+  const winnerStacks = toEffectStacks(winnerEffects)
+  const coinRollBonus = sumCoinRollBonus(winnerStacks)
+  const coinPowerBonus = sumCoinPowerBonus(winnerStacks)
 
   const coins: OneSidedCoinResult[] = []
   let totalDamage = 0
@@ -81,7 +114,7 @@ function runFullClash(attacker: ResolvedCombatant, defender: ResolvedCombatant):
   if (clash.winner !== 'draw') {
     for (let i = 0; i < clash.winnerCoinsRemaining; i++) {
       const heads = flipCoins(1, winnerChance) === 1
-      const coinRoll = winner.basePower + (heads ? winner.coinPower : 0)
+      const coinRoll = winner.basePower + (heads ? winner.coinPower + coinPowerBonus : 0) + coinRollBonus
       const damage = computeFinalDamage({
         coinRoll,
         staticModifiers: {
@@ -91,24 +124,60 @@ function runFullClash(attacker: ResolvedCombatant, defender: ResolvedCombatant):
           parryBonus,
           critical: 0,
         },
-        dynamicModifiers: { skillEffects: 0, buffs: 0 },
+        dynamicModifiers: { skillEffects: 0, buffs: dynamicModifier },
       })
       coins.push({ heads, coinRoll, damage })
       totalDamage += damage
     }
   }
 
-  return { clash, winner, loser, coins, totalDamage }
+  const aBleed = resolveBleedThroughRounds(clash.rounds, attacker.coinCount, 'a', attackerEffects.bleed)
+  const bBleed = resolveBleedThroughRounds(clash.rounds, defender.coinCount, 'b', defenderEffects.bleed)
+  const rupture = clash.winner !== 'draw' ? resolveRuptureOverHits(coins.length, loserEffects.rupture) : { totalDamage: 0, nextState: loserEffects.rupture }
+
+  const nextAttackerEffects: CombatantEffectsSetup = {
+    ...attackerEffects,
+    bleed: aBleed.nextState,
+    rupture: clash.winner === 'b' ? rupture.nextState : attackerEffects.rupture,
+  }
+  const nextDefenderEffects: CombatantEffectsSetup = {
+    ...defenderEffects,
+    bleed: bBleed.nextState,
+    rupture: clash.winner === 'a' ? rupture.nextState : defenderEffects.rupture,
+  }
+
+  return {
+    result: {
+      clash,
+      winner,
+      loser,
+      coins,
+      totalDamage,
+      attackerBleedDamage: aBleed.totalDamage,
+      defenderBleedDamage: bBleed.totalDamage,
+      ruptureDamage: rupture.totalDamage,
+    },
+    nextAttackerEffects,
+    nextDefenderEffects,
+  }
 }
 
 /** Owns the clash run/reveal state machine so it can be shared by sibling components (both dossiers need `poseFor`, the center column needs the rest) instead of living inside one presentational component. */
-export function useClash(attacker: ResolvedCombatant, defender: ResolvedCombatant) {
+export function useClash(
+  attacker: ResolvedCombatant,
+  defender: ResolvedCombatant,
+  attackerEffects: CombatantEffectsSetup,
+  defenderEffects: CombatantEffectsSetup,
+  onEffectsConsumed: (attacker: CombatantEffectsSetup, defender: CombatantEffectsSetup) => void,
+) {
   const [phase, setPhase] = useState<ClashPhase>('idle')
   const [result, setResult] = useState<FullClashResult | null>(null)
   const [revealedCoins, setRevealedCoins] = useState(0)
 
   function startClash() {
-    setResult(runFullClash(attacker, defender))
+    const run = runFullClash(attacker, defender, attackerEffects, defenderEffects)
+    setResult(run.result)
+    onEffectsConsumed(run.nextAttackerEffects, run.nextDefenderEffects)
     setRevealedCoins(0)
     setPhase('clashing')
   }

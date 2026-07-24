@@ -5,6 +5,7 @@ import { CombatantDossier, DEFAULT_COMBATANT_SETUP, type CombatantSetup } from '
 import { ClashArena } from './components/ClashArena'
 import { LandingPage } from './components/LandingPage'
 import { useClash, type ResolvedCombatant } from './lib/useClash'
+import { DEFAULT_EFFECTS_SETUP, type CombatantEffectsSetup } from './lib/effectSetup'
 
 const FALLBACK_COMBATANT: ResolvedCombatant = {
   label: '',
@@ -32,6 +33,8 @@ function App() {
 
   const [attackerSetup, setAttackerSetup] = useState<CombatantSetup>(DEFAULT_COMBATANT_SETUP)
   const [defenderSetup, setDefenderSetup] = useState<CombatantSetup>(DEFAULT_COMBATANT_SETUP)
+  const [attackerEffects, setAttackerEffects] = useState<CombatantEffectsSetup>(DEFAULT_EFFECTS_SETUP)
+  const [defenderEffects, setDefenderEffects] = useState<CombatantEffectsSetup>(DEFAULT_EFFECTS_SETUP)
   const [uptieTier, setUptieTier] = useState<1 | 2 | 3 | 4>(4)
 
   useEffect(() => {
@@ -85,6 +88,12 @@ function App() {
   const { phase, result, revealedCoins, startClash, onRoundSequenceComplete, revealNextCoin, poseFor } = useClash(
     attacker ?? FALLBACK_COMBATANT,
     defender ?? FALLBACK_COMBATANT,
+    attackerEffects,
+    defenderEffects,
+    (nextAttacker, nextDefender) => {
+      setAttackerEffects(nextAttacker)
+      setDefenderEffects(nextDefender)
+    },
   )
 
   if (view === 'landing') {
@@ -124,6 +133,8 @@ function App() {
           uptieTier={uptieTier}
           setup={attackerSetup}
           onSetupChange={setAttackerSetup}
+          effects={attackerEffects}
+          onEffectsChange={setAttackerEffects}
           pose={attacker ? poseFor(attacker) : 'idle'}
         />
 
@@ -152,6 +163,8 @@ function App() {
           uptieTier={uptieTier}
           setup={defenderSetup}
           onSetupChange={setDefenderSetup}
+          effects={defenderEffects}
+          onEffectsChange={setDefenderEffects}
           pose={defender ? poseFor(defender) : 'idle'}
         />
       </div>

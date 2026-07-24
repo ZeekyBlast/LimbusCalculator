@@ -1,4 +1,4 @@
-import { useEffect, useState, type ReactNode } from 'react'
+import { Fragment, useEffect, useState, type ReactNode } from 'react'
 import type { Identity } from '../types'
 import type { Pose } from '../lib/useClash'
 import {
@@ -16,6 +16,7 @@ import {
 import { useStatusEffectManifest, matchStatusEffectIcons } from '../lib/statusEffectIcons'
 import { Combobox, type ComboboxGroup } from './Combobox'
 import { SINNER_ORDER } from '../lib/sinners'
+import { STACKABLE_EFFECTS, type CombatantEffectsSetup } from '../lib/effectSetup'
 
 const RESISTANCE_PRESETS: { label: string; value: number }[] = [
   { label: 'Nullify (0%)', value: 0 },
@@ -175,6 +176,80 @@ function SkillEffectText({ skill, manifest }: { skill: { skillEffect?: string; c
   )
 }
 
+function StatNumberInput({ id, label, value, onChange }: { id: string; label: string; value: number; onChange: (v: number) => void }) {
+  return (
+    <label htmlFor={id} className="flex items-center justify-between gap-2 text-xs text-bone-dim">
+      <span>{label}</span>
+      <input
+        id={id}
+        type="number"
+        min={0}
+        max={99}
+        value={value}
+        onChange={e => onChange(Math.max(0, Math.min(99, Number(e.target.value))))}
+        className="ledger-number w-14 bg-ink border border-paper-light rounded-sm px-1 py-0.5 text-right text-gold-bright"
+      />
+    </label>
+  )
+}
+
+/** Editable stacks/ailments for one side - collapsed by default like SkillEffectText's overflow, since most clashes run with none of these set. */
+function StatusEffectsEditor({ idPrefix, effects, onChange }: { idPrefix: string; effects: CombatantEffectsSetup; onChange: (e: CombatantEffectsSetup) => void }) {
+  const ailments: { key: 'bleed' | 'burn' | 'rupture'; label: string }[] = [
+    { key: 'bleed', label: 'Bleed' },
+    { key: 'burn', label: 'Burn' },
+    { key: 'rupture', label: 'Rupture' },
+  ]
+  return (
+    <details className="mt-4 pt-3 border-t border-paper-light">
+      <summary className="text-xs uppercase tracking-wide text-gold/70 hover:text-gold-bright cursor-pointer select-none">Status Effects</summary>
+      <div className="mt-3 grid grid-cols-3 gap-x-3 gap-y-2">
+        {STACKABLE_EFFECTS.map(effect => (
+          <StatNumberInput
+            key={effect.id}
+            id={`${idPrefix}-${effect.id}`}
+            label={effect.label}
+            value={effects.stacks[effect.id] ?? 0}
+            onChange={v => onChange({ ...effects, stacks: { ...effects.stacks, [effect.id]: v } })}
+          />
+        ))}
+      </div>
+
+      <div className="mt-3 text-xs">
+        <div className="grid grid-cols-[auto_1fr_1fr] gap-x-2 gap-y-1.5 items-center">
+          <span className="text-bone-dim" />
+          <span className="text-bone-dim text-center">Potency</span>
+          <span className="text-bone-dim text-center">Count</span>
+          {ailments.map(({ key, label }) => (
+            <Fragment key={key}>
+              <span className="text-bone-dim">{label}</span>
+              <input
+                type="number"
+                min={0}
+                max={99}
+                value={effects[key].potency}
+                onChange={e => onChange({ ...effects, [key]: { ...effects[key], potency: Math.max(0, Math.min(99, Number(e.target.value))) } })}
+                aria-label={`${label} Potency`}
+                className="ledger-number bg-ink border border-paper-light rounded-sm px-1 py-0.5 text-right text-gold-bright"
+              />
+              <input
+                type="number"
+                min={0}
+                max={99}
+                value={effects[key].count}
+                onChange={e => onChange({ ...effects, [key]: { ...effects[key], count: Math.max(0, Math.min(99, Number(e.target.value))) } })}
+                aria-label={`${label} Count`}
+                className="ledger-number bg-ink border border-paper-light rounded-sm px-1 py-0.5 text-right text-gold-bright"
+              />
+            </Fragment>
+          ))}
+        </div>
+        <p className="text-bone-dim italic mt-2">Burn ticks at Turn End - outside a single clash, so it's tracked here but not triggered by Clash.</p>
+      </div>
+    </details>
+  )
+}
+
 interface CombatantDossierProps {
   role: string
   identities: Identity[]
@@ -185,6 +260,8 @@ interface CombatantDossierProps {
   uptieTier: 1 | 2 | 3 | 4
   setup: CombatantSetup
   onSetupChange: (setup: CombatantSetup) => void
+  effects: CombatantEffectsSetup
+  onEffectsChange: (effects: CombatantEffectsSetup) => void
   pose: Pose
 }
 
@@ -198,6 +275,8 @@ export function CombatantDossier({
   uptieTier,
   setup,
   onSetupChange,
+  effects,
+  onEffectsChange,
   pose,
 }: CombatantDossierProps) {
   const identity = identities.find(i => i.title === selectedTitle)
@@ -364,6 +443,8 @@ export function CombatantDossier({
             <SkillEffectText skill={skill} manifest={effectManifest} />
           </div>
         )}
+
+        <StatusEffectsEditor idPrefix={role} effects={effects} onChange={onEffectsChange} />
       </div>
     </section>
   )
