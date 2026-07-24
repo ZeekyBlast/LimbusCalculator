@@ -12,6 +12,8 @@ import {
   sumCoinPowerBonus,
   resolveBleedThroughRounds,
   resolveRuptureOverHits,
+  resolvePoiseCrit,
+  criticalDamageModifier,
   type ClashResult,
 } from '@formula/index'
 import { toEffectStacks, type CombatantEffectsSetup } from './effectSetup'
@@ -37,6 +39,7 @@ export interface OneSidedCoinResult {
   heads: boolean
   coinRoll: number
   damage: number
+  isCrit: boolean
 }
 
 export interface FullClashResult {
@@ -102,19 +105,22 @@ function runFullClash(
   // Fragile/Protection live on whoever's getting hit (the loser); Damage Up/Down, Power Up, and
   // Coin Boost/Drop live on whoever's dealing the hit (the winner) - Syx's blog Md term (G+H)
   // combines both sides' contributions for a single damage instance, regardless of source.
-  const combinedStacks = [...toEffectStacks(winnerEffects), ...toEffectStacks(loserEffects)]
-  const dynamicModifier = calculateDynamicModifier(combinedStacks, false)
   const winnerStacks = toEffectStacks(winnerEffects)
+  const loserStacks = toEffectStacks(loserEffects)
   const coinRollBonus = sumCoinRollBonus(winnerStacks)
   const coinPowerBonus = sumCoinPowerBonus(winnerStacks)
 
   const coins: OneSidedCoinResult[] = []
   let totalDamage = 0
+  let poiseState = winnerEffects.poise
 
   if (clash.winner !== 'draw') {
     for (let i = 0; i < clash.winnerCoinsRemaining; i++) {
       const heads = flipCoins(1, winnerChance) === 1
+      const crit = resolvePoiseCrit(poiseState)
+      poiseState = crit.nextState
       const coinRoll = winner.basePower + (heads ? winner.coinPower + coinPowerBonus : 0) + coinRollBonus
+      const dynamicModifier = calculateDynamicModifier([...winnerStacks, ...loserStacks], crit.isCrit)
       const damage = computeFinalDamage({
         coinRoll,
         staticModifiers: {
@@ -122,11 +128,11 @@ function runFullClash(
           damageTypeResistance: loser.damageTypeResistanceModifier,
           offenseDefenseAdvantage: offenseDefenseAdvantage(winner.offenseLevel, loser.defenseLevel),
           parryBonus,
-          critical: 0,
+          critical: crit.isCrit ? criticalDamageModifier() : 0,
         },
         dynamicModifiers: { skillEffects: 0, buffs: dynamicModifier },
       })
-      coins.push({ heads, coinRoll, damage })
+      coins.push({ heads, coinRoll, damage, isCrit: crit.isCrit })
       totalDamage += damage
     }
   }
@@ -139,11 +145,13 @@ function runFullClash(
     ...attackerEffects,
     bleed: aBleed.nextState,
     rupture: clash.winner === 'b' ? rupture.nextState : attackerEffects.rupture,
+    poise: clash.winner === 'a' ? poiseState : attackerEffects.poise,
   }
   const nextDefenderEffects: CombatantEffectsSetup = {
     ...defenderEffects,
     bleed: bBleed.nextState,
     rupture: clash.winner === 'a' ? rupture.nextState : defenderEffects.rupture,
+    poise: clash.winner === 'b' ? poiseState : defenderEffects.poise,
   }
 
   return {

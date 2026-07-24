@@ -16,16 +16,23 @@ export function CoinFlipRow({ coins, revealedCount, onRevealNext }: CoinFlipRowP
           return (
             <div
               key={i}
-              className={`w-16 h-16 rounded-full flex flex-col items-center justify-center border-2 shadow-lg ${justRevealed ? 'coin-flip' : ''} ${
+              className={`relative w-16 h-16 rounded-full flex flex-col items-center justify-center border-2 shadow-lg ${justRevealed ? 'coin-flip' : ''} ${
                 !revealed
                   ? 'bg-paper border-paper-light text-bone-dim'
-                  : coin.heads
-                    ? 'bg-gradient-to-br from-gold-bright to-gold border-gold-bright text-ink'
-                    : 'bg-gradient-to-br from-bone to-bone-dim border-bone-dim text-ink'
+                  : coin.isCrit
+                    ? 'bg-gradient-to-br from-blood-bright to-blood border-blood-bright text-bone'
+                    : coin.heads
+                      ? 'bg-gradient-to-br from-gold-bright to-gold border-gold-bright text-ink'
+                      : 'bg-gradient-to-br from-bone to-bone-dim border-bone-dim text-ink'
               }`}
             >
               {revealed ? (
                 <>
+                  {coin.isCrit && (
+                    <span className="absolute -top-2 font-mono text-[9px] uppercase tracking-wide text-blood-bright bg-ink px-1 rounded-sm border border-blood-bright/60">
+                      Crit
+                    </span>
+                  )}
                   <span className="font-display text-xl font-bold leading-none">{coin.heads ? 'H' : 'T'}</span>
                   <span className="ledger-number text-[11px] leading-none mt-0.5">{coin.damage}</span>
                 </>

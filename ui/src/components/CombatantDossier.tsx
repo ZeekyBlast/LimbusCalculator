@@ -1,5 +1,5 @@
 import { Fragment, useEffect, useState, type ReactNode } from 'react'
-import type { Identity } from '../types'
+import type { Identity, Passive } from '../types'
 import type { Pose } from '../lib/useClash'
 import {
   portraitUrl,
@@ -39,6 +39,10 @@ export interface CombatantSetup {
   /** Identity's own Level (1-60, matches the game's cap). Drives HP, Defense, and both the clash-round and post-clash damage formulas. */
   level: number
   sanityPoints: number
+  /** Identity's own Resonance level (0-5) - gates the "X Res" passive tier. Display-only: which passive tier text applies, not a mechanical effect. */
+  resonanceLevel: number
+  /** Copies of this Identity owned (0-7, matches the highest "X Owned" requirement seen in scraped data) - gates the "X Owned" passive tier. */
+  copiesOwned: number
 }
 
 export const DEFAULT_COMBATANT_SETUP: CombatantSetup = {
@@ -46,6 +50,8 @@ export const DEFAULT_COMBATANT_SETUP: CombatantSetup = {
   typeResistancePct: 1,
   level: 60,
   sanityPoints: 0,
+  resonanceLevel: 5,
+  copiesOwned: 7,
 }
 
 const UPTIE4_FRAMES = uptie4BorderFrameUrls()
@@ -195,10 +201,11 @@ function StatNumberInput({ id, label, value, onChange }: { id: string; label: st
 
 /** Editable stacks/ailments for one side - collapsed by default like SkillEffectText's overflow, since most clashes run with none of these set. */
 function StatusEffectsEditor({ idPrefix, effects, onChange }: { idPrefix: string; effects: CombatantEffectsSetup; onChange: (e: CombatantEffectsSetup) => void }) {
-  const ailments: { key: 'bleed' | 'burn' | 'rupture'; label: string }[] = [
+  const ailments: { key: 'bleed' | 'burn' | 'rupture' | 'poise'; label: string }[] = [
     { key: 'bleed', label: 'Bleed' },
     { key: 'burn', label: 'Burn' },
     { key: 'rupture', label: 'Rupture' },
+    { key: 'poise', label: 'Poise' },
   ]
   return (
     <details className="mt-4 pt-3 border-t border-paper-light">
@@ -244,9 +251,51 @@ function StatusEffectsEditor({ idPrefix, effects, onChange }: { idPrefix: string
             </Fragment>
           ))}
         </div>
-        <p className="text-bone-dim italic mt-2">Burn ticks at Turn End - outside a single clash, so it's tracked here but not triggered by Clash.</p>
+        <p className="text-bone-dim italic mt-2">
+          Burn ticks at Turn End - outside a single clash, so it's tracked here but not triggered by Clash. Poise's own Turn End decrement is skipped for the same reason; its Crit-triggered decrement still applies.
+        </p>
       </div>
     </details>
+  )
+}
+
+/** Parses "2 Res", "3 Owned", "3 Res.", or a bare number (scraper drops the "Res" suffix sometimes) into a tier + threshold. Blank requirement means no gating - always active. */
+function parsePassiveRequirement(requirement?: string): { tier: 'resonance' | 'owned'; threshold: number } | null {
+  const trimmed = (requirement ?? '').trim()
+  if (!trimmed) return null
+  const match = trimmed.match(/^(\d+)/)
+  if (!match) return null
+  return { tier: /owned/i.test(trimmed) ? 'owned' : 'resonance', threshold: Number(match[1]) }
+}
+
+function PassivesList({ passives, resonanceLevel, copiesOwned, manifest }: { passives: Passive[]; resonanceLevel: number; copiesOwned: number; manifest: string[] }) {
+  if (passives.length === 0) return null
+  return (
+    <div className="mt-4 pt-3 border-t border-paper-light">
+      <p className="text-xs uppercase tracking-wide text-gold/70 mb-2">Passives</p>
+      <div className="space-y-3">
+        {passives.map((passive, i) => {
+          const req = parsePassiveRequirement(passive.requirement)
+          const owned = req?.tier === 'owned' ? copiesOwned : resonanceLevel
+          const active = !req || owned >= req.threshold
+          return (
+            <div key={i} className={active ? '' : 'opacity-50'}>
+              <div className="flex items-center gap-1.5 mb-0.5">
+                <span className="font-display text-sm uppercase tracking-wide text-gold-bright">{passive.name}</span>
+                {req && (
+                  <span className={`font-mono text-[10px] px-1 rounded-sm border ${active ? 'border-gold-bright/60 text-gold-bright' : 'border-paper-light text-bone-dim'}`}>
+                    {req.threshold} {req.tier === 'owned' ? 'Owned' : 'Res'}
+                  </span>
+                )}
+              </div>
+              {passive.description?.split('\n').map((line, j) => (
+                <EffectIconLine key={j} text={line.trim()} manifest={manifest} indent={line.trim().startsWith('-')} />
+              ))}
+            </div>
+          )
+        })}
+      </div>
+    </div>
   )
 }
 
@@ -288,6 +337,8 @@ export function CombatantDossier({
   const typeResistanceId = `${role}-type-resistance`
   const levelId = `${role}-level`
   const sanityId = `${role}-sanity`
+  const resonanceId = `${role}-resonance`
+  const ownedId = `${role}-owned`
 
   return (
     <section className="border border-paper-light bg-paper rounded-sm overflow-hidden h-fit">
@@ -411,6 +462,35 @@ export function CombatantDossier({
               className="w-full accent-gold"
             />
           </div>
+
+          <div>
+            <label htmlFor={resonanceId} className="block text-xs uppercase tracking-wide text-bone-dim mb-1">
+              Resonance Lv: <span className="ledger-number text-gold-bright">{setup.resonanceLevel}</span>
+            </label>
+            <input
+              id={resonanceId}
+              type="range"
+              min={0}
+              max={5}
+              value={setup.resonanceLevel}
+              onChange={e => onSetupChange({ ...setup, resonanceLevel: Number(e.target.value) })}
+              className="w-full accent-gold"
+            />
+          </div>
+          <div>
+            <label htmlFor={ownedId} className="block text-xs uppercase tracking-wide text-bone-dim mb-1">
+              Copies Owned: <span className="ledger-number text-gold-bright">{setup.copiesOwned}</span>
+            </label>
+            <input
+              id={ownedId}
+              type="range"
+              min={0}
+              max={7}
+              value={setup.copiesOwned}
+              onChange={e => onSetupChange({ ...setup, copiesOwned: Number(e.target.value) })}
+              className="w-full accent-gold"
+            />
+          </div>
         </div>
 
         <label htmlFor={skillSelectId} className="block text-xs uppercase tracking-wide text-bone-dim mb-1 mt-4">Assigned Skill</label>
@@ -442,6 +522,10 @@ export function CombatantDossier({
             </div>
             <SkillEffectText skill={skill} manifest={effectManifest} />
           </div>
+        )}
+
+        {identity && (
+          <PassivesList passives={identity.passives} resonanceLevel={setup.resonanceLevel} copiesOwned={setup.copiesOwned} manifest={effectManifest} />
         )}
 
         <StatusEffectsEditor idPrefix={role} effects={effects} onChange={onEffectsChange} />

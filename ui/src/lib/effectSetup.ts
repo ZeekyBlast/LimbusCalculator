@@ -1,12 +1,12 @@
-import type { EffectStack } from '@formula/index'
-import type { AilmentState } from '@formula/index'
+import type { EffectStack, AilmentState, PoiseState } from '@formula/index'
 
-/** Verified dynamic-modifier/counter effects a user can stack in the simulator. Crit Damage Up is deliberately excluded - nothing in this simulator models a critical hit yet, so that slot could never contribute. */
+/** Verified dynamic-modifier/counter effects a user can stack in the simulator. */
 export const STACKABLE_EFFECTS: { id: string; label: string }[] = [
   { id: 'fragile', label: 'Fragile' },
   { id: 'protection', label: 'Protection' },
   { id: 'damage-up', label: 'Damage Up' },
   { id: 'damage-down', label: 'Damage Down' },
+  { id: 'crit-damage-up', label: 'Crit Dmg Up' },
   { id: 'power-up', label: 'Power Up' },
   { id: 'attack-power-up', label: 'Atk Power Up' },
   { id: 'coin-boost', label: 'Coin Boost' },
@@ -19,6 +19,8 @@ export interface CombatantEffectsSetup {
   bleed: AilmentState
   burn: AilmentState
   rupture: AilmentState
+  /** Drives Critical Hit chance on this combatant's own hits ((Potency * 5)%, wiki's Poise page) - only relevant when this side wins the clash. */
+  poise: PoiseState
 }
 
 export const DEFAULT_EFFECTS_SETUP: CombatantEffectsSetup = {
@@ -26,6 +28,7 @@ export const DEFAULT_EFFECTS_SETUP: CombatantEffectsSetup = {
   bleed: { potency: 0, count: 0 },
   burn: { potency: 0, count: 0 },
   rupture: { potency: 0, count: 0 },
+  poise: { potency: 0, count: 0 },
 }
 
 export function toEffectStacks(setup: CombatantEffectsSetup): EffectStack[] {
