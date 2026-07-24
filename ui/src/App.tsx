@@ -118,6 +118,8 @@ function App() {
       setAttackerBattle(nextAttacker)
       setDefenderBattle(nextDefender)
     },
+    attackerSkill ?? {},
+    defenderSkill ?? {},
   )
 
   const encounterOver = Boolean(attackerBattle?.defeated || defenderBattle?.defeated)

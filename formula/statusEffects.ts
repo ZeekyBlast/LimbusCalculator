@@ -99,6 +99,44 @@ export const statusEffects: StatusEffect[] = [
             "Same Potency/Count mechanic as Bleed (see formula/fixedDamageAilment.ts's resolveRuptureTrigger), but triggers once per hit (each coin that connects). " +
             "Deliberately kept out of calculateDynamicModifier for the same reason as Bleed.",
     },
+
+    // Added for skillEffectGrants.ts's auto-apply feature - type/sin-scoped Fragile/Damage Up/
+    // Power Up variants (only the combinations confirmed present in data/generated/identities.json,
+    // not every mathematically possible type x sin pairing), plus a handful of Count-only effects
+    // the registry didn't cover yet. Type/sin gating itself lives in skillEffectGrants.ts's
+    // isEffectApplicable, not here - calculateDynamicModifier/sumSlot stay damage-type-agnostic.
+    { id: "fragile-slash", name: "Slash Fragility", slot: "dynamic-additive-fragile-protection", sign: "positive", perStackValue: 0.1, formulaStatus: "verified" },
+    { id: "fragile-pierce", name: "Pierce Fragility", slot: "dynamic-additive-fragile-protection", sign: "positive", perStackValue: 0.1, formulaStatus: "verified" },
+    { id: "fragile-blunt", name: "Blunt Fragility", slot: "dynamic-additive-fragile-protection", sign: "positive", perStackValue: 0.1, formulaStatus: "verified" },
+    { id: "fragile-envy", name: "Envy Fragility", slot: "dynamic-additive-fragile-protection", sign: "positive", perStackValue: 0.1, formulaStatus: "verified" },
+    { id: "fragile-gloom", name: "Gloom Fragility", slot: "dynamic-additive-fragile-protection", sign: "positive", perStackValue: 0.1, formulaStatus: "verified" },
+    { id: "fragile-pride", name: "Pride Fragility", slot: "dynamic-additive-fragile-protection", sign: "positive", perStackValue: 0.1, formulaStatus: "verified" },
+    { id: "fragile-lust", name: "Lust Fragility", slot: "dynamic-additive-fragile-protection", sign: "positive", perStackValue: 0.1, formulaStatus: "verified" },
+
+    { id: "damage-up-slash", name: "Slash DMG Up", slot: "dynamic-additive-damage-up-down", sign: "positive", perStackValue: 0.1, formulaStatus: "verified" },
+    { id: "damage-up-blunt", name: "Blunt DMG Up", slot: "dynamic-additive-damage-up-down", sign: "positive", perStackValue: 0.1, formulaStatus: "verified" },
+    { id: "damage-up-gluttony", name: "Gluttony DMG Up", slot: "dynamic-additive-damage-up-down", sign: "positive", perStackValue: 0.1, formulaStatus: "verified" },
+    { id: "damage-up-envy", name: "Envy DMG Up", slot: "dynamic-additive-damage-up-down", sign: "positive", perStackValue: 0.1, formulaStatus: "verified" },
+    { id: "damage-up-pierce", name: "Pierce DMG Up", slot: "dynamic-additive-damage-up-down", sign: "positive", perStackValue: 0.1, formulaStatus: "verified" },
+
+    { id: "power-up-slash", name: "Slash Power Up", slot: "coin-roll-additive", sign: "positive", perStackValue: 1, formulaStatus: "verified" },
+    { id: "power-up-blunt", name: "Blunt Power Up", slot: "coin-roll-additive", sign: "positive", perStackValue: 1, formulaStatus: "verified" },
+    { id: "power-up-envy", name: "Envy Power Up", slot: "coin-roll-additive", sign: "positive", perStackValue: 1, formulaStatus: "verified" },
+    { id: "power-up-pride", name: "Pride Power Up", slot: "coin-roll-additive", sign: "positive", perStackValue: 1, formulaStatus: "verified" },
+    { id: "power-up-pierce", name: "Pierce Power Up", slot: "coin-roll-additive", sign: "positive", perStackValue: 1, formulaStatus: "verified" },
+
+    { id: "attack-power-down", name: "Attack Power Down", slot: "coin-roll-additive", sign: "negative", perStackValue: 1, formulaStatus: "verified" },
+    { id: "defense-power-up", name: "Defense Power Up", slot: "coin-roll-additive", sign: "positive", perStackValue: 1, formulaStatus: "verified", description: "Applies when this unit is the one being hit, not the attacker - not yet distinguished from Attack Power Up by the wiring layer." },
+    { id: "defense-power-down", name: "Defense Power Down", slot: "coin-roll-additive", sign: "negative", perStackValue: 1, formulaStatus: "verified" },
+
+    { id: "haste", name: "Haste", slot: "counter", formulaStatus: "verified", description: "Tracked as stacks; no direct formula effect (Speed isn't modeled by this single-clash simulator)." },
+    { id: "bind", name: "Bind", slot: "counter", formulaStatus: "verified", description: "Tracked as stacks; no direct formula effect (this sim has no concept of a bound/unusable Skill slot)." },
+    { id: "paralyze", name: "Paralyze", slot: "counter", formulaStatus: "verified", description: "Tracked as stacks; no direct formula effect (coin-fixing isn't modeled by this simulator's coin flips)." },
+    { id: "charge", name: "Charge", slot: "counter", formulaStatus: "verified", description: "Tracked as stacks; no direct formula effect. Decays by 1 at Turn End per the wiki - not simulated." },
+    { id: "offense-level-up-grant", name: "Offense Level Up (skill-granted)", slot: "counter", formulaStatus: "verified", description: "Distinct from CombatantSetup's manual per-side Level slider - tracked as stacks only, not yet folded into offenseLevel." },
+    { id: "offense-level-down", name: "Offense Level Down", slot: "counter", formulaStatus: "verified" },
+    { id: "defense-level-up-grant", name: "Defense Level Up (skill-granted)", slot: "counter", formulaStatus: "verified", description: "Distinct from CombatantSetup's manual per-side Level slider - tracked as stacks only, not yet folded into defenseLevel." },
+    { id: "defense-level-down", name: "Defense Level Down", slot: "counter", formulaStatus: "verified" },
 ];
 
 export function getEffectById(id: string, registry: StatusEffect[] = statusEffects): StatusEffect | undefined {

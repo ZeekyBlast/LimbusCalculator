@@ -8,3 +8,4 @@ export * from "./uptieResolver";
 export * from "./statusEffects";
 export * from "./fixedDamageAilment";
 export * from "./unbreakableCoin";
+export * from "./skillEffectGrants";

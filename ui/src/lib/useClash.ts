@@ -15,10 +15,15 @@ import {
   resolveBurnTrigger,
   resolvePoiseCrit,
   criticalDamageModifier,
+  parseSkillGrants,
+  isEffectApplicable,
+  clampAilmentValue,
   type ClashResult,
+  type SkillGrant,
 } from '@formula/index'
 import { toEffectStacks, type CombatantEffectsSetup } from './effectSetup'
 import { applyHpDamage, type SideBattleState } from './battleState'
+import type { Skill } from '../types'
 
 export interface ResolvedCombatant {
   label: string
@@ -75,12 +80,55 @@ interface RunResult {
   nextDefenderEffects: CombatantEffectsSetup
 }
 
+/** Additively folds one parsed skill grant into an effects object - stack grants into `.stacks`, potency/count grants into the matching AilmentState/PoiseState field, both clamped [0,99] like the manual editor already does. */
+function applyGrant(effects: CombatantEffectsSetup, grant: SkillGrant, amount: number): CombatantEffectsSetup {
+  if (grant.dimension === 'stack') {
+    return { ...effects, stacks: { ...effects.stacks, [grant.effectId]: (effects.stacks[grant.effectId] ?? 0) + amount } }
+  }
+  const field = grant.effectId as 'bleed' | 'burn' | 'rupture' | 'poise'
+  const current = effects[field]
+  const next =
+    grant.dimension === 'potency'
+      ? { ...current, potency: clampAilmentValue(current.potency + amount) }
+      : { ...current, count: clampAilmentValue(current.count + amount) }
+  return { ...effects, [field]: next }
+}
+
+/** Applies every grant of one trigger from `grants`, routing each to `self`/`opponent` by its own target - used for On Use (both sides act every clash) and for the winner-only On Hit/On Crit grants (see runFullClash). */
+function applyGrantsOfTrigger(
+  grants: SkillGrant[],
+  trigger: SkillGrant['trigger'],
+  self: CombatantEffectsSetup,
+  opponent: CombatantEffectsSetup,
+  amountMultiplier: number,
+): { self: CombatantEffectsSetup; opponent: CombatantEffectsSetup } {
+  let nextSelf = self
+  let nextOpponent = opponent
+  for (const grant of grants) {
+    if (grant.trigger !== trigger) continue
+    const amount = grant.amount * amountMultiplier
+    if (amount === 0) continue
+    if (grant.target === 'self') nextSelf = applyGrant(nextSelf, grant, amount)
+    else nextOpponent = applyGrant(nextOpponent, grant, amount)
+  }
+  return { self: nextSelf, opponent: nextOpponent }
+}
+
 function runFullClash(
   attacker: ResolvedCombatant,
   defender: ResolvedCombatant,
   attackerEffects: CombatantEffectsSetup,
   defenderEffects: CombatantEffectsSetup,
+  attackerSkill: Skill,
+  defenderSkill: Skill,
 ): RunResult {
+  // On Use fires for both sides every clash, regardless of who wins - applied before anything
+  // below reads attacker/defenderEffects, so it's already reflected in this clash's own math.
+  const attackerOnUse = applyGrantsOfTrigger(parseSkillGrants(attackerSkill), 'on-use', attackerEffects, defenderEffects, 1)
+  const defenderOnUse = applyGrantsOfTrigger(parseSkillGrants(defenderSkill), 'on-use', attackerOnUse.opponent, attackerOnUse.self, 1)
+  attackerEffects = defenderOnUse.opponent
+  defenderEffects = defenderOnUse.self
+
   const clash = simulateClash(
     {
       basePower: attacker.basePower,
@@ -104,14 +152,17 @@ function runFullClash(
   const loser = clash.winner === 'a' ? defender : attacker
   const winnerEffects = clash.winner === 'a' ? attackerEffects : defenderEffects
   const loserEffects = clash.winner === 'a' ? defenderEffects : attackerEffects
+  const winnerSkill = clash.winner === 'a' ? attackerSkill : defenderSkill
   const winnerChance = (50 + Math.min(Math.max(winner.sanityPoints, -45), 45)) / 100
   const parryBonus = parryRoundBonus(clash.parryRounds)
 
   // Fragile/Protection live on whoever's getting hit (the loser); Damage Up/Down, Power Up, and
   // Coin Boost/Drop live on whoever's dealing the hit (the winner) - Syx's blog Md term (G+H)
   // combines both sides' contributions for a single damage instance, regardless of source.
-  const winnerStacks = toEffectStacks(winnerEffects)
-  const loserStacks = toEffectStacks(loserEffects)
+  // Type/sin-scoped variants (Slash Fragility etc.) only apply when they match the resolving
+  // skill's own damage type/sin - a Pierce skill never benefits from a Slash Fragility stack.
+  const winnerStacks = toEffectStacks(winnerEffects).filter(s => isEffectApplicable(s.effectId, winnerSkill.damageType, winnerSkill.sin))
+  const loserStacks = toEffectStacks(loserEffects).filter(s => isEffectApplicable(s.effectId, winnerSkill.damageType, winnerSkill.sin))
   const coinRollBonus = sumCoinRollBonus(winnerStacks)
   const coinPowerBonus = sumCoinPowerBonus(winnerStacks)
 
@@ -159,6 +210,28 @@ function runFullClash(
     poise: clash.winner === 'b' ? poiseState : defenderEffects.poise,
   }
 
+  // On Hit / On Crit only come from the winner's skill - only the winner's post-win coins are
+  // individually resolved into `coins` in this sim, the loser's skill never lands a hit. Each
+  // grant is multiplied by how many coins triggered it and folds into *next* clash's effects
+  // (not this one) - matches the "next turn" phrasing most real On Hit/On Crit text already uses.
+  const winnerGrants = parseSkillGrants(winnerSkill)
+  const onHitApplied = applyGrantsOfTrigger(
+    winnerGrants,
+    'on-hit',
+    clash.winner === 'a' ? nextAttackerEffects : nextDefenderEffects,
+    clash.winner === 'a' ? nextDefenderEffects : nextAttackerEffects,
+    coins.length,
+  )
+  const onCritApplied = applyGrantsOfTrigger(
+    winnerGrants,
+    'on-crit',
+    onHitApplied.self,
+    onHitApplied.opponent,
+    coins.filter(c => c.isCrit).length,
+  )
+  const finalWinnerNextEffects = onCritApplied.self
+  const finalLoserNextEffects = onCritApplied.opponent
+
   return {
     result: {
       clash,
@@ -174,8 +247,8 @@ function runFullClash(
       attackerBurnDamage: 0,
       defenderBurnDamage: 0,
     },
-    nextAttackerEffects,
-    nextDefenderEffects,
+    nextAttackerEffects: clash.winner === 'a' ? finalWinnerNextEffects : finalLoserNextEffects,
+    nextDefenderEffects: clash.winner === 'a' ? finalLoserNextEffects : finalWinnerNextEffects,
   }
 }
 
@@ -189,13 +262,15 @@ export function useClash(
   attackerBattle: SideBattleState,
   defenderBattle: SideBattleState,
   onTurnResolved: (attacker: SideBattleState, defender: SideBattleState) => void,
+  attackerSkill: Skill,
+  defenderSkill: Skill,
 ) {
   const [phase, setPhase] = useState<ClashPhase>('idle')
   const [result, setResult] = useState<FullClashResult | null>(null)
   const [revealedCoins, setRevealedCoins] = useState(0)
 
   function startClash() {
-    const run = runFullClash(attacker, defender, attackerEffects, defenderEffects)
+    const run = runFullClash(attacker, defender, attackerEffects, defenderEffects, attackerSkill, defenderSkill)
 
     // Clash-phase HP damage: the loser takes the winner's coin damage plus their own Rupture;
     // Bleed applies to both sides regardless of who won (already reflected in these totals).

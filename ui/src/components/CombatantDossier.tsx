@@ -247,7 +247,7 @@ function StatusEffectsEditor({ idPrefix, effects, onChange }: { idPrefix: string
           ))}
         </div>
         <p className="text-bone-dim italic mt-2">
-          Burn ticks at Turn End once an encounter is running (after the first Clash). Poise's own Turn End decrement is still skipped - only its Crit-triggered decrement applies.
+          Burn ticks at Turn End once an encounter is running (after the first Clash). Poise's own Turn End decrement is still skipped - only its Crit-triggered decrement applies. On Use / On Hit / On Crit effects parsed from the skill's own text are added to these values automatically each Clash - your typed values aren't overwritten, only added to.
         </p>
       </div>
     </details>
