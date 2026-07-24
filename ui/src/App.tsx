@@ -180,6 +180,7 @@ function App() {
           roster={attackerRoster}
           onRosterChange={setAttackerRoster}
           deployedIdentity={attackerIdentity}
+          level={attackerSetup.level}
         />
         <RosterPanel
           role="Defender"
@@ -187,6 +188,7 @@ function App() {
           roster={defenderRoster}
           onRosterChange={setDefenderRoster}
           deployedIdentity={defenderIdentity}
+          level={defenderSetup.level}
         />
       </div>
     </div>

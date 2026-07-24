@@ -1,10 +1,14 @@
 import type { Identity } from '../types'
-import { portraitUrl, sinnerIconUrl, hideOnError } from '../lib/images'
+import { portraitUrl, sinnerIconUrl, statIconUrl, hideOnError } from '../lib/images'
 import { Combobox } from './Combobox'
 import { SINNER_ORDER } from '../lib/sinners'
 import type { Roster } from '../lib/roster'
 
 const NONE = ''
+
+function maxHp(identity: Identity, level: number): number {
+  return Math.round((identity.hp ?? 0) + (identity.hpGrowth ?? 0) * level)
+}
 
 interface RosterPanelProps {
   role: string
@@ -13,6 +17,8 @@ interface RosterPanelProps {
   onRosterChange: (roster: Roster) => void
   /** The identity currently selected in this side's Dossier - always occupies its own sinner's slot, not independently editable here. */
   deployedIdentity: Identity | undefined
+  /** Deployed side's Level slider value - applied to every roster member's Max HP for comparison, since there's no per-bench-member Level control yet. */
+  level: number
 }
 
 /**
@@ -22,11 +28,14 @@ interface RosterPanelProps {
  * isn't computed as active/inactive, same limit as the deployed Combat Passive (see
  * project_sin_resonance memory: that needs a whole-party turn engine this 1v1 sim doesn't have).
  */
-export function RosterPanel({ role, identities, roster, onRosterChange, deployedIdentity }: RosterPanelProps) {
+export function RosterPanel({ role, identities, roster, onRosterChange, deployedIdentity, level }: RosterPanelProps) {
   const benchEntries = SINNER_ORDER
     .filter(sinner => sinner !== deployedIdentity?.sinner && roster[sinner])
     .map(sinner => identities.find(i => i.title === roster[sinner]))
     .filter((i): i is Identity => !!i)
+
+  const fielded = deployedIdentity ? [deployedIdentity, ...benchEntries] : benchEntries
+  const hpRanked = [...fielded].sort((a, b) => maxHp(b, level) - maxHp(a, level))
 
   return (
     <section className="border border-paper-light bg-paper rounded-sm overflow-hidden">
@@ -70,6 +79,27 @@ export function RosterPanel({ role, identities, roster, onRosterChange, deployed
           )
         })}
       </div>
+
+      {hpRanked.length > 1 && (
+        <div className="px-4 pb-4 pt-3 border-t border-paper-light">
+          <p className="text-xs uppercase tracking-wide text-gold/70 mb-2 flex items-center gap-1.5">
+            <img src={statIconUrl('hp')} alt="" loading="lazy" className="w-3.5 h-3.5 opacity-80" onError={hideOnError} />
+            Team Max HP (Lv {level}) &mdash; for "highest/lowest Max HP" passives
+          </p>
+          <ol className="text-xs space-y-0.5">
+            {hpRanked.map((identity, i) => (
+              <li key={identity.title} className="flex items-center justify-between gap-2">
+                <span className="text-bone-dim truncate">
+                  {i === 0 && <span className="text-gold-bright mr-1">&#9650;</span>}
+                  {i === hpRanked.length - 1 && <span className="text-blood-bright mr-1">&#9660;</span>}
+                  {identity.prefix ?? identity.title}
+                </span>
+                <span className="ledger-number text-gold-bright shrink-0">{maxHp(identity, level)}</span>
+              </li>
+            ))}
+          </ol>
+        </div>
+      )}
 
       {benchEntries.length > 0 && (
         <div className="px-4 pb-4 pt-3 border-t border-paper-light">
