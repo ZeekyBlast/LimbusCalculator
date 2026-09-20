@@ -55,5 +55,9 @@
       "reason": "no enemy block for \"Refracted Distorted Hohenheim\" on Hohenheim/Enemy"
     }
   ],
-  "warnings": []
+  "warnings": [
+    "9572:0: no skills parsed",
+    "9573:0: no skills parsed",
+    "9574:0: no skills parsed"
+  ]
 }

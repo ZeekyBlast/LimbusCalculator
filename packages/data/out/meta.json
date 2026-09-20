@@ -1,12 +1,12 @@
 {
-  "scrapedAt": "2026-09-20T19:38:20.731Z",
+  "scrapedAt": "2026-09-20T21:20:50.585Z",
   "levelCap": 60,
   "railwayLine": "Line 6: Maru no Uchi no Sanzu no Kawa",
   "identityCount": 187,
   "enemyUnitCount": 39,
   "effectParseCoverage": {
-    "total": 7161,
-    "parsed": 2746,
-    "ratio": 0.3835
+    "total": 7339,
+    "parsed": 2805,
+    "ratio": 0.3822
   }
 }

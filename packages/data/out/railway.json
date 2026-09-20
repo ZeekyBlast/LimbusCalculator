@@ -39,6 +39,9 @@
     {
       "number": 1,
       "name": "Weighing of Robes",
+      "stationNumbers": [
+        1
+      ],
       "waves": [
         {
           "number": 1,
@@ -52,6 +55,9 @@
     {
       "number": 2,
       "name": "Tarnishing",
+      "stationNumbers": [
+        2
+      ],
       "waves": [
         {
           "number": 1,
@@ -99,6 +105,10 @@
     {
       "number": 3,
       "name": "Heart of Innocence - Face of Things",
+      "stationNumbers": [
+        3,
+        4
+      ],
       "waves": [
         {
           "number": 1,
@@ -132,6 +142,11 @@
     {
       "number": 4,
       "name": "Tangled Knots - Drowning Desire - Blind Folly",
+      "stationNumbers": [
+        5,
+        6,
+        7
+      ],
       "waves": [
         {
           "number": 1,
@@ -167,6 +182,9 @@
     {
       "number": 5,
       "name": "Advent",
+      "stationNumbers": [
+        8
+      ],
       "waves": [
         {
           "number": 1,

@@ -2055,6 +2055,295 @@
         }
       },
       {
+        "id": "9543:0::skill3-2",
+        "name": "I Carve the Path of a Lord",
+        "slot": "enemy",
+        "variant": "2",
+        "sin": "pride",
+        "damageType": "slash",
+        "offenseLevelMod": 3,
+        "basePower": 6,
+        "coinPower": 4,
+        "coinCount": 2,
+        "unbreakableCoins": [],
+        "attackWeight": 1,
+        "icon": "I Carve the Path of a Lord Hong Lu Icon",
+        "uptie": {},
+        "effects": [
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] If this unit activated combo with a Heishou Pack Adept Identity: Base Power +1, Coin Power +1"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Deal +1% damage for every 1% (missing HP percentage on target + missing HP percentage on self) (max 50%)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] Coin Power +1 for every 6 (Rupture on target + Poise on self) (max 3)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] Deal +10% damage for every 2 types of negative effects on target (max 30%)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] Deal +10% damage for every Heishou Bolus Contamination -黑獸丸染-"
+          },
+          {
+            "trigger": "attack-end",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Attack End] Gain Heishou Bolus Contamination -黑獸丸染- depending on which Heishou Pack Identity activated Exalted Command"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "rupture",
+              "count": 1
+            },
+            "source": "[On Hit] Inflict +1 Rupture Count"
+          },
+          {
+            "trigger": "on-crit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "damagePercent",
+              "delta": 0.5
+            },
+            "source": "Deal +50% Damage on Critical Hit"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "rupture",
+              "potency": 2
+            },
+            "source": "[On Hit] Inflict 2 Rupture"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "slash-resist-down-next-turn-once-per-turn",
+              "potency": 1
+            },
+            "source": "[On Hit] Inflict 1 Slash Resist Down next turn (once per turn)"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Kill] For 2 ally Heishou Pack Identities that have the least SP, heal 10 SP and apply 1 Attack Power Up next turn"
+          }
+        ],
+        "rawText": {
+          "skill": "[On Use] If this unit activated combo with a Heishou Pack Adept Identity: Base Power +1, Coin Power +1\n\nDeal +1% damage for every 1% (missing HP percentage on target + missing HP percentage on self) (max 50%)\n[On Use] Coin Power +1 for every 6 (Rupture on target + Poise on self) (max 3)\n[On Use] Deal +10% damage for every 2 types of negative effects on target (max 30%)\n[On Use] Deal +10% damage for every Heishou Bolus Contamination -黑獸丸染-\n[Attack End] Gain Heishou Bolus Contamination -黑獸丸染- depending on which Heishou Pack Identity activated Exalted Command",
+          "coins": [
+            "[On Hit] Inflict +1 Rupture Count",
+            "Deal +50% Damage on Critical Hit\n[On Hit] Inflict 2 Rupture\n[On Hit] Inflict 1 Slash Resist Down next turn (once per turn)\n[On Kill] For 2 ally Heishou Pack Identities that have the least SP, heal 10 SP and apply 1 Attack Power Up next turn"
+          ]
+        }
+      },
+      {
+        "id": "9543:0::skill3-3",
+        "name": "Lonesome Stand: Sacrifice to Claim The Garden [孑孑單身，捨生取园]",
+        "slot": "enemy",
+        "variant": "3",
+        "sin": "pride",
+        "damageType": "slash",
+        "offenseLevelMod": 3,
+        "basePower": 6,
+        "coinPower": 4,
+        "coinCount": 3,
+        "unbreakableCoins": [],
+        "attackWeight": 1,
+        "icon": "Lonesome Stand Sacrifice to Claim The Garden -孑孑單身, 捨生取园- Hong Lu Icon",
+        "uptie": {},
+        "effects": [
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Deal +10% damage for every Life from Death -死中求活- on self"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Deal +1% damage for every 1% (missing HP percentage on target + missing HP percentage on self) (max 50%)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "condition": {
+              "stat": "life-from-death",
+              "side": "self",
+              "field": "potency",
+              "op": ">=",
+              "value": 3
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "self",
+              "status": "atk-weight",
+              "potency": 1
+            },
+            "source": "[On Use] At 3+ Life from Death -死中求活-, gain +1 Atk Weight"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] Coin Power +1 for every 6 (Rupture on target + Poise on self) (max 3)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] Deal +10% damage for every 2 types of negative effects on target (max 30%)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] Deal +10% damage for every Heishou Bolus Contamination -黑獸丸染-"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "rupture",
+              "potency": 1
+            },
+            "source": "[On Hit] Inflict 1 Rupture"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "rupture",
+              "potency": 1
+            },
+            "source": "[On Hit] Inflict 1 Rupture"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 2
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Deal +10% damage for every type of negative effect on target (max 50%)"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 2
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "rupture",
+              "potency": 1
+            },
+            "source": "[On Hit] Inflict 1 Rupture"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 2
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "slash-resist-down-next-turn-once-per-turn",
+              "potency": 1
+            },
+            "source": "[On Hit] Inflict 1 Slash Resist Down next turn (once per turn)"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 2
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Kill] Gain 2 Attack Power Up next turn"
+          }
+        ],
+        "rawText": {
+          "skill": "Deal +10% damage for every Life from Death -死中求活- on self\nDeal +1% damage for every 1% (missing HP percentage on target + missing HP percentage on self) (max 50%)\n[On Use] At 3+ Life from Death -死中求活-, gain +1 Atk Weight\n[On Use] Coin Power +1 for every 6 (Rupture on target + Poise on self) (max 3)\n[On Use] Deal +10% damage for every 2 types of negative effects on target (max 30%)\n[On Use] Deal +10% damage for every Heishou Bolus Contamination -黑獸丸染-",
+          "coins": [
+            "[On Hit] Inflict 1 Rupture",
+            "[On Hit] Inflict 1 Rupture",
+            "Deal +10% damage for every type of negative effect on target (max 50%)\n[On Hit] Inflict 1 Rupture\n[On Hit] Inflict 1 Slash Resist Down next turn (once per turn)\n[On Kill] Gain 2 Attack Power Up next turn"
+          ]
+        }
+      },
+      {
         "id": "9543:0::defense",
         "name": "Heishou Keenclaw [黑獸利爪]",
         "slot": "defense",
@@ -2759,6 +3048,211 @@
             "[On Hit] Inflict +1 Rupture Count\n[On Hit] Inflict Deathrite -Haste-",
             "[On Hit] Inflict 1 Rupture",
             "At 10+ Speed, deal +30% damage\n[On Hit] Inflict 3 Rupture\n[On Hit] At 10+ Speed, Reuse Coin once (once per Skill)\n[Reuse - On Hit] Inflict Deathrite -Haste-"
+          ]
+        }
+      },
+      {
+        "id": "9539:0::skill3-2",
+        "name": "Ascendant Heishou - Mao Technique: Cloudsplitting Manifestation",
+        "slot": "enemy",
+        "variant": "2",
+        "sin": "gluttony",
+        "damageType": "slash",
+        "offenseLevelMod": 4,
+        "basePower": 5,
+        "coinPower": 4,
+        "coinCount": 3,
+        "unbreakableCoins": [],
+        "attackWeight": 1,
+        "icon": "Ascendant Heishou - Mao Technique Cloudsplitting Manifestation Faust Icon",
+        "uptie": {},
+        "effects": [
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "If this unit's Speed is faster than the target's, deal +(Speed difference x Rupture Potency on target)% damage (max 50%)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "If this unit's Speed is faster than the target's, gain Coin Power based on Speed difference (Coin Power +1 for every 2 Speed difference; max 2)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] Coin Power +1 for every 10 Rupture on target (max 2)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "condition": {
+              "stat": "speed",
+              "side": "self",
+              "field": "potency",
+              "op": ">=",
+              "value": 10
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "self",
+              "status": "poise-if-this-unit-has-less-than-4-poise-count-raise-poise-count-up-to-4",
+              "potency": 20
+            },
+            "source": "[On Use] At 10+ Speed, gain 20 Poise; if this unit has less than 4 Poise Count, raise Poise Count up to 4"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "applyStatus",
+              "target": "self",
+              "status": "strider-mao",
+              "potency": 3
+            },
+            "source": "[On Use] Gain 3 Strider -Mao-"
+          },
+          {
+            "trigger": "clash-win",
+            "scope": "skill",
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "rupture",
+              "count": 2
+            },
+            "source": "[Clash Win] Inflict +2 Rupture Count"
+          },
+          {
+            "trigger": "attack-end",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Attack End] Consume 10 Tianjiu Star's Blade"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "rupture",
+              "count": 1
+            },
+            "source": "[On Hit] Inflict +1 Rupture Count"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Hit] Inflict Deathrite -Fissure-"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Hit] Inflict Deathrite -Haste-"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "rupture",
+              "potency": 1
+            },
+            "source": "[On Hit] Inflict 1 Rupture"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 2
+            },
+            "condition": {
+              "stat": "speed",
+              "side": "self",
+              "field": "potency",
+              "op": ">=",
+              "value": 10
+            },
+            "op": {
+              "kind": "damagePercent",
+              "delta": 0.3
+            },
+            "source": "At 10+ Speed, deal +30% damage"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 2
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "rupture",
+              "potency": 3
+            },
+            "source": "[On Hit] Inflict 3 Rupture"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 2
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Hit] At 10+ Speed, Reuse Coin once (once per Skill)"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 2
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Reuse - On Hit] Inflict Deathrite -Fissure-"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 2
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Reuse - On Hit] Inflict Deathrite -Haste-"
+          }
+        ],
+        "rawText": {
+          "skill": "If this unit's Speed is faster than the target's, deal +(Speed difference x Rupture Potency on target)% damage (max 50%)\nIf this unit's Speed is faster than the target's, gain Coin Power based on Speed difference (Coin Power +1 for every 2 Speed difference; max 2)\n[On Use] Coin Power +1 for every 10 Rupture on target (max 2)\n[On Use] At 10+ Speed, gain 20 Poise; if this unit has less than 4 Poise Count, raise Poise Count up to 4\n[On Use] Gain 3 Strider -Mao-\n[Clash Win] Inflict +2 Rupture Count\n[Attack End] Consume 10 Tianjiu Star's Blade",
+          "coins": [
+            "[On Hit] Inflict +1 Rupture Count\n[On Hit] Inflict Deathrite -Fissure-\n[On Hit] Inflict Deathrite -Haste-",
+            "[On Hit] Inflict 1 Rupture",
+            "At 10+ Speed, deal +30% damage\n[On Hit] Inflict 3 Rupture\n[On Hit] At 10+ Speed, Reuse Coin once (once per Skill)\n[Reuse - On Hit] Inflict Deathrite -Fissure-\n[Reuse - On Hit] Inflict Deathrite -Haste-"
           ]
         }
       },
@@ -3489,6 +3983,217 @@
             "[On Hit] Inflict 2 Rupture\n[On Hit] Inflict 2 Tremor",
             "[On Hit] Inflict 1 Bind next turn\n- At 3+ Linebreaker, inflict 1 additional Bind\n[On Hit] Inflict +1 Tremor Count",
             "[On Hit] Trigger Tremor Burst; then, reduce target's Tremor Count by 1\n[On Hit] At 2+ Strider -Wu-, inflict 2 Concussion"
+          ]
+        }
+      },
+      {
+        "id": "9538:0::skill3-2",
+        "name": "Obsidian Stormrider's Crescent Decapitator [黑風馬脚月斬]",
+        "slot": "enemy",
+        "variant": "2",
+        "sin": "gluttony",
+        "damageType": "slash",
+        "offenseLevelMod": 4,
+        "basePower": 5,
+        "coinPower": 3,
+        "coinCount": 4,
+        "unbreakableCoins": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "attackWeight": 3,
+        "icon": "Obsidian Stormrider's Crescent Decapitator -黑風馬脚月斬- Yi Sang Icon",
+        "uptie": {},
+        "effects": [
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "If this unit's Speed is faster than the target's, Final Power +1"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] Apply 1 Commanding Cry on all other allies next turn (once per turn)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "applyStatus",
+              "target": "self",
+              "status": "strider-wu",
+              "potency": 3
+            },
+            "source": "[On Use] Gain 3 Strider -Wu-"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] Coin Power +1 for every 5 (Rupture + Tremor) on target (max 2)"
+          },
+          {
+            "trigger": "clash-win",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Clash Win] If this unit's Speed is faster than the target's, deal +50% damage"
+          },
+          {
+            "trigger": "clash-win",
+            "scope": "skill",
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "concussion-against-the-main-target",
+              "potency": 1
+            },
+            "source": "[Clash Win] Inflict 1 Concussion against the main target"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "rupture",
+              "potency": 3
+            },
+            "source": "[On Hit] Inflict 3 Rupture"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "tremor",
+              "potency": 4
+            },
+            "source": "[On Hit] Inflict 4 Tremor"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "rupture",
+              "count": 2
+            },
+            "source": "[On Hit] Inflict +2 Rupture Count"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "tremor",
+              "count": 2
+            },
+            "source": "[On Hit] Inflict +2 Tremor Count"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 2
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 2
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "concussion",
+              "potency": 1
+            },
+            "source": "[On Hit] Inflict 1 Concussion"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 3
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 3
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Hit] Trigger Tremor Burst; then, reduce target's Tremor Count by 1"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 3
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Hit] Trigger Tremor Burst; then, reduce target's Tremor Count by 1"
+          }
+        ],
+        "rawText": {
+          "skill": "If this unit's Speed is faster than the target's, Final Power +1\n[On Use] Apply 1 Commanding Cry on all other allies next turn (once per turn)\n[On Use] Gain 3 Strider -Wu-\n[On Use] Coin Power +1 for every 5 (Rupture + Tremor) on target (max 2)\n[Clash Win] If this unit's Speed is faster than the target's, deal +50% damage\n[Clash Win] Inflict 1 Concussion against the main target",
+          "coins": [
+            "Unbreakable Coin\n[On Hit] Inflict 3 Rupture\n[On Hit] Inflict 4 Tremor",
+            "Unbreakable Coin\n[On Hit] Inflict +2 Rupture Count\n[On Hit] Inflict +2 Tremor Count",
+            "Unbreakable Coin\n[On Hit] Inflict 1 Concussion",
+            "Unbreakable Coin\n[On Hit] Trigger Tremor Burst; then, reduce target's Tremor Count by 1\n[On Hit] Trigger Tremor Burst; then, reduce target's Tremor Count by 1"
           ]
         }
       },
@@ -5846,7 +6551,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 0
+              "coin": 1
             },
             "op": {
               "kind": "applyStatus",
@@ -5859,7 +6564,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 1
+              "coin": 2
             },
             "op": {
               "kind": "applyStatus",
@@ -5872,7 +6577,7 @@
           {
             "trigger": "heads-hit",
             "scope": {
-              "coin": 1
+              "coin": 2
             },
             "op": {
               "kind": "applyStatus",
@@ -5886,6 +6591,7 @@
         "rawText": {
           "skill": "[On Use] If target has 6+ (Burn + Rupture), Coin Power +1\n[On Use] Clash Power +1 for every 10 Burn on self (max 2)\n[Clash Start] Apply 1 Burn and +1 Burn Count to target and self",
           "coins": [
+            "",
             "[On Hit] Inflict 1 Rupture",
             "[On Hit] Inflict 1 Burn\n[Heads Hit] Inflict +1 Rupture Count"
           ]
@@ -6222,6 +6928,238 @@
             "[On Hit] Apply 2 Burn to target and self\n[Heads Hit] At 50%+ HP, take Burn damage by Burn Potency on self",
             "[On Hit] Apply 2 Burn to target and self\n[Heads Hit] At 50%+ HP, take Burn damage by Burn Potency on self",
             "[On Hit] Inflict +3 Rupture Count\n[On Hit] Deal ((Burn on self + Burn on the main target)% of this Coin's final damage) Gluttony damage against all targets (max 20%)"
+          ]
+        }
+      },
+      {
+        "id": "9544:0::skill3-2",
+        "name": "Rooster's Rampaging Blades Under the Ensanguined Heaven [血天下雞舞亂刀]",
+        "slot": "enemy",
+        "variant": "2",
+        "sin": "wrath",
+        "damageType": "slash",
+        "offenseLevelMod": 5,
+        "basePower": 5,
+        "coinPower": 3,
+        "coinCount": 4,
+        "unbreakableCoins": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "attackWeight": 3,
+        "icon": "Rooster's Rampaging Blades Under the Ensanguined Heaven 血天下雞舞亂刀 Heathcliff Icon",
+        "uptie": {},
+        "effects": [
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unfocused Volley"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Deal +3% damage for every Burn on self (max 60%)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Deal +1% damage for every 2% (missing HP percentage on target + missing HP percentage on self) (max 50%)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "applyStatus",
+              "target": "self",
+              "status": "bloodflame",
+              "potency": 3
+            },
+            "source": "[On Use] Gain 3 Bloodflame -血炎-"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] Coin Power +1 for every 6 (Burn + Rupture) on the main target (max 2)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] Clash Power +1 for every 20% missing HP on self (max 3)"
+          },
+          {
+            "trigger": "clash-win",
+            "scope": "skill",
+            "op": {
+              "kind": "applyStatus",
+              "target": "self",
+              "status": "burn",
+              "potency": 10
+            },
+            "source": "[Clash Win] Gain 10 Burn"
+          },
+          {
+            "trigger": "attack-end",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Attack End] Consume all Battleblood Instinct"
+          },
+          {
+            "trigger": "attack-end",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Attack End] At more than 20 Burn, consume up to 25 excess Burn and heal (Burn consumed x 2)% HP"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "rupture",
+              "count": 2
+            },
+            "source": "[On Hit] Inflict +2 Rupture Count"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "burn",
+              "count": 2
+            },
+            "source": "[On Hit] Inflict +2 Burn Count"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 2
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 2
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "rupture",
+              "potency": 2
+            },
+            "source": "[On Hit] Inflict 2 Rupture"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 3
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 3
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "burn",
+              "potency": 2
+            },
+            "source": "[On Hit] Inflict 2 Burn"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 3
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Hit] If this unit has 20+ Burn, or if this unit has less than 50% HP, Reuse this Coin (once per Skill)"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 3
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Hit] Deal (20% of this Coin's final damage) Wrath damage against all targets"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 3
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "- If this is the final Coin, heal HP by the amount of damage the above effect dealt"
+          }
+        ],
+        "rawText": {
+          "skill": "Unfocused Volley\nDeal +3% damage for every Burn on self (max 60%)\nDeal +1% damage for every 2% (missing HP percentage on target + missing HP percentage on self) (max 50%)\n[On Use] Gain 3 Bloodflame -血炎-\n[On Use] Coin Power +1 for every 6 (Burn + Rupture) on the main target (max 2)\n[On Use] Clash Power +1 for every 20% missing HP on self (max 3)\n[Clash Win] Gain 10 Burn\n[Attack End] Consume all Battleblood Instinct\n[Attack End] At more than 20 Burn, consume up to 25 excess Burn and heal (Burn consumed x 2)% HP",
+          "coins": [
+            "Unbreakable Coin\n[On Hit] Inflict +2 Rupture Count",
+            "Unbreakable Coin\n[On Hit] Inflict +2 Burn Count",
+            "Unbreakable Coin\n[On Hit] Inflict 2 Rupture",
+            "Unbreakable Coin\n[On Hit] Inflict 2 Burn\n[On Hit] If this unit has 20+ Burn, or if this unit has less than 50% HP, Reuse this Coin (once per Skill)\n[On Hit] Deal (20% of this Coin's final damage) Wrath damage against all targets\n- If this is the final Coin, heal HP by the amount of damage the above effect dealt"
           ]
         }
       },
@@ -6783,7 +7721,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 0
+              "coin": 1
             },
             "op": {
               "kind": "applyStatus",
@@ -6796,7 +7734,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 0
+              "coin": 1
             },
             "op": {
               "kind": "applyStatus",
@@ -6809,7 +7747,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 1
+              "coin": 2
             },
             "op": {
               "kind": "applyStatus",
@@ -6822,7 +7760,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 1
+              "coin": 2
             },
             "op": {
               "kind": "applyStatus",
@@ -6835,7 +7773,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 2
+              "coin": 3
             },
             "op": {
               "kind": "unparsed"
@@ -6845,7 +7783,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 2
+              "coin": 3
             },
             "op": {
               "kind": "unparsed"
@@ -6855,7 +7793,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 2
+              "coin": 3
             },
             "op": {
               "kind": "unparsed"
@@ -6865,7 +7803,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 2
+              "coin": 3
             },
             "op": {
               "kind": "applyStatus",
@@ -6878,7 +7816,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 2
+              "coin": 3
             },
             "op": {
               "kind": "unparsed"
@@ -6889,6 +7827,7 @@
         "rawText": {
           "skill": "Coin Power +1 for every 6 (Rupture + Sinking) on target (max 2)\n[Combat Start] If this unit has Burgeoning of Horns -發角-, convert all Coins of this Skill into Unbreakable Coin and deal +10% damage for every Burgeoning of Horns -發角- Stack on this unit (max 30%)\n[On Use] Gain 3 Burgeoning of Horns -發角-",
           "coins": [
+            "",
             "[On Hit] Inflict +2 Rupture Count\n[On Hit] Inflict +2 Sinking Count",
             "[On Hit] Inflict 2 Rupture\n[On Hit] Inflict 2 Sinking",
             "- If target has any of the Panic type changing effects, +10% damage for every Stack (max 30%)\n[On Hit] Deal (25% of this Coin's final damage) Slash damage\n- If target has Shattermark, strengthen this effect and deal (50% of this Coin's final damage) Slash damage instead\n[On Hit] Inflict 3 Shattermark next turn\n- If target has any of the Panic type changing effects, inflict +3 Sinking Count (once per turn)"
@@ -7172,7 +8111,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 0
+              "coin": 1
             },
             "op": {
               "kind": "applyStatus",
@@ -7185,7 +8124,7 @@
           {
             "trigger": "heads-hit",
             "scope": {
-              "coin": 0
+              "coin": 1
             },
             "op": {
               "kind": "applyStatus",
@@ -7198,7 +8137,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 1
+              "coin": 2
             },
             "op": {
               "kind": "applyStatus",
@@ -7211,7 +8150,7 @@
           {
             "trigger": "heads-hit",
             "scope": {
-              "coin": 1
+              "coin": 2
             },
             "op": {
               "kind": "applyStatus",
@@ -7225,6 +8164,7 @@
         "rawText": {
           "skill": "[On Use] If target has 6+ (Burn + Rupture), Coin Power +1",
           "coins": [
+            "",
             "[On Hit] Inflict 1 Rupture\n[Heads Hit] Inflict 1 Burn",
             "[On Hit] Inflict +1 Burn Count\n[Heads Hit] Inflict +1 Rupture Count"
           ]
@@ -7427,7 +8367,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 0
+              "coin": 1
             },
             "op": {
               "kind": "applyStatus",
@@ -7440,7 +8380,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 0
+              "coin": 1
             },
             "op": {
               "kind": "applyStatus",
@@ -7453,7 +8393,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 1
+              "coin": 2
             },
             "op": {
               "kind": "applyStatus",
@@ -7466,7 +8406,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 1
+              "coin": 2
             },
             "op": {
               "kind": "applyStatus",
@@ -7479,7 +8419,7 @@
           {
             "trigger": "heads-hit",
             "scope": {
-              "coin": 1
+              "coin": 2
             },
             "op": {
               "kind": "unparsed"
@@ -7489,7 +8429,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 2
+              "coin": 3
             },
             "op": {
               "kind": "applyStatus",
@@ -7502,7 +8442,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 2
+              "coin": 3
             },
             "op": {
               "kind": "applyStatus",
@@ -7515,7 +8455,7 @@
           {
             "trigger": "heads-hit",
             "scope": {
-              "coin": 2
+              "coin": 3
             },
             "op": {
               "kind": "unparsed"
@@ -7526,6 +8466,7 @@
         "rawText": {
           "skill": "Unfocused Volley\nDeal +1% damage for every 2% (missing HP percentage on target + missing HP percentage on self) (max 50%)\n[Combat Start] If this unit has Bloodflame -血炎-, or if this unit has less than 50% HP, convert all Coins to Unbreakable Coins\n[On Use] Gain 1 Bloodflame -血炎-\n[On Use] Coin Power +1 for every 6 (Burn + Rupture) on target (max 2)\n[On Use] Clash Power +1 for every 20% missing HP on self (max 2)\n[Clash Lose] Apply 2 Burn to target and self",
           "coins": [
+            "",
             "[On Hit] Inflict +1 Burn Count\n[On Hit] Inflict +1 Rupture Count",
             "[On Hit] Inflict 1 Burn\n[On Hit] Inflict 1 Rupture\n[Heads Hit] Deal (10% of this Coin's final damage) bonus Gluttony damage",
             "[On Hit] Inflict 2 Burn\n[On Hit] Inflict 2 Rupture\n[Heads Hit] Deal (20% of this Coin's final damage) bonus Gluttony damage against all targets"
@@ -7900,6 +8841,98 @@
           "coins": [
             "[On Hit] Inflict +1 Rupture Count",
             "[On Hit] Inflict 2 Rupture\n[On Crit] Gain 1 Offense Level Up next turn (2 times per turn)"
+          ]
+        }
+      },
+      {
+        "id": "9545:0::skill1-2",
+        "name": "Crimson Strike - Launcher [始]",
+        "slot": "enemy",
+        "variant": "2",
+        "sin": "gloom",
+        "damageType": "blunt",
+        "offenseLevelMod": 0,
+        "basePower": 2,
+        "coinPower": 2,
+        "coinCount": 2,
+        "unbreakableCoins": [],
+        "attackWeight": 1,
+        "icon": "Crimson Strike - Launcher -始- Ishmael Icon",
+        "uptie": {},
+        "effects": [
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Unclashable]"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "applyStatus",
+              "target": "self",
+              "status": "poise",
+              "potency": 5
+            },
+            "source": "[On Use] Gain 5 Poise and +2 Poise Count"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "applyStatus",
+              "target": "self",
+              "status": "poise",
+              "count": 2
+            },
+            "source": "[On Use] Gain 5 Poise and +2 Poise Count"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "condition": {
+              "stat": "ready",
+              "side": "self",
+              "field": "potency",
+              "op": ">=",
+              "value": 3
+            },
+            "op": {
+              "kind": "coinPower",
+              "delta": 2
+            },
+            "source": "[On Use] At 3+ Ready -待-, Coin Power +2"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Before Attack] Consume all Ready -待- on self to gain +(Ready -待- on self x 2) Atk Weight (max 5)"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "rupture",
+              "potency": 1
+            },
+            "source": "[On Hit] Inflict 1 Rupture"
+          }
+        ],
+        "rawText": {
+          "skill": "[Unclashable]\n[On Use] Gain 5 Poise and +2 Poise Count\n[On Use] At 3+ Ready -待-, Coin Power +2\n[Before Attack] Consume all Ready -待- on self to gain +(Ready -待- on self x 2) Atk Weight (max 5)",
+          "coins": [
+            "",
+            "[On Hit] Inflict 1 Rupture"
           ]
         }
       },
@@ -11665,6 +12698,161 @@
         }
       },
       {
+        "id": "9557:0::skill1-2",
+        "name": "I'll Gut You Like a Fish",
+        "slot": "enemy",
+        "variant": "2",
+        "sin": "envy",
+        "damageType": "blunt",
+        "offenseLevelMod": 3,
+        "basePower": 3,
+        "coinPower": 4,
+        "coinCount": 2,
+        "unbreakableCoins": [
+          0,
+          1
+        ],
+        "attackWeight": 1,
+        "icon": "I'll Gut You Like a Fish Outis Icon",
+        "uptie": {},
+        "effects": [
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Lævateinn (Outis) Exclusive Skill"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Coin Power +1 for every 6 (Burn + Bleed) on target (max 2)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] This Skill gains Offense Level equal to (highest Reson. / 2) (max 3, rounded down)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] If this unit has The Middle - Vengeance Tattoo -Great Sister-, inflict 1 Bleed On Coin Hit"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Before Attack] Gain Burn equal to the number of Coins in this Skill"
+          },
+          {
+            "trigger": "attack-end",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Attack End] Lose 5 SP"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "bleed",
+              "count": 2
+            },
+            "source": "[On Hit] Inflict +2 Bleed Count"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Hit] Raise Stagger Threshold by 10"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "burn",
+              "potency": 4
+            },
+            "source": "[On Hit] Inflict 4 Burn and +2 Burn Count"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "burn",
+              "count": 2
+            },
+            "source": "[On Hit] Inflict 4 Burn and +2 Burn Count"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Hit] If this unit has The Middle - Vengeance Tattoo -Great Sister-, inflict 1 Bind and 1 Paralyze next turn (once per turn)"
+          }
+        ],
+        "rawText": {
+          "skill": "Lævateinn (Outis) Exclusive Skill\nCoin Power +1 for every 6 (Burn + Bleed) on target (max 2)\n[On Use] This Skill gains Offense Level equal to (highest Reson. / 2) (max 3, rounded down)\n[On Use] If this unit has The Middle - Vengeance Tattoo -Great Sister-, inflict 1 Bleed On Coin Hit\n[Before Attack] Gain Burn equal to the number of Coins in this Skill\n[Attack End] Lose 5 SP",
+          "coins": [
+            "Unbreakable Coin\n[On Hit] Inflict +2 Bleed Count\n[On Hit] Raise Stagger Threshold by 10",
+            "Unbreakable Coin\n[On Hit] Inflict 4 Burn and +2 Burn Count\n[On Hit] If this unit has The Middle - Vengeance Tattoo -Great Sister-, inflict 1 Bind and 1 Paralyze next turn (once per turn)"
+          ]
+        }
+      },
+      {
         "id": "9557:0::skill2",
         "name": "Don't Let Somethin' Like This Break You!",
         "slot": "enemy",
@@ -11812,6 +13000,227 @@
             "[On Hit] Inflict 1 Bleed\n[On Hit] Inflict 1 Bind next turn (once per turn)",
             "[On Hit] Inflict 1 Bleed\n[On Hit] Inflict 1 Paralyze next turn (once per turn)",
             "[On Hit] Inflict 1 Bleed\n[On Hit] If this unit has The Middle - Vengeance Tattoo -Great Sister-, deal Blunt damage equal to (Burn on target + Bleed on target)% of this Coin's final damage (max 20%)"
+          ]
+        }
+      },
+      {
+        "id": "9557:0::skill2-2",
+        "name": "Gut Stab [Lævateinn]",
+        "slot": "enemy",
+        "variant": "2",
+        "sin": "envy",
+        "damageType": "blunt",
+        "offenseLevelMod": 4,
+        "basePower": 3,
+        "coinPower": 3,
+        "coinCount": 5,
+        "unbreakableCoins": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "attackWeight": 1,
+        "icon": "Gut Stab Lævateinn Outis Icon",
+        "uptie": {},
+        "effects": [
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Lævateinn (Outis) Exclusive Skill"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "condition": {
+              "stat": "burn-bleed",
+              "side": "target",
+              "field": "potency",
+              "op": ">=",
+              "value": 4
+            },
+            "op": {
+              "kind": "basePower",
+              "delta": 1
+            },
+            "source": "If target has 4+ (Burn + Bleed), Final Power +1"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] This Skill gains Offense Level equal to (highest Reson. / 2) (max 3; rounded down)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "applyStatus",
+              "target": "self",
+              "status": "aggro-to-this-skill-slot",
+              "potency": 5
+            },
+            "source": "[On Use] Gain +5 Aggro to this Skill Slot next turn"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Before Attack] Gain Burn equal to the number of Coins in this Skill"
+          },
+          {
+            "trigger": "attack-end",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Attack End] Lose 5 SP"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "burn",
+              "potency": 4
+            },
+            "source": "[On Hit] Inflict 4 Burn"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "bleed",
+              "potency": 4
+            },
+            "source": "[On Hit] Inflict 4 Bleed"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 2
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 2
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "burn",
+              "count": 1
+            },
+            "source": "[On Hit] Inflict +1 Burn Count"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 3
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 3
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "bleed",
+              "count": 2
+            },
+            "source": "[On Hit] Inflict +2 Bleed Count"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 4
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 4
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "bind",
+              "potency": 1
+            },
+            "source": "[On Hit] Inflict 1 Bind and 1 Paralyze next turn (once per turn)"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 4
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "paralyze-next-turn-once-per-turn",
+              "potency": 1
+            },
+            "source": "[On Hit] Inflict 1 Bind and 1 Paralyze next turn (once per turn)"
+          }
+        ],
+        "rawText": {
+          "skill": "Lævateinn (Outis) Exclusive Skill\nIf target has 4+ (Burn + Bleed), Final Power +1\n[On Use] This Skill gains Offense Level equal to (highest Reson. / 2) (max 3; rounded down)\n[On Use] Gain +5 Aggro to this Skill Slot next turn\n[Before Attack] Gain Burn equal to the number of Coins in this Skill\n[Attack End] Lose 5 SP",
+          "coins": [
+            "Unbreakable Coin\n[On Hit] Inflict 4 Burn",
+            "Unbreakable Coin\n[On Hit] Inflict 4 Bleed",
+            "Unbreakable Coin\n[On Hit] Inflict +1 Burn Count",
+            "Unbreakable Coin\n[On Hit] Inflict +2 Bleed Count",
+            "Unbreakable Coin\n[On Hit] Inflict 1 Bind and 1 Paralyze next turn (once per turn)"
           ]
         }
       },
@@ -11982,6 +13391,587 @@
             "[On Hit] Inflict +1 Bleed Count",
             "[On Hit] Inflict 2 Bleed",
             "Unbreakable Coin\n[On Hit] Inflict +1 Bleed Count"
+          ]
+        }
+      },
+      {
+        "id": "9557:0::skill3-2",
+        "name": "Complete and Total Extermination [Lævateinn]",
+        "slot": "enemy",
+        "variant": "2",
+        "sin": "envy",
+        "damageType": "blunt",
+        "offenseLevelMod": 5,
+        "basePower": 4,
+        "coinPower": 3,
+        "coinCount": 5,
+        "unbreakableCoins": [
+          0,
+          1,
+          2,
+          3,
+          4
+        ],
+        "attackWeight": 1,
+        "icon": "Complete and Total Extermination Lævateinn Outis Icon",
+        "uptie": {},
+        "effects": [
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Lævateinn (Outis) Exclusive Skill"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Final Power +1 for every 4 (Burn + Bleed) on target (max 3)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Deal +1% damage for every 1 (Burn + Bleed) on target (max 40%)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] This Skill gains Offense Level equal to (highest Reson.) (max 6)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] If this unit has The Middle - Vengeance Tattoo -Great Sister-, Coin Power +1"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] If this unit has The Middle - Vengeance Tattoo -Great Sister-, inflict 1 Bleed Potency On Coin Hit"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Before Attack] Gain Burn equal to the number of Coins of this Skill"
+          },
+          {
+            "trigger": "attack-end",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Attack End] Lose 5 SP"
+          },
+          {
+            "trigger": "attack-end",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Attack End] Consume all The Middle - Grudge (Outis) on self"
+          },
+          {
+            "trigger": "attack-end",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Attack End] If this Skill was activated as a Counter Skill, gain 1 Blunt DMG Up next turn (once per turn)"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "burn",
+              "potency": 4
+            },
+            "source": "[On Hit] Inflict 4 Burn"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "burn",
+              "count": 2
+            },
+            "source": "[On Hit] Inflict +2 Burn Count"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 2
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 2
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "bleed",
+              "potency": 4
+            },
+            "source": "[On Hit] Inflict 4 Bleed"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 2
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Hit] Deal Slash damage equal to ((Burn on target + Bleed on target) x 2)% of this Coin's final damage (max 50%)"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 3
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 3
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "bleed",
+              "count": 2
+            },
+            "source": "[On Hit] Inflict +2 Bleed Count"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 3
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Hit] Deal Slash damage equal to ((Burn on target + Bleed on target) x 2)% of this Coin's final damage (max 50%)"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 4
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 4
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Hit] Deal Pierce damage equal to (Burn on target + Bleed on target)% of this Coin's final damage (max 25%)"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 4
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Hit] Deal Blunt damage equal to (Burn on target + Bleed on target)% of this Coin's final damage (max 25%)"
+          }
+        ],
+        "rawText": {
+          "skill": "Lævateinn (Outis) Exclusive Skill\nFinal Power +1 for every 4 (Burn + Bleed) on target (max 3)\nDeal +1% damage for every 1 (Burn + Bleed) on target (max 40%)\n[On Use] This Skill gains Offense Level equal to (highest Reson.) (max 6)\n[On Use] If this unit has The Middle - Vengeance Tattoo -Great Sister-, Coin Power +1\n[On Use] If this unit has The Middle - Vengeance Tattoo -Great Sister-, inflict 1 Bleed Potency On Coin Hit\n[Before Attack] Gain Burn equal to the number of Coins of this Skill\n[Attack End] Lose 5 SP\n[Attack End] Consume all The Middle - Grudge (Outis) on self\n[Attack End] If this Skill was activated as a Counter Skill, gain 1 Blunt DMG Up next turn (once per turn)",
+          "coins": [
+            "Unbreakable Coin\n[On Hit] Inflict 4 Burn",
+            "Unbreakable Coin\n[On Hit] Inflict +2 Burn Count",
+            "Unbreakable Coin\n[On Hit] Inflict 4 Bleed\n[On Hit] Deal Slash damage equal to ((Burn on target + Bleed on target) x 2)% of this Coin's final damage (max 50%)",
+            "Unbreakable Coin\n[On Hit] Inflict +2 Bleed Count\n[On Hit] Deal Slash damage equal to ((Burn on target + Bleed on target) x 2)% of this Coin's final damage (max 50%)",
+            "Unbreakable Coin\n[On Hit] Deal Pierce damage equal to (Burn on target + Bleed on target)% of this Coin's final damage (max 25%)\n[On Hit] Deal Blunt damage equal to (Burn on target + Bleed on target)% of this Coin's final damage (max 25%)"
+          ]
+        }
+      },
+      {
+        "id": "9557:0::skill3-3",
+        "name": "Time to Unpack!",
+        "slot": "enemy",
+        "variant": "3",
+        "sin": "envy",
+        "damageType": "blunt",
+        "offenseLevelMod": 4,
+        "basePower": 4,
+        "coinPower": 3,
+        "coinCount": 4,
+        "unbreakableCoins": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "attackWeight": 1,
+        "icon": "Time to Unpack! Outis Icon",
+        "uptie": {},
+        "effects": [
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "External effects cannot trigger this Skill to be Reused"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] If this unit has The Middle - Vengeance Tattoo -Great Sister-, deal Slash damage equal to (25% of each Coin's final damage) On Coin Hit"
+          },
+          {
+            "trigger": "attack-end",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Attack End] Remove a seal from the sword"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "burn",
+              "potency": 3
+            },
+            "source": "[On Hit] Inflict 3 Burn"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 1
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "bleed",
+              "potency": 3
+            },
+            "source": "[On Hit] Inflict 3 Bleed"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 2
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 2
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Hit] Raise Stagger Threshold by 10"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 3
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 3
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "envy-fragility",
+              "potency": 2
+            },
+            "source": "[On Hit] Inflict 2 Envy Fragility next turn"
+          }
+        ],
+        "rawText": {
+          "skill": "External effects cannot trigger this Skill to be Reused\n[On Use] If this unit has The Middle - Vengeance Tattoo -Great Sister-, deal Slash damage equal to (25% of each Coin's final damage) On Coin Hit\n[Attack End] Remove a seal from the sword",
+          "coins": [
+            "Unbreakable Coin\n[On Hit] Inflict 3 Burn",
+            "Unbreakable Coin\n[On Hit] Inflict 3 Bleed",
+            "Unbreakable Coin\n[On Hit] Raise Stagger Threshold by 10",
+            "Unbreakable Coin\n[On Hit] Inflict 2 Envy Fragility next turn"
+          ]
+        }
+      },
+      {
+        "id": "9557:0::skill3-4",
+        "name": "Good Girl. Your Sacrifice for the Family Won't Be Forgotten.",
+        "slot": "enemy",
+        "variant": "4",
+        "sin": "envy",
+        "damageType": "blunt",
+        "offenseLevelMod": 4,
+        "basePower": 16,
+        "coinPower": 2,
+        "coinCount": 1,
+        "unbreakableCoins": [
+          0
+        ],
+        "attackWeight": 2,
+        "icon": "Good Girl. Your Sacrifice for the Family Won't Be Forgotten. Outis Icon",
+        "uptie": {},
+        "effects": [
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Lævateinn (Outis) Exclusive Skill"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Unclashable]"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Target Fixed]"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "External effects cannot trigger this Skill to be Reused, and this Skill does not trigger Defense Skills"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Final Power +1 for every 4 (Burn + Bleed) on the main target (max 3)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] Final Power +1 and deal +10% damage for every The Middle - Vengeance Tattoo -Great Sister- on self (max 3, max 100%)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] If The House of Spiders: The Middle Apprentice Ishmael is among targets, deal +100% damage"
+          },
+          {
+            "trigger": "attack-end",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Attack End] Consume all The Middle - Grudge (Outis) on self and gain 5 The Middle - Grudge (Outis)"
+          },
+          {
+            "trigger": "attack-end",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Attack End] If a targeted ally is killed, gain 10 The Middle - Grudge (Outis)"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "If target's Blunt Res. is below \"Normal\" (1.0), treat it as Normal (1.0)"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "burn",
+              "potency": 3
+            },
+            "source": "[On Hit] Inflict 3 Burn and +2 Burn Count"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "burn",
+              "count": 2
+            },
+            "source": "[On Hit] Inflict 3 Burn and +2 Burn Count"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "bleed",
+              "potency": 3
+            },
+            "source": "[On Hit] Inflict 3 Bleed and +2 Bleed Count"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "bleed",
+              "count": 2
+            },
+            "source": "[On Hit] Inflict 3 Bleed and +2 Bleed Count"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Hit] Deal Blunt damage equal to (100% of this Coin's final damage)"
+          }
+        ],
+        "rawText": {
+          "skill": "Lævateinn (Outis) Exclusive Skill\n[Unclashable]\n[Target Fixed]\nExternal effects cannot trigger this Skill to be Reused, and this Skill does not trigger Defense Skills\nFinal Power +1 for every 4 (Burn + Bleed) on the main target (max 3)\n[On Use] Final Power +1 and deal +10% damage for every The Middle - Vengeance Tattoo -Great Sister- on self (max 3, max 100%)\n[On Use] If The House of Spiders: The Middle Apprentice Ishmael is among targets, deal +100% damage\n[Attack End] Consume all The Middle - Grudge (Outis) on self and gain 5 The Middle - Grudge (Outis)\n[Attack End] If a targeted ally is killed, gain 10 The Middle - Grudge (Outis)",
+          "coins": [
+            "Unbreakable Coin\nIf target's Blunt Res. is below \"Normal\" (1.0), treat it as Normal (1.0)\n[On Hit] Inflict 3 Burn and +2 Burn Count\n[On Hit] Inflict 3 Bleed and +2 Bleed Count\n[On Hit] Deal Blunt damage equal to (100% of this Coin's final damage)"
           ]
         }
       },
@@ -12964,6 +14954,193 @@
         }
       },
       {
+        "id": "9558:0::skill3-2",
+        "name": "COMPLETE AND TOTAL EXTERMINATION!!",
+        "slot": "enemy",
+        "variant": "2",
+        "sin": "envy",
+        "damageType": "blunt",
+        "offenseLevelMod": 6,
+        "basePower": 16,
+        "coinPower": 10,
+        "coinCount": 1,
+        "unbreakableCoins": [
+          0
+        ],
+        "attackWeight": 3,
+        "icon": "COMPLETE AND TOTAL EXTERMINATION!! Heathcliff Icon",
+        "uptie": {},
+        "effects": [
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "External effects cannot trigger this Skill to be Reused"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Deal +1% damage for every 1% missing HP on self (max 30%)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Final Power +1 for every 4 (Burn + Bleed) on the main target (max 5)"
+          },
+          {
+            "trigger": "combat-start",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Combat Start] This Skill gains (highest Reson.) Offense Level (max 6)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] If the main target has Vengeance Mark, Final Power +3"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "condition": {
+              "stat": "book-of-vengeance-heathcliff",
+              "side": "self",
+              "field": "potency",
+              "op": ">=",
+              "value": 20
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "self",
+              "status": "atk-weight",
+              "potency": 1
+            },
+            "source": "[On Use] At 20+ Book of Vengeance -Heathcliff-, gain +1 Atk Weight"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Use] Deal +60% damage for every excess Atk Weight beyond the # of actual targets (in Focused Encounter, the Part)"
+          },
+          {
+            "trigger": "on-use",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Kill] For every enemy killed using this Skill, gain an E.G.O resource of a random least-owned Affinity (max 4)"
+          },
+          {
+            "trigger": "attack-end",
+            "scope": "skill",
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[Attack End] Consume 15 Vengeance Tattoo on self"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "Unbreakable Coin"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "If target is Staggered, deal +20% damage"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "bleed",
+              "potency": 5
+            },
+            "source": "[On Hit] Inflict 5 Bleed"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "burn",
+              "potency": 5
+            },
+            "source": "[On Hit] Inflict 5 Burn"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "applyStatus",
+              "target": "target",
+              "status": "tremor",
+              "potency": 5
+            },
+            "source": "[On Hit] Inflict 5 Tremor"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Hit] Trigger Tremor Burst; then, reduce target's Tremor Count by 1"
+          },
+          {
+            "trigger": "on-hit",
+            "scope": {
+              "coin": 0
+            },
+            "op": {
+              "kind": "unparsed"
+            },
+            "source": "[On Hit] Deal (Envy Reson. x 7)% of this Coin's final damage as Blunt bonus damage (max 42%)"
+          }
+        ],
+        "rawText": {
+          "skill": "External effects cannot trigger this Skill to be Reused\nDeal +1% damage for every 1% missing HP on self (max 30%)\nFinal Power +1 for every 4 (Burn + Bleed) on the main target (max 5)\n[Combat Start] This Skill gains (highest Reson.) Offense Level (max 6)\n[On Use] If the main target has Vengeance Mark, Final Power +3\n[On Use] At 20+ Book of Vengeance -Heathcliff-, gain +1 Atk Weight\n[On Use] Deal +60% damage for every excess Atk Weight beyond the # of actual targets (in Focused Encounter, the Part)\n[On Kill] For every enemy killed using this Skill, gain an E.G.O resource of a random least-owned Affinity (max 4)\n[Attack End] Consume 15 Vengeance Tattoo on self",
+          "coins": [
+            "Unbreakable Coin\nIf target is Staggered, deal +20% damage\n[On Hit] Inflict 5 Bleed\n[On Hit] Inflict 5 Burn\n[On Hit] Inflict 5 Tremor\n[On Hit] Trigger Tremor Burst; then, reduce target's Tremor Count by 1\n[On Hit] Deal (Envy Reson. x 7)% of this Coin's final damage as Blunt bonus damage (max 42%)"
+          ]
+        }
+      },
+      {
         "id": "9558:0::defense",
         "name": "Payback",
         "slot": "defense",
@@ -13537,7 +15714,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 2
+              "coin": 3
             },
             "op": {
               "kind": "unparsed"
@@ -13547,7 +15724,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 2
+              "coin": 3
             },
             "op": {
               "kind": "applyStatus",
@@ -13563,6 +15740,7 @@
           "coins": [
             "[On Hit] Inflict 2 Bleed",
             "[On Hit] Inflict +2 Bleed Count",
+            "",
             "[On Hit] Deal (Envy Reson. x 5)% of this Coin's final damage as Slash bonus damage (max 30%)\n[On Hit] Inflict 1 Bleed"
           ]
         }
@@ -13954,7 +16132,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 0
+              "coin": 1
             },
             "op": {
               "kind": "applyStatus",
@@ -13967,7 +16145,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 1
+              "coin": 2
             },
             "condition": {
               "stat": "reson-that-includes-this-skill",
@@ -13986,6 +16164,7 @@
         "rawText": {
           "skill": "If target has 6+ Bleed, Coin Power +1\n[On Use] Gain +5 Aggro to this Skill Slot next turn\n[Combat Start] This Skill gains (highest Reson. / 2) Offense Level (max 3, rounded down)\n- If the said Reson. includes an A-Reson., double the Offense Level gained from the above effect",
           "coins": [
+            "",
             "[On Hit] Inflict 2 Bleed",
             "At 3+ Reson. that includes this Skill, deal +20% damage"
           ]
@@ -14041,7 +16220,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 0
+              "coin": 1
             },
             "op": {
               "kind": "applyStatus",
@@ -14054,7 +16233,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 1
+              "coin": 2
             },
             "op": {
               "kind": "unparsed"
@@ -14064,7 +16243,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 1
+              "coin": 2
             },
             "op": {
               "kind": "unparsed"
@@ -14075,6 +16254,7 @@
         "rawText": {
           "skill": "Deal +1% damage for every 1 Book of Vengeance -Sinclair- (max 30%)\nCoin Power +1 for every 6 Bleed on target (max 2)\n[Combat Start] This Skill gains (highest Reson. / 2) Offense Level (max 3, rounded down)\n- If the said Reson. includes an A-Reson., double the Offense Level gained from the above effect",
           "coins": [
+            "",
             "[On Hit] Inflict 4 Bleed",
             "Deal +5% damage for every Reson. that includes this Skill (max 30%)\nDeal +15% damage for every 10 Book of Vengeance -Sinclair- (max 45%)"
           ]
@@ -14383,7 +16563,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 0
+              "coin": 1
             },
             "op": {
               "kind": "applyStatus",
@@ -14396,7 +16576,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 0
+              "coin": 1
             },
             "op": {
               "kind": "applyStatus",
@@ -14410,6 +16590,7 @@
         "rawText": {
           "skill": "[Combat Start] This Skill gains 1 Offense Level by (highest A-Reson./2) (Max 6)\nIf the highest A-Reson is Envy A-Reson., boost the Offense Level gained by the above effect by 50% (rounded down)\nGain double the Offense Level from the above effects in Focused Encounters with 7 or fewer Participant Limits.",
           "coins": [
+            "",
             "[On Hit] Inflict 3 Bleed\n[On Hit] Inflict 1 Damage Down"
           ]
         }
@@ -14865,7 +17046,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 1
+              "coin": 2
             },
             "op": {
               "kind": "unparsed"
@@ -14877,6 +17058,7 @@
           "skill": "At 4+ Envy Reson., Coin Power +1\nAt 6+ Envy A-Reson., Coin Power +1",
           "coins": [
             "[On Hit] If target has Vengeance Mark, inflict 1 Plus Coin Drop next turn",
+            "",
             "[On Hit] If target has Vengeance Mark, inflict 2 Envy Fragility next turn"
           ]
         }
@@ -18001,7 +20183,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 0
+              "coin": 1
             },
             "op": {
               "kind": "applyStatus",
@@ -18015,6 +20197,7 @@
         "rawText": {
           "skill": "Final Power +1 for every Unlock stage (max 2)\nThe following effects activate depending on the weapon's Attack Type\n- Blunt weapons deal +20% damage\n- Non-Blunt weapons deal -10% damage\n[On Use] Gain +1 Poise Count",
           "coins": [
+            "",
             "[On Hit] Gain 2 Poise"
           ]
         }
@@ -18290,7 +20473,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 0
+              "coin": 1
             },
             "op": {
               "kind": "applyStatus",
@@ -18303,7 +20486,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 1
+              "coin": 2
             },
             "op": {
               "kind": "applyStatus",
@@ -18316,7 +20499,7 @@
           {
             "trigger": "on-hit",
             "scope": {
-              "coin": 1
+              "coin": 2
             },
             "op": {
               "kind": "unparsed"
@@ -18327,6 +20510,7 @@
         "rawText": {
           "skill": "Final Power +1 for every Unlock stage (max 2)\nThe following effects activate depending on the weapon's Attack Type\n- Blunt weapons deal +30% damage\n- Non-Blunt weapons deal -15% damage\n[Combat Start] Gain the following effects (effects are cumulative)\n- At Unlock - II (Rien), convert the final Coin to Unbreakable Coin\n- At Unlock - III (Rien), on Clash Win with this Skill, lower user's Stagger Threshold by 10\n[On Use] Gain 2 Poise",
           "coins": [
+            "",
             "[On Hit] Inflict 3 Sinking",
             "[On Hit] Gain +1 Poise Count\n[On Hit without Cracking] Inflict +1 Sinking Count"
           ]
