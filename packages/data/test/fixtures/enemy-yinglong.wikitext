@@ -1,0 +1,510 @@
+{{IDTab|3}}{{Background|{{ROOTPAGENAME}}}}
+__FORCETOC__
+=='''Refracted Yinglong'''==
+===Phase 1===
+{{ABPage
+<!--General Info-->
+|sin=Gluttony
+|name=Refracted Yinglong
+|filename=Yinglong Airborne
+|abnorisk=WAW-05
+|abnocode=F-02-14-23
+|faction=Yinglong
+|location=Line 6: Maru no Uchi no Sanzu no Kawa
+|id=9568
+|portrait=Yinglong-9568_portrait.png
+|hp=1972
+|hpgrowth=90.92
+|level=60
+<!--Parts1-->
+|abnoparts1={{ABPage/Parts
+|partsname=Inverted Scale
+|partsicon=Scale
+|level=60
+|hp=1338
+|hpgrowth=61.70
+|speed=1~1
+|defmod=+5
+|slash=1
+|pierce=1
+|blunt=1
+|wrath=1
+|lust=0.75
+|sloth=0.75
+|gluttony=1.5
+|gloom=1.5
+|pride=1
+|envy=1.5
+}}
+<!--Parts2-->
+|abnoparts2={{ABPage/Parts
+|partsname=Head
+|partsicon=Head
+|level=60
+|hp=1972
+|hpgrowth=90.92
+|speed=2~3
+|defmod=+5
+|slash=0.8
+|pierce=0.8
+|blunt=0.8
+|wrath=1
+|lust=0.75
+|sloth=0.75
+|gluttony=1.25
+|gloom=1.25
+|pride=1
+|envy=1.25
+}}
+<!--Skill1-->
+|skillparts1={{Icons|Abno Part Scale}} Inverted Scale
+|skill1={{Skill|level=60
+|hint=3
+|sin=Wrath
+|slevel=1
+|name=Wrath of the Inverted Scale [<b>逆鱗之禍</b>]
+|type=Pierce
+|icon=Wrath of the Inverted Scale 逆鱗之禍 Yinglong
+|spower=2
+|cpower=+ 1
+|coin=2
+|atkmod=+0
+|atkweight=7
+|se=This Skill activates only when {{SkillHint|the "Inverted Scale" Part is hit as the main target}} <br> {{SkillCon|On Use}} {{SkillHint|Consume all {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}}}} on self and Reuse the final Coin (# of Stacks consumed) times (max 5 times)
+|ce1={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit}} Deal 5 SP damage <br> {{SkillCon|On Kill}} Upon killing the main target, apply the {{StatusEffect|Unfocused Volley|r}} effect on this Skill
+|ce2={{StatusEffect|Unbreakable Coin|r}} <br> This Coin damages only the main target. If {{StatusEffect|Unfocused Volley|r}} is applied, this Coin damages all targets <br> {{SkillCon|On Hit}} Inflict +2 {{StatusEffect|Rupture|d}} Count
+}}
+<!--Skill2-->
+|skillparts2={{Icons|Abno Part Head}} Head
+|skill2={{Skill|level=60
+|sin=Gluttony
+|slevel=1
+|name=Levinflash [<b>閃雷</b>]
+|type=Pierce
+|icon=Levinflash 閃雷 Yinglong
+|spower=3
+|cpower=+ 4
+|coin=2
+|atkmod=+2
+|atkweight=1
+|ce1={{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Rupture|d}}
+|ce2={{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Rupture|d}}
+}}
+<!--Skill3-->
+|skillparts3={{Icons|Abno Part Head}} Head
+|skill3={{Skill|level=60
+|sin=Gluttony
+|slevel=1
+|name=Roar of the Dragon [<b>龍聲</b>]
+|type=Pierce
+|icon=Roar of the Dragon 龍聲 Yinglong
+|spower=4
+|cpower=+ 4
+|coin=2
+|atkmod=+3
+|atkweight=3
+|ce1={{SkillCon|On Hit}} Inflict 3 {{StatusEffect|Rupture|d}}
+|ce2={{SkillCon|On Hit}} Inflict +2 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Bind|d}} next turn
+}}
+<!--Skill4-->
+|skillparts4={{Icons|Abno Part Head}} Head
+|skill4={{Skill|level=60
+|hint=3
+|sin=Wrath
+|slevel=2
+|name=The Descending Pin [<b>落針</b>]
+|type=Pierce
+|icon=The Descending Pin 落針 Yinglong
+|spower=4
+|cpower=+ 8
+|coin=1
+|atkmod=+2
+|atkweight=1
+|se={{SkillCon|On Use}} Base Power +1 {{SkillHint|for every 2 {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}}}} on self <br> {{SkillCon|On Use}} If target has {{StatusEffect|Bind|d}} or {{StatusEffect|Paralyze|d}}, Base Power +2 <br> {{SkillCon|On Use}} {{SkillHint|Spawn "Flower-burying Pin" next turn}} <br> {{SkillCon|Clash Lose}} Heal 5 SP on target <br> {{SkillCon|Clash Lose}} {{SkillHint|Does not spawn "Flower-burying Pin"}}, and the head takes {{SkillHint|fixed damage}}
+|ce1={{SkillCon|On Hit}} Inflict 3 {{StatusEffect|Rupture|d}} and +2 {{StatusEffect|Rupture|d}} Count
+}}
+<!--Skill5-->
+|skillparts5={{Icons|Abno Part Head}} Head
+|skill5={{Skill|level=60
+|hint=1
+|sin=Gloom
+|slevel=2
+|name=Draconic Vortex [<b>龍卷</b>]
+|type=Pierce
+|icon=Draconic Vortex 龍卷 Yinglong
+|spower=3
+|cpower=+ 3
+|coin=3
+|atkmod=+3
+|atkweight=3
+|se={{SkillCon|On Use}} If the main target has {{StatusEffect|Bind|d}} or {{StatusEffect|Paralyze|d}}, Coin Power +1 <br> {{SkillCon|Clash Lose}} {{SkillHint|Apply {{StatusEffect|Capricious Mercy|b}}}} on the main target
+|ce1={{SkillCon|On Hit}} Inflict +3 {{StatusEffect|Rupture|d}} Count
+|ce2={{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Rupture|d}}
+|ce3={{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Rupture|d}}
+}}
+<!--Skill6-->
+|skillparts6={{Icons|Abno Part Head}} Head
+|skill6={{Skill|level=60
+|hint=2
+|sin=Wrath
+|slevel=3
+|name=Gathering Rain [<b>積雨</b>]
+|type=Pierce
+|icon=Gathering Rain 積雨 Yinglong
+|spower=4
+|cpower=+ 3
+|coin=3
+|atkmod=+4
+|atkweight=4
+|se={{SkillCon|On Use}} Base Power +1 {{SkillHint|for every {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}}}} on self <br> {{SkillCon|On Use}} If this unit has {{SkillHint|5+ {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}}}}, Coin Power +1 and gain +1 Atk Weight <br> {{SkillCon|Clash Lose}} Deal -80% damage and damage dealt by this Skill cannot Stagger the target
+|ce1={{SkillCon|On Hit}} Inflict 3 {{StatusEffect|Rupture|d}}
+|ce2={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit without Cracking}} Inflict 3 {{StatusEffect|Rupture|d}}
+|ce3={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit}} If this unit has {{SkillHint|5+ {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}}, Reuse this Coin}} (once per Skill) <br> {{SkillCon|On Hit without Cracking}} Inflict +2 {{StatusEffect|Rupture|d}} Count
+}}
+<!--Skill7-->
+|skillparts7={{Icons|Abno Part Head}} Head
+|skill7={{Skill|level=60
+|hint=2
+|sin=Pride
+|slevel=3
+|name=Levinfall [<b>落雷</b>]
+|type=Pierce
+|icon=Levinfall 落雷 Yinglong
+|spower=18
+|cpower=+ 7
+|coin=1
+|atkmod=+5
+|atkweight=8
+|se={{SkillCon|Unclashable}}{{SkillCon|Target Fixed}} <br> {{SkillHint|Targets "Flower-burying Pin"}} <br> If "Flower-burying Pin" is destroyed, cancel this Skill
+|ce1={{SkillCon|On Hit}} Inflict 5 {{StatusEffect|Rupture|d}} and +3 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Hit}} 50% chance to inflict 1 {{StatusEffect|Paralyze|d}} next turn
+}}
+<!--Passives-->
+|passive1={{Passive|The Unreachable Heavens|Encounter Start: The Head Part gains Shield equal to 100% of this unit's max HP <br> Does not lose Shield at Turn End <br> When the Shield is broken, enter a new phase}}
+|passive2={{Passive|Life Hanging on a Wedge [<b>一櫼之命</b>]|hint=1|Encounter Start: Gain 3 {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}} <br> Turn End: Gain 1 {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}} next turn <br> Gain +1 more {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}} from this effect every time the "Thundering Wrath" Passive triggers}}
+|passive3={{Passive|Thundering Wrath [<b>震怒</b>]|hint=3|The Inverted Scale Part takes damage only from Skills that it is the main target of; does not take damage from any other sources <br> When the Inverted Scale Part is hit, remove the Inverted Scale Part from the Skill Slots next turn; gain 1 {{StatusEffect|Offense Level Up|b}} and 1 {{StatusEffect|Defense Level Down|d}} for every {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}} Stack consumed by the "Wrath of the Inverted Scale" Skill}}
+|passive4={{Passive|Dragon's Scale|Unaffected by {{StatusEffect|Haste|b}} and {{StatusEffect|Bind|d}} <br> Take -50% HP damage from {{StatusEffect|Burn|d}}, {{StatusEffect|Bleed|d}}, {{StatusEffect|Tremor|d}}, {{StatusEffect|Rupture|d}}, and {{StatusEffect|Sinking|d}}; -50% to Stagger Threshold raised by {{StatusEffect|Tremor|d}}}}
+|passive5={{Passive|Refracted Struggle|At 10+ Clashes against the same enemy, randomly gain or lose Clash Power by (Clash Count / 10) in a Clash. (rounded down)}}
+}}
+====Behavior====
+Yinglong starts the phase with 3 {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}} and 20 {{StatusEffect|Scaleclad|b}}. It uses the following skill rotation:
+*Wrath of the Inverted Scale [逆鱗之禍], Levinflash [閃雷], Roar of the Dragon [龍聲], The Descending Pin [落針], The Descending Pin [落針], Draconic Vortex [龍卷], Draconic Vortex [龍卷]
+*Wrath of the Inverted Scale [逆鱗之禍], Roar of the Dragon [龍聲], The Descending Pin [落針], The Descending Pin [落針], Draconic Vortex [龍卷], Gathering Rain [積雨]
+*Wrath of the Inverted Scale [逆鱗之禍], Levinflash [閃雷], Roar of the Dragon [龍聲], The Descending Pin [落針], The Descending Pin [落針], Draconic Vortex [龍卷], Draconic Vortex [龍卷]
+*Wrath of the Inverted Scale [逆鱗之禍], Roar of the Dragon [龍聲], The Descending Pin [落針], The Descending Pin [落針], Gathering Rain [積雨], Gathering Rain [積雨]
+
+If the Inverted Scale part was hit in the previous turn, the skill slot using 'Wrath of the Inverted Scale [逆鱗之禍]' will be absent.
+
+For every [[Flower-burying Pin]] on the field, one instance of 'The Descending Pin [落針]' will be replaced by 'Levinfall [落雷]', targeting the respective Flower-Burying Pin.
+
+The turn will end and the battle will move to the next phase when Yinglong's Shield HP is depleted.
+
+{|class="article-table nohover mw-collapsible" style="width:100%; margin:auto;text-align:center"
+! scope="col" style="color:#FFFFFF; text-align:center"|Summons
+|-
+|{{EnBox|9571}}
+|}
+
+===Phase 2===
+The second phase consists of a fight against [[Hongyu, the Crimson Jade 紅玉|Hongyu, the Crimson Jade [紅玉]]] and [[Peccatula#Invidiae|Peccatula Invidiae]] replicating the Sinners' H Corp. Identities. Once all enemy units are defeated, the battle progresses to the next phase.
+
+{|class="article-table nohover mw-collapsible" style="width:100%; margin:auto;text-align:center"
+! scope="col" colspan="2" style="color:#FFFFFF; text-align:center"|Phase 2
+|-
+|{{EnBox|9570}}
+|{{EnBox|9543|Peccatulum Invidiae - H Corp. Identities}}
+|}
+
+===<span id="Refracted Yinglong (Phase 3)"/>Phase 3===
+{{ABPage
+<!--General Info-->
+|sin=Gluttony
+|name=Refracted Yinglong
+|filename=Yinglong
+|abnorisk=WAW-05
+|abnocode=F-02-14-23
+|faction=Yinglong
+|location=Line 6: Maru no Uchi no Sanzu no Kawa
+|id=9569
+|portrait=Yinglong-9569_portrait.png
+|hp=1972
+|hpgrowth=90.92
+|level=60
+<!--Parts1-->
+|abnoparts1={{ABPage/Parts
+|partsname=Flower-burying Wedge
+|partsicon=Back
+|breaktype=destroy
+|level=60
+|hp=809
+|hpgrowth=37.28
+|speed=1~1
+|defmod=+10
+|stagger1=70
+|stagger2=30
+|stagger3=0
+|slash=0.8
+|pierce=0.8
+|blunt=0.8
+|wrath=1
+|lust=0.75
+|sloth=0.75
+|gluttony=1.25
+|gloom=1.25
+|pride=1
+|envy=1.25
+}}
+<!--Parts2-->
+|abnoparts2={{ABPage/Parts
+|partsname=Inverted Scale
+|partsicon=Scale
+|breaktype=destroy
+|level=60
+|hp=535
+|hpgrowth=24.68
+|speed=2~2
+|defmod=+5
+|stagger1=65
+|slash=1
+|pierce=1
+|blunt=1
+|wrath=1
+|lust=0.75
+|sloth=0.75
+|gluttony=1.5
+|gloom=1.5
+|pride=1
+|envy=1.5
+}}
+<!--Parts3-->
+|abnoparts3={{ABPage/Parts
+|partsname=Head
+|partsicon=Head
+|breaktype=destroy
+|level=60
+|hp=789
+|hpgrowth=36.37
+|speed=2~4
+|defmod=+5
+|stagger1=60
+|slash=0.8
+|pierce=0.8
+|blunt=0.8
+|wrath=1
+|lust=0.75
+|sloth=0.75
+|gluttony=1.25
+|gloom=1.25
+|pride=1
+|envy=1.25
+}}
+<!--Parts4-->
+|abnoparts4={{ABPage/Parts
+|partsname=Body
+|partsicon=Body
+|breaktype=destroy
+|level=60
+|hp=1183
+|hpgrowth=54.55
+|speed=2~4
+|defmod=+8
+|stagger1=50
+|slash=0.8
+|pierce=0.8
+|blunt=0.8
+|wrath=1
+|lust=0.75
+|sloth=0.75
+|gluttony=1.25
+|gloom=1.25
+|pride=1
+|envy=1.25
+}}
+<!--Skill1-->
+|skillparts1={{Icons|Abno Part Back}} Flower-burying Wedge
+|skill1={{Skill|level=60
+|hint=3
+|sin=Gluttony
+|slevel=3
+|name=The Dragon's Wedge [<b>龍之櫼</b>]
+|type=Guard
+|icon=The Dragon's Wedge 龍之櫼 Yinglong
+|spower=10
+|cpower=+ 8
+|coin=1
+|defmod=+3
+|atkweight=1
+|se={{StatusEffect|Clashable Guard|r}} <br> {{SkillCon|Combat Start}} {{SkillHint|Gain 1 {{StatusEffect|Flower-burying Wedge -埋花櫼- (Yinglong)|r}} next turn}} <br> {{SkillCon|Clash Lose}} Cancel the Combat Start effect. Gain 3 {{StatusEffect|Defense Power Up|b}} next turn
+|ce1={{StatusEffect|Unbreakable Coin|r}}
+}}
+<!--Skill2-->
+|skillparts2={{Icons|Abno Part Scale}} Inverted Scale
+|skill2={{Skill|level=60
+|hint=3
+|sin=Wrath
+|slevel=1
+|name=Wrath of the Inverted Scale [<b>逆鱗之禍</b>]
+|type=Pierce
+|icon=Wrath of the Inverted Scale 逆鱗之禍 2 Yinglong
+|spower=5
+|cpower=+ 4
+|coin=2
+|atkmod=+3
+|atkweight=7
+|se={{SkillCon|On Use}} {{SkillHint|Consume all {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}}}} on self and Reuse the final Coin (# of Stacks consumed) times (max 5 times) <br> {{SkillCon|Clash Lose}} Deal -50% damage and damage dealt by this Skill cannot Stagger the target
+|ce1={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit}} Deal 5 SP damage <br> {{SkillCon|On Kill}} Upon killing the main target, apply the {{StatusEffect|Unfocused Volley|r}} effect on this Skill
+|ce2={{StatusEffect|Unbreakable Coin|r}} <br> This Coin damages only the main target. If {{StatusEffect|Unfocused Volley|r}} is applied, this Coin damages all targets <br> {{SkillCon|On Hit}} Inflict +2 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Hit without Cracking}} Inflict 1 {{StatusEffect|Dragon's Blood -龍血-|d}}
+}}
+<!--Skill3-->
+|skillparts3={{Icons|Abno Part Head}} Head
+|skill3={{Skill|level=60
+|sin=Gluttony
+|slevel=1
+|name=Levinflash [<b>閃雷</b>]
+|type=Pierce
+|icon=Levinflash 閃雷 Yinglong
+|spower=4
+|cpower=+ 4
+|coin=2
+|atkmod=+3
+|atkweight=1
+|se={{SkillCon|On Use}} If the main target has less than 35 SP, Base Power +1 <br> {{SkillCon|Clash Lose}} Deal -50% damage and damage dealt by this Skill cannot Stagger the target
+|ce1={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit without Cracking}} Inflict +1 {{StatusEffect|Dragon's Blood -龍血-|d}} Count
+|ce2={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit without Cracking}} Inflict 1 {{StatusEffect|Paralyze|d}} next turn
+}}
+<!--Skill4-->
+|skillparts4={{Icons|Abno Part Head}} Head
+|skill4={{Skill|level=60
+|sin=Gluttony
+|slevel=1
+|name=Roar of the Dragon [<b>龍聲</b>]
+|type=Pierce
+|icon=Roar of the Dragon 龍聲 2 Yinglong
+|spower=5
+|cpower=+ 4
+|coin=2
+|atkmod=+3
+|atkweight=3
+|se={{SkillCon|On Use}} If the main target has less than 35 SP, Coin Power +1 <br> {{SkillCon|Clash Lose}} Deal -50% damage and damage dealt by this Skill cannot Stagger the target
+|ce1={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit without Cracking}} Deal 5 SP damage
+|ce2={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit}} Inflict +2 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Hit without Cracking}} Inflict +2 {{StatusEffect|Dragon's Blood -龍血-|d}} Count
+}}
+<!--Skill5-->
+|skillparts5={{Icons|Abno Part Body}} Body
+|skill5={{Skill|level=60
+|hint=3
+|sin=Wrath
+|slevel=2
+|name=The Descending Pin [<b>落針</b>]
+|type=Pierce
+|icon=The Descending Pin 落針 Yinglong
+|spower=6
+|cpower=+ 4
+|coin=2
+|atkmod=+3
+|atkweight=1
+|se={{SkillCon|On Use}} Base Power +1 {{SkillHint|for every 2 {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}}}} on self <br> {{SkillCon|On Use}} If target has {{StatusEffect|Bind|d}} or {{StatusEffect|Paralyze|d}}, Base Power +2 <br> {{SkillCon|On Use}} If this unit has {{SkillHint|5+ {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}}}}, Coin Power +1 <br> {{SkillCon|On Use}} {{SkillHint|Spawn "Flower-burying Pin" next turn}} <br> {{SkillCon|Clash Lose}} {{SkillHint|Does not spawn "Flower-burying Pin"}}
+|ce1={{SkillCon|On Hit}} Deal 5 SP damage
+|ce2={{SkillCon|On Hit}} Inflict 3 {{StatusEffect|Rupture|d}} and +2 {{StatusEffect|Rupture|d}} Count
+}}
+<!--Skill6-->
+|skillparts6={{Icons|Abno Part Body}} Body
+|skill6={{Skill|level=60
+|sin=Gloom
+|slevel=2
+|name=Draconic Vortex [<b>龍卷</b>]
+|type=Pierce
+|icon=Draconic Vortex 龍卷 Yinglong
+|spower=5
+|cpower=+ 3
+|coin=3
+|atkmod=+4
+|atkweight=4
+|se={{SkillCon|On Use}} If the main target has {{StatusEffect|Bind|d}} or {{StatusEffect|Paralyze|d}}, Coin Power +1
+|ce1={{SkillCon|On Hit}} Inflict +2 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Dragon's Blood -龍血-|d}} Count
+|ce2={{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Dragon's Blood -龍血-|d}} Count
+|ce3={{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Dragon's Blood -龍血-|d}} Count
+}}
+<!--Skill7-->
+|skillparts7={{Icons|Abno Part Body}} Body
+|skill7={{Skill|level=60
+|hint=2
+|sin=Wrath
+|slevel=3
+|name=Gathering Rain [<b>積雨</b>]
+|type=Pierce
+|icon=Gathering Rain 積雨 Yinglong
+|spower=5
+|cpower=+ 3
+|coin=3
+|atkmod=+5
+|atkweight=4
+|se={{SkillCon|On Use}} Base Power +1 {{SkillHint|for every {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}}}} on self <br> {{SkillCon|On Use}} If this unit has {{SkillHint|5+ {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}}}}, Coin Power +1 and gain +1 Atk Weight <br> {{SkillCon|Clash Lose}} Deal -80% damage and damage dealt by this Skill cannot Stagger the target
+|ce1={{SkillCon|On Hit}} Deal 5 SP damage
+|ce2={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit without Cracking}} Inflict 3 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit without Cracking}} Inflict +2 {{StatusEffect|Dragon's Blood -龍血-|d}} Count
+|ce3={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit}} If this unit has {{SkillHint|5+ {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}}, Reuse this Coin}} (once per Skill) <br> {{SkillCon|On Hit without Cracking}} Inflict +2 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Hit without Cracking}} Inflict 2 {{StatusEffect|Dragon's Blood -龍血-|d}}
+}}
+<!--Skill8-->
+|skillparts8={{Icons|Abno Part Body}} Body
+|skill8={{Skill|level=60
+|hint=2
+|sin=Pride
+|slevel=3
+|name=Levinfall [<b>落雷</b>]
+|type=Pierce
+|icon=Levinfall 落雷 Yinglong
+|spower=18
+|cpower=+ 7
+|coin=1
+|atkmod=+3
+|atkweight=8
+|se={{SkillCon|Unclashable}}{{SkillCon|Target Fixed}} <br> {{SkillHint|Targets "Flower-burying Pin"}} <br> If "Flower-burying Pin" is destroyed, cancel this Skill
+|ce1={{SkillCon|On Hit}} Inflict 5 {{StatusEffect|Rupture|d}} and +3 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Hit}} 50% chance to inflict 1 {{StatusEffect|Paralyze|d}} next turn
+}}
+<!--Skill9-->
+|skillparts9={{Icons|Abno Part Back}} Flower-burying Wedge
+|skill9={{Skill|level=60
+|hint=3
+|sin=Gluttony
+|slevel=3
+|name=Tides Born of Dragon's Tears [<b>龍淚成濤</b>]
+|type=Pierce
+|icon=Tides Born of Dragon's Tears 龍淚成濤 Yinglong
+|spower=10
+|cpower=+ 2
+|coin=5
+|atkmod=+5
+|atkweight=4
+|se=Can Clash with this Skill regardless of Speed <br> {{SkillCon|On Use}} Until this Skill ends, this unit cannot be Staggered from taking damage <br> {{SkillCon|On Use}} {{SkillHint|For every {{StatusEffect|Flower-burying Wedge -埋花櫼- (Yinglong)|r}} on self}}, Coin Power +1 and +1 Atk Weight <br> - If {{StatusEffect|Flower-burying Wedge -埋花櫼- (Yinglong)|r}} is at max Stack, deal +100% additional damage <br> {{SkillCon|Clash Lose}} Deal -80% damage and damage dealt by this Skill cannot Stagger the target <br> {{SkillCon|Clash Lose}} Gain 3 {{StatusEffect|Fragile|d}} until the next Turn End <br> {{SkillCon|Skill End}} Reduce {{StatusEffect|Flower-burying Wedge -埋花櫼- (Yinglong)|r}} Stack to 1
+|ce1={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit without Cracking}} Inflict +2 {{StatusEffect|Dragon's Blood -龍血-|d}} Count
+|ce2={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit without Cracking}} Inflict +2 {{StatusEffect|Dragon's Blood -龍血-|d}} Count
+|ce3={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit without Cracking}} Inflict 2 {{StatusEffect|Dragon's Blood -龍血-|d}}
+|ce4={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit without Cracking}} Inflict 2 {{StatusEffect|Dragon's Blood -龍血-|d}}
+|ce5={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit without Cracking}} Inflict 2 {{StatusEffect|Dragon's Blood -龍血-|d}}
+}}
+<!--Passives-->
+|passive1={{Passive|Tarnished Body|All Parts become Breakable and Unseverable <br> Broken Parts regenerate in 3 turns with 30% HP}}
+|passive2={{Passive|Life Hanging on a Wedge [<b>一櫼之命</b>]|hint=3|Cannot be killed as long as the Flower-burying Wedge Part isn't broken}}
+|passive3={{Passive|Erumpent Flower-burying Efflorescence [<b>梅花滿開</b>]|hint=1|Encounter Start: Gain 3 {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}} <br> Turn End: Gain 1 {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}} next turn <br> Gain +1 more {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}} from this effect every time the "Thundering Wrath" Passive triggers <br> - When the Inverted Scale is broken, reset the increased {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}} gain}}
+|passive4={{Passive|Thundering Wrath [<b>震怒</b>]|hint=3|The Inverted Scale Part takes damage only from Skills that it is the main target of; does not take damage from any other sources <br> When the Inverted Scale Part is hit, remove the Inverted Scale Part from the Skill Slots next turn; gain 1 {{StatusEffect|Offense Level Up|b}} and 1 {{StatusEffect|Defense Level Down|d}} for every {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}} Stack consumed by the "Wrath of the Inverted Scale" Skill}}
+|passive5={{Passive|Dragon's Scale|Unaffected by {{StatusEffect|Haste|b}} and {{StatusEffect|Bind|d}} <br> Take -50% HP damage from {{StatusEffect|Burn|d}}, {{StatusEffect|Bleed|d}}, {{StatusEffect|Tremor|d}}, {{StatusEffect|Rupture|d}}, and {{StatusEffect|Sinking|d}}; -50% to Stagger Threshold raised by {{StatusEffect|Tremor|d}}}}
+|passive6={{Passive|Broken Scale|When the Inverted Scale Part is broken, the "Thundering Wrath" Passive does not activate <br> While the Inverted Scale Part is broken, all Parts gain 3 {{StatusEffect|Offense Level Up|b}} and 6 {{StatusEffect|Defense Level Down|d}}}}
+|passive7={{Passive|Broken Skull|While the Head part is broken, all Parts gain 2 {{StatusEffect|Fragile|d}} every turn}}
+|passive8={{Passive|Refracted Struggle|At 10+ Clashes against the same enemy, randomly gain or lose Clash Power by (Clash Count / 10) in a Clash. (rounded down)}}
+}}
+
+====Behavior====
+Yinglong starts the phase with 3 {{StatusEffect|Flower-burying Pin -埋花針- (Yinglong)|b}}, 1 {{StatusEffect|Flower-burying Wedge -埋花櫼- (Yinglong)|r}}, and 30% HP on all parts except for the Flower-burying Wedge. Yinglong cannot be defeated until the Flower-burying Wedge part is broken.
+
+Yinglong uses the following skill rotation:
+*The Dragon's Wedge [龍之櫼], Wrath of the Inverted Scale [逆鱗之禍], Levinflash [閃雷], Roar of the Dragon [龍聲], The Descending Pin [落針], Draconic Vortex [龍卷], Gathering Rain [積雨]
+*The Dragon's Wedge [龍之櫼], Wrath of the Inverted Scale [逆鱗之禍], Levinflash [閃雷], Roar of the Dragon [龍聲], The Descending Pin [落針], Draconic Vortex [龍卷], Gathering Rain [積雨]
+*Tides Born of Dragon's Tears [龍淚成濤]
+
+If the Inverted Scale part was hit in the previous turn, the skill slot using 'Wrath of the Inverted Scale [逆鱗之禍]' will be absent.
+
+If a [[Flower-burying Pin]] is on the field, 'The Descending Pin [落針]' will be replaced by 'Levinfall [落雷]', targeting the respective Flower-Burying Pin.
+
+If one of Yinglong's parts is currently broken, any skill slots using the part's respective skills will be absent from the rotation.
+
+[[Category:Enemy]]
+[[Category:Abnormality]]

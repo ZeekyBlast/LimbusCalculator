@@ -1,0 +1,195 @@
+{{IDPage
+<!--General Info-->
+|prefix=Blade Lineage Salsu
+|sinner=Don Quixote
+|quote=The way of… Wine? Drinking etiquette? Forsooth, I am quite unaquainted with that subject. Kaugh, 't-tis quite bitter!
+|worldtype=official
+|world=World of the Kurokumo Clan and Blade Lineage
+|season=3e
+|rarity=2
+|releasedate=2024.02.22
+|keyword={{Keyword|Syndicate}} {{Keyword|Blade Lineage}}
+<!--Status, Resistances & Stagger Thresholds-->
+|hp=73
+|hpgrowth=2.4
+|speed=4~8
+|1speed=4~6
+|2speed=4~7
+|defmod=-2
+|slash=Ineff
+|pierce=Normal
+|blunt=Fatal
+|stagger1=70
+|stagger2=40
+|stagger3=20
+<!--Skill1-->
+|skill1={{UptieSkills
+|sin=Pride
+|slevel=1
+|name=Draw of the Sword
+|type=Pierce
+|icon=Draw of the Sword Don Quixote Icon
+|spower=3
+|2spower=2
+|cpower=+ 4
+|coin=2
+|amt=3
+|atkmod=+1
+|atkweight=1
+|se=At 5+ {{StatusEffect|Poise|b}} on self, Coin Power +1 <br> {{SkillCon|On Use}} Gain +2 {{StatusEffect|Poise|b}} Count
+|3se={{SkillCon|On Use}} Gain +2 {{StatusEffect|Poise|b}} Count
+|ce1={{SkillCon|On Hit}} Gain 1 {{StatusEffect|Poise|b}}
+|3ce1={{SkillCon|Heads Hit}} Gain 1 {{StatusEffect|Poise|b}}
+|ce2={{SkillCon|On Hit}} Gain 1 {{StatusEffect|Poise|b}}
+|3ce2={{SkillCon|Heads Hit}} Gain 1 {{StatusEffect|Poise|b}}
+}}
+<!--Skill2-->
+|skill2={{UptieSkills
+|sin=Envy
+|slevel=2
+|name=Blade Arc
+|type=Slash
+|icon=Blade Arc Don Quixote Icon
+|spower=4
+|2spower=3
+|cpower=+ 5
+|coin=2
+|amt=2
+|atkmod=+1
+|atkweight=1
+|se=At 7+ {{StatusEffect|Poise|b}} on self, Coin Power +1 <br> {{SkillCon|On Use}} Gain +2 {{StatusEffect|Poise|b}} Count
+|3se={{SkillCon|On Use}} Gain +2 {{StatusEffect|Poise|b}} Count
+|ce1={{SkillCon|On Hit}} Gain 2 {{StatusEffect|Poise|b}}
+|1ce1={{SkillCon|Heads Hit}} Gain 2 {{StatusEffect|Poise|b}}
+|ce2={{SkillCon|On Crit}} To 1 ally that either has no {{StatusEffect|Poise|b}} or has the least {{StatusEffect|Poise|b}} Potency, apply 2 {{StatusEffect|Poise|b}} <br> If the affected ally is from the [[:Category:Blade Lineage Identities|Blade Lineage]], apply 2 additional {{StatusEffect|Poise|b}}
+|3ce2={{SkillCon|On Crit}} To 1 ally that either has no {{StatusEffect|Poise|b}} or has the least {{StatusEffect|Poise|b}} Potency, apply 2 {{StatusEffect|Poise|b}}
+}}
+<!--Skill3-->
+|skill3={{UptieSkills
+|sin=Sloth
+|slevel=3
+|name=Fare Thee Well!
+|type=Slash
+|icon=Fare Thee Well Don Quixote Icon
+|spower=4
+|cpower=+ 3
+|coin=3
+|amt=1
+|atkmod=+4
+|atkweight=1
+|se=At 10+ {{StatusEffect|Poise|b}} on self, Coin Power +1 <br> {{SkillCon|On Use}} Gain 5 {{StatusEffect|Poise|b}}
+|3se={{SkillCon|On Use}} Gain 5 {{StatusEffect|Poise|b}}
+|ce1={{SkillCon|Heads Hit}} The final Coin deals +10% damage
+|ce2={{SkillCon|Heads Hit}} The final Coin deals +10% damage
+|ce3=+30% Damage on Critical Hit <br> {{SkillCon|On Crit}} To 2 allies that either have no {{StatusEffect|Poise|b}} or have the least {{StatusEffect|Poise|b}} Count, apply +2 {{StatusEffect|Poise|b}} Count <br> If the affected ally is from the [[:Category:Blade Lineage Identities|Blade Lineage]], apply 2 additional {{StatusEffect|Poise|b}} Count <br> {{SkillCon|Attack End}} If target is defeated, apply 1 {{StatusEffect|Slash DMG Up|b}} to self and to 1 random other ally next turn
+|3ce3={{SkillCon|On Crit}} To 2 allies that either have no {{StatusEffect|Poise|b}} or have the least {{StatusEffect|Poise|b}} Count, apply +2 {{StatusEffect|Poise|b}} Count <br> {{SkillCon|Attack End}} If target is defeated, gain 1 {{StatusEffect|Slash DMG Up|b}} next turn
+}}
+<!--Defense Skill-->
+|defense={{UptieSkills
+|sin=Pride
+|3sin=def
+|slevel=1
+|name=Evade
+|type=Evade
+|icon=Blade Lineage Salsu Don Quixote Evade Icon
+|3icon=Blade Lineage Salsu Don Quixote Evade Def Icon
+|spower=3
+|3spower=2
+|cpower=+ 10
+|coin=1
+|defmod=-2
+|atkweight=1
+}}
+<!--Passive 1-->
+|passive1={{Passive|Collective Breathing|sin=Pride|req=2 Res|When this unit gains {{StatusEffect|Poise|b}} Potency using its own Skill or Coin effects: Give 1 {{StatusEffect|Poise|b}} Potency to 1 ally that either has no {{StatusEffect|Poise|b}} or has the least {{StatusEffect|Poise|b}} Potency (max 5 times)}}
+|3passive1={{Passive|Collective Breathing|sin=Pride|req=2 Res|When this unit gains {{StatusEffect|Poise|b}} Potency using its own Skill or Coin effects: Apply 1 {{StatusEffect|Poise|b}} Potency to 1 ally that either has no {{StatusEffect|Poise|b}} or has the least {{StatusEffect|Poise|b}} Potency (max 3 times)}}
+<!--Passive 2-->
+|passive2={{Passive|Nightly Stroll|sin=Pride|req=3 Owned|1 ally that has the least {{StatusEffect|Poise|b}} gains 2 more {{StatusEffect|Poise|b}} Potency when gaining {{StatusEffect|Poise|b}} Potency using its own Skill or Coin effects (max 2 times; does not apply to allies that do not have {{StatusEffect|Poise|b}})}}
+|3passive2={{Passive|Nightly Stroll|sin=Pride|req=3 Owned|1 ally that has the least {{StatusEffect|Poise|b}} gains 1 more {{StatusEffect|Poise|b}} Potency when gaining {{StatusEffect|Poise|b}} Potency using its own Skill or Coin effects (max 2 times; does not apply to allies that do not have {{StatusEffect|Poise|b}})}}
+}}
+
+==Uptie Changes==
+{{Uptie
+|s1name=Draw of the Sword
+|s1sin=Pride
+|s1u2=
+|s1u3=
+* Base Power: '''2 > 3'''
+|s1u4=
+* Skill Effect: <br> '''At 5+ {{StatusEffect|Poise|b}} on self, Coin Power +1'''
+* Coin Effect: <br> {{Icons|CoinEffect1}} '''[Heads Hit] > [On Hit]''' Gain 1 {{StatusEffect|Poise|b}} <br> {{Icons|CoinEffect2}} '''[Heads Hit] > [On Hit]''' Gain 1 {{StatusEffect|Poise|b}}
+|s2name=Blade Arc
+|s2sin=Envy
+|s2u2=
+* Coin Effect: <br> {{Icons|CoinEffect1}} '''[Heads Hit] > [On Hit]''' Gain 2 {{StatusEffect|Poise|b}}
+|s2u3=
+* Base Power: '''3 > 4'''
+|s2u4=
+* Skill Effect: <br> '''At 7+ {{StatusEffect|Poise|b}} on self, Coin Power +1'''
+* Coin Effect: <br> {{UptieCoin|2|[On Crit] To 1 other ally that either has no {{StatusEffect|Poise|b}} or has the least {{StatusEffect|Poise|b}} Potency, apply 2 {{StatusEffect|Poise|b}} <br> '''If the affected ally is from the Blade Lineage, apply 2 additional {{StatusEffect|Poise|b}}}}
+|s3name=Fare Thee Well!
+|s3sin=Sloth
+|s3u4=
+* Skill Effect: <br> '''At 10+ {{StatusEffect|Poise|b}} on self, Coin Power +1'''
+* Coin Effect: <br> {{UptieCoin|3|'''+30% Damage on Critical Hit''' <br> [On Crit] To 2 allies that either have no {{StatusEffect|Poise|b}} or have the least {{StatusEffect|Poise|b}} Count, apply +2 {{StatusEffect|Poise|b}} Count <br> '''If the affected ally is from the Blade Lineage, apply 2 additional {{StatusEffect|Poise|b}} Count <br> [Attack End] If target is defeated, apply 1 {{StatusEffect|Slash DMG Up|b}} to self '''and 1 random other ally''' next turn}}
+|dname=Evade
+|dsin=Pride
+|du2=
+|du3=
+|du4=
+* Sin Affinity: '''None > {{Icons|Pride}}'''
+* Base Power: '''2 > 3'''
+|pname=
+|psin=
+|pu2=* Speed: '''4~6 > 4~7'''
+|pu3=* Speed: '''4~7 > 4~8'''
+|pu4=
+* Collective Breathing: <br> When this unit gains {{StatusEffect|Poise|b}} Potency using its own Skill or Coin effects: Give 1 {{StatusEffect|Poise|b}} Potency to 1 ally that either has no {{StatusEffect|Poise|b}} or has the least {{StatusEffect|Poise|b}} Potency (max '''3 > 5''' times)
+* Nightly Stroll: <br> 1 ally that has the least {{StatusEffect|Poise|b}} gains '''1 > 2''' more {{StatusEffect|Poise|b}} Potency when gaining {{StatusEffect|Poise|b}} Potency using its own Skill or Coin effects (max 2 times; does not apply to allies that do not have {{StatusEffect|Poise|b}})
+}}
+
+== Trivia ==
+* In this Mirror World, Don Quixote is a Salsu from the [[Blade Lineage]] Syndicate.
+
+==Gallery==
+<tabber>
+Sprites=
+<gallery>
+Blade Lineage Salsu Don Quixote Idle Animation.gif|Idle Animation
+Blade Lineage Salsu Don Quixote Idle Sprite.png|Idle Sprite
+Blade Lineage Salsu Don Quixote Moving Sprite.png|Moving Sprite
+Blade Lineage Salsu Don Quixote Guard Sprite.png|Guard Sprite
+Blade Lineage Salsu Don Quixote Evade Sprite.png|Evade Sprite
+Blade Lineage Salsu Don Quixote Hurt Sprite.png|Hurt Sprite
+</gallery>
+|-| Skill Animations=
+<gallery>
+Blade Lineage Salsu Don Quixote Skill 1.gif|Skill 1
+Blade Lineage Salsu Don Quixote Skill 2.gif|Skill 2
+Blade Lineage Salsu Don Quixote Skill 3.gif|Skill 3
+</gallery>
+<gallery widths=170>
+Blade Lineage Salsu Don Quixote Skill 1.mp4|Skill 1
+Blade Lineage Salsu Don Quixote Skill 2.mp4|Skill 2
+Blade Lineage Salsu Don Quixote Skill 3.mp4|Skill 3
+Blade Lineage Salsu Don Quixote Defense.mp4|Defense
+</gallery>
+</tabber>
+
+==Navigation==
+{{SinnerNavbox|Don Quixote}}
+[[Category:Identities]]
+[[Category:Identity ID|03208 Blade Lineage]]
+[[Category:Season 3 Event]]
+[[Category:Don Quixote Identities]]
+[[Category:2-Star Identities|0308]]
+[[Category:Pride Affinity]]
+[[Category:Envy Affinity]]
+[[Category:Sloth Affinity]]
+[[Category:Identities with Evade Skills]]
+[[Category:Identities with Poise]]
+[[Category:Identities with Slash DMG Up]]
+[[Category:World of the Kurokumo Clan and Blade Lineage|10]]
+[[Category:Syndicate Identities]]
+[[Category:Blade Lineage Identities]]
+[[Category:Event Reward Identities and E.G.O]]

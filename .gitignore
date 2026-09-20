@@ -16,3 +16,6 @@ ui/public/gamedata
 
 # Subagent-driven-development scratch
 .superpowers/
+
+# Scraped images (regenerate with npm run scrape:images -w @limbus/data)
+packages/data/images/

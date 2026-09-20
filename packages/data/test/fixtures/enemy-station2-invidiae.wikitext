@@ -1,0 +1,1451 @@
+__TOC__ __FORCETOC__
+
+
+<center>''Units are listed in Deployment Order. <br> The Peccatulum Invidiae starts with 5 of each type of E.G.O Resource.''</center>
+
+=='''Refracted Peccatulum Invidiae - The Lord of Hongyuan Hong Lu Class 2'''==
+{{ENPage/Invidiae|type=Refracted Peccatulum Invidiae|suffix=Class 2
+<!--General Info-->
+|prefix=The Lord of Hongyuan
+|sinner=Hong Lu
+|level=60
+|rarity=3
+|season=6
+|uptie=4
+|keyword={{Keyword|Jia Family|strike}} {{Keyword|H Corp.}}
+|zayin=Land of Illusion
+|teth=Lasso
+|he=Dimension Shredder
+|waw=Tears of the Tarnished Blood 汚血泣淚 
+<!--Status, Resistances & Stagger Thresholds-->
+|hp=60
+|hpgrowth=2.2
+|speed=4~8
+|defmod=-2
+|slash=Ineff
+|pierce=Normal
+|blunt=Fatal
+|wrath=Fatal
+|lust=Normal
+|sloth=Normal
+|gluttony=Normal
+|gloom=Endure
+|pride=Normal
+|envy=Fatal
+|stagger1=65
+|stagger2=35
+|stagger3=
+<!--Skill1-->
+|skill1={{Skill
+|slevel=1
+|sin=Gloom
+|name=I Wish to Open the Path
+|type=Slash
+|icon=I Wish to Open the Path Hong Lu Icon
+|spower=4
+|cpower=+ 4
+|coin=2
+|amt=3
+|atkmod=+1
+|atkweight=1
+|se={{SkillCon|Combat Start}} Apply 1 {{StatusEffect|Defense Power Up|b}} to 1 + (highest Reson. / 3) other allies. (once per turn; max 3; prioritizes targets that have {{StatusEffect|Assist Defense|r}}; includes Unique Assist Defenses) <br> {{SkillCon|On Use}} At 6+ ({{StatusEffect|Rupture|d}} on target + {{StatusEffect|Poise|b}} on self), Coin Power +1 <br> {{SkillCon|On Use}} If target has 3+ types of negative effects, Clash Power +1
+|ce1={{SkillCon|On Hit}} Gain +3 {{StatusEffect|Poise|b}} Count
+|ce2={{SkillCon|On Hit}} Inflict +2 {{StatusEffect|Rupture|d}} Count
+}}
+<!--Skill2-->
+|skill2={{Skill
+|slevel=2
+|sin=Gluttony
+|name=Tarnished Blood's Absolute Cleaver of Ambitions ['''汚血絕志竟成''']
+|type=Slash
+|icon=Tarnished Blood's Absolute Cleaver of Ambitions -汚血絕志竟成- Hong Lu Icon
+|spower=3
+|cpower=+ 3
+|coin=4
+|amt=2
+|atkmod=+2
+|atkweight=1
+|se={{SkillCon|Combat Start}} Apply 1 {{StatusEffect|Gluttony DMG Up|b}} to all other allies that have Gluttony Skills equipped this turn (once per turn) <br> {{SkillCon|On Use}} Coin Power +1 for every 6 ({{StatusEffect|Rupture|d}} on target + {{StatusEffect|Poise|b}} on self) (max 2) <br> {{SkillCon|On Use}} Gain 3 {{StatusEffect|Poise|b}}
+|ce1={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+|ce2={{SkillCon|On Hit}} Gain +2 {{StatusEffect|Poise|b}} Count
+|ce3={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}}
+|ce4={{StatusEffect|Unbreakable Coin|r}} <br> Deal +50% damage <br> +50% Damage on Critical Hit <br> {{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Rupture|d}}
+}}
+<!--Skill3-->
+|skill3={{Skill
+|slevel=3
+|sin=Pride
+|name=Answer Me, Heishou Packs
+|type=Slash
+|icon=Answer Me, Heishou Packs Hong Lu Icon
+|spower=10
+|cpower=+ 12
+|coin=1
+|amt=1
+|atkmod=+3
+|atkweight=1
+|se=This Skill does not trigger Defense Skills <br><br> {{SkillCon|On Use}} Coin Power +1 for every 4 ({{StatusEffect|Rupture|d}} on target + {{StatusEffect|Poise|b}} on self) (max 3) <br> {{SkillCon|On Use}} Gain 5 {{StatusEffect|Poise|b}} and +3 {{StatusEffect|Poise|b}} Count <br><br> {{SkillCon|Attack End}} Among ally Heishou Pack units that can act, choose 1 unit that has the least {{StatusEffect|Unrelenting Storm|b}} Stack and apply {{StatusEffect|Unrelenting Storm|b}}; then, bestow {{StatusEffect|Exalted Command|r}}. (once per turn) <br> - After {{StatusEffect|Exalted Command|r}} is complete, The Lord of Hongyuan Hong Lu activates 'I Carve the Path of a Lord' <br> - If {{StatusEffect|Exalted Command|r}} did not activate, or if the combo Identity is Staggered or defeated before {{StatusEffect|Exalted Command|r}} is complete, use 'Lonesome Stand: Sacrifice to Claim The Garden' instead
+|ce1={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Offense Level Down|d}} for every 2 types of negative effect on target (max 3) <br> {{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Defense Level Down|d}} for every type of Deathrite on target (max 3)
+}}
+<!--Skill3 - 2-->
+|skill3-2={{Skill
+|slevel=3
+|sin=Pride
+|name=I Carve the Path of a Lord
+|type=Slash
+|icon=I Carve the Path of a Lord Hong Lu Icon
+|spower=6
+|cpower=+ 4
+|coin=2
+|amt=0
+|atkmod=+3
+|atkweight=1
+|se={{SkillCon|On Use}} If this unit activated combo with a Heishou Pack Adept Identity: Base Power +1, Coin Power +1 <br><br> Deal +1% damage for every 1% (missing HP percentage on target + missing HP percentage on self) (max 50%) <br> {{SkillCon|On Use}} Coin Power +1 for every 6 ({{StatusEffect|Rupture|d}} on target + {{StatusEffect|Poise|b}} on self) (max 3) <br> {{SkillCon|On Use}} Deal +10% damage for every 2 types of negative effects on target (max 30%) <br> {{SkillCon|On Use}} Deal +10% damage for every {{StatusEffect|Heishou Bolus Contamination -黑獸丸染-|b}} <br> {{SkillCon|Attack End}} Gain {{StatusEffect|Heishou Bolus Contamination -黑獸丸染-|b}} depending on which Heishou Pack Identity activated {{StatusEffect|Exalted Command|r}}
+|ce1={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+|ce2=Deal +50% Damage on Critical Hit <br> {{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Slash Resist Down|d}} next turn (once per turn) <br> {{SkillCon|On Kill}} For 2 ally Heishou Pack Identities that have the least SP, heal 10 SP and apply 1 {{StatusEffect|Attack Power Up|b}} next turn
+}}
+<!--Skill3 - 3-->
+|skill3-3={{Skill
+|slevel=3
+|sin=Pride
+|name=Lonesome Stand: Sacrifice to Claim The Garden ['''孑孑單身，捨生取园''']
+|type=Slash
+|icon=Lonesome Stand Sacrifice to Claim The Garden -孑孑單身, 捨生取园- Hong Lu Icon
+|spower=6
+|cpower=+ 4
+|coin=3
+|amt=0
+|atkmod=+3
+|atkweight=1
+|se=Deal +10% damage for every {{StatusEffect|Life from Death -死中求活-|b}} on self <br> Deal +1% damage for every 1% (missing HP percentage on target + missing HP percentage on self) (max 50%) <br> {{SkillCon|On Use}} At 3+ {{StatusEffect|Life from Death -死中求活-|b}}, gain +1 Atk Weight <br> {{SkillCon|On Use}} Coin Power +1 for every 6 ({{StatusEffect|Rupture|d}} on target + {{StatusEffect|Poise|b}} on self) (max 3) <br> {{SkillCon|On Use}} Deal +10% damage for every 2 types of negative effects on target (max 30%) <br> {{SkillCon|On Use}} Deal +10% damage for every {{StatusEffect|Heishou Bolus Contamination -黑獸丸染-|b}}
+|ce1={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}}
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}}
+|ce3=Deal +10% damage for every type of negative effect on target (max 50%) <br> {{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Slash Resist Down|d}} next turn (once per turn) <br> {{SkillCon|On Kill}} Gain 2 {{StatusEffect|Attack Power Up|b}} next turn
+}}
+<!--Defense Skill-->
+|defense={{Skill
+|slevel=1
+|sin=Gluttony
+|name=Heishou Keenclaw ['''黑獸利爪''']
+|type=Slash
+|icon=Heishou Keenclaw -黑獣利爪- Hong Lu Icon
+|spower=6
+|cpower=+ 7
+|coin=1
+|atkmod=+0
+|atkweight=1
+|se={{SkillCon|Clashable Counter}} <br> {{SkillCon|Combat Start}} Apply 1 {{StatusEffect|Slash Power Up|b}} to (highest Reson.) Heishou Pack Identity allies (once per turn) <br><br> {{SkillCon|Combat Start}} If there are Backup Units, select 1 ally Heishou that has the least HP percentage. <br> - Upon using this Skill, apply {{StatusEffect|Your Will Guides My Blade.|r}} to the selected ally, command {{StatusEffect|Battlefield Retreat|r}}, and heal 10% of their HP upon Retreating (once per turn) <br> - The Heishou Pack Identity who Retreated due to this effect will be placed earlier in the Return line than non-Heishou Identities <br> {{SkillCon|Combat Start}} If there are no Backup Units, apply 2 {{StatusEffect|Attack Power Up|b}} to 1 ally Heishou that has the least HP percentage (once per turn)
+|ce1={{StatusEffect|Unbreakable Coin|r}}
+}}
+<!--Defense 2-->
+|defense2={{Skill
+|slevel=1
+|sin=Gluttony
+|name=Lordsguard
+|type=Guard
+|icon=Lordsguard Hong Lu Icon
+|spower=2
+|cpower=+ 8
+|coin=1
+|defmod=+0
+|atkweight=1
+|se={{StatusEffect|Clashable Guard|r}} <br> This Skill counts as Assist Defense only for the unit that uses the Skill, and does not trigger the effects of other characters that have conditionals that check for {{StatusEffect|Assist Defense|r}} activation. <br> {{SkillCon|On Use}} If target has 3+ types of negative effects, Clash Power +1
+|ce1={{StatusEffect|Unbreakable Coin|r}}
+}}
+<!--Passive 0-->
+|passive0={{Passive|The Heishou Lord|When other ally units Substitute in or Return to the battlefield, they heal 10 SP; then, at Combat Start, command them to use Skill 1 as an Unopposed Attack against a random enemy <br> - If the said ally is a Heishou Pack or a Jia Family unit, activate the following instead: heal 20 SP; then, at Combat Start, command them to use their base Skill 3 as an Unopposed Attack against a random enemy (2 times per Encounter per Identity) <br><br> Encounter Start: gain 1 {{StatusEffect|Leash-holder of All Heishou|b}} for every Heishou Pack Identity in the Team, including Backup Units <br><br> When Heishou Units are killed in an Encounter, heal 20 SP and gain 1 {{StatusEffect|Life from Death -死中求活-|b}} (activates even when this unit has Retreated) <br><br> Deal +5% damage for every 1 {{StatusEffect|Heishou Bolus Contamination -黑獸丸染-|b}} (max 55%)}}
+<!--Passive 1-->
+|passive1={{Passive|Embrace the Tarnished Blood and Exsanguinate Others For the Cause.|sin=Gluttony|req=5 Owned|Combat Start: If this unit did not equip a Defense Skill and is about to take an Unopposed Attack, apply 1 {{StatusEffect|Lordsguard|r}} to (highest Reson. / 3) random Heishou Pack allies that have the least {{StatusEffect|Assist Defense|r}} Stacks (max 2 allies; once per Identity; excludes Identities that have Skills that gain {{StatusEffect|Assist Defense|r}}) <br><br> In this Encounter, when this unit takes damage that brings their HP down to 0, nullify that damage; then, this unit's HP cannot drop below 1 for the turn, and it gains 1 {{StatusEffect|Tarnished Blood|b}} (once per Encounter) <br><br> This unit's Skills deal +3% damage for every {{StatusEffect|Tarnished Blood|b}} on self <br><br> When activating the E.G.O Skill '[[Tears of the Tarnished Blood 汚血泣淚 Hong Lu|Tears of the Tarnished Blood - The End]]', nullify the death effect in its Attack End effects; instead, heal 60% HP. Starting next turn, gain 1 {{StatusEffect|Damage Up|b}} at every Turn Start (once per Encounter)}}
+|passive2={{Passive|Refracted Mind|Entry SP +45}}
+|passive3={{Passive|Refracted Struggle|At 10+ Clashes against the same enemy, randomly gain or lose Clash Power by (Clash Count / 10) in a Clash. (rounded down)}}
+|passive4={{Passive|Refracted Egress|Cannot Retreat}}
+<!--Passive 2-->
+|spassive={{Passive|Please be traceless in your deeds.|sin=Gluttony|req=6 Owned|Identity that has the least current HP percentage: Deal +(types of Deathrites on target x 3)% damage against the enemy (max 15%)}}
+}}
+
+=='''Refracted Peccatulum Invidiae - Heishou Pack - Mao Branch Adept Faust Class 2'''==
+{{ENPage/Invidiae|type=Refracted Peccatulum Invidiae|suffix=Class 2
+<!--General Info-->
+|prefix=Heishou Pack - Mao Branch Adept
+|sinner=Faust
+|level=60
+|rarity=3
+|season=6
+|uptie=4
+|keyword={{Keyword|H Corp.}} {{Keyword|Heishou Pack}} {{Keyword|Heishou Pack Adept}} {{Keyword|Heishou Pack - Mao Branch}}
+|zayin=Representation Emitter
+|teth=Lasso
+|he=Fluid Sac
+|waw=Everlasting
+<!--Status, Resistances & Stagger Thresholds-->
+|hp=76
+|hpgrowth=3.19
+|speed=4~7
+|defmod=+3
+|slash=Ineff
+|pierce=Normal
+|blunt=Fatal
+|wrath=Normal
+|lust=Fatal
+|sloth=Normal
+|gluttony=Fatal
+|gloom=Normal
+|pride=Endure
+|envy=Normal
+|stagger1=50
+<!--Skill1-->
+|skill1={{Skill|level=60
+|slevel=1
+|sin=Sloth
+|name=Blinkstep
+|type=Slash
+|icon=Blinkstep Faust Icon
+|spower=3
+|cpower=+ 4
+|coin=2
+|amt=3
+|atkmod=+1
+|atkweight=1
+|se=If this unit's Speed is faster than the target's by 3 or more, Coin Power +1 <br> {{SkillCon|On Use}} If target has 4+ {{StatusEffect|Rupture|d}}, Coin Power +1 <br> {{SkillCon|Clash Win}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+|ce1={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}}
+|ce2={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Hit}} At 10+ Speed, Reuse Coin once (once per Skill)
+}}
+<!--Skill2-->
+|skill2={{Skill|level=60
+|slevel=2
+|sin=Pride
+|name=Clearing the Path, My Lord.
+|type=Slash
+|icon=Clearing the Path, My Lord Faust Icon
+|spower=4
+|cpower=+ 6
+|coin=2
+|amt=2
+|atkmod=+2
+|atkweight=1
+|se=If this unit's Speed is faster than the target's, deal +(Speed difference x {{StatusEffect|Tianjiu Star's Blade|r}} on self)% damage (max 50%) <br> If this unit's Speed is faster than the target's by 3 or more, Coin Power +1 <br> {{SkillCon|On Use}} If target has 4+ {{StatusEffect|Rupture|d}}, Coin Power +1 <br> {{SkillCon|On Use}} Gain 2 {{StatusEffect|Haste|b}} next turn (once per turn) <br> {{SkillCon|Clash Win}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+|ce1={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}} <br> If target has {{StatusEffect|Deathrite -Haste-|d}} or {{StatusEffect|Deathrite -Fissure-|d}}, deal +50% damage
+}}
+<!--Skill3-->
+|skill3={{Skill|level=60
+|slevel=3
+|sin=Gluttony
+|name=Traceless to Sight and Sound Alike.
+|type=Slash
+|icon=Traceless to Sight and Sound Alike Faust Icon
+|spower=5
+|cpower=+ 4
+|coin=3
+|amt=1
+|atkmod=+3
+|atkweight=1
+|se=If this unit's Speed is faster than the target's, deal +(Speed difference x {{StatusEffect|Rupture|d}} Potency on target)% damage (max 50%) <br> If this unit's Speed is faster than the target's, gain Coin Power based on Speed difference (Coin Power +1 for every 2 Speed difference; max 2) <br> {{SkillCon|Combat Start}} Gain 1 {{StatusEffect|Assist Defense|r}} (once per turn) <br> {{SkillCon|Before Use}} At 10+ {{StatusEffect|Tianjiu Star's Blade|r}}, activate "Ascendant Heishou - Mao Technique: Cloudsplitting Manifestation" instead <br> {{SkillCon|On Use}} If target has 15+ {{StatusEffect|Rupture|d}}, Coin Power +1 <br> {{SkillCon|On Use}} Gain 3 {{StatusEffect|Strider -Mao-|b}} <br> {{SkillCon|Clash Win}} Inflict +2 {{StatusEffect|Rupture|d}} Count
+|ce1={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Hit}} Inflict {{StatusEffect|Deathrite -Haste-|d}}
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}}
+|ce3=At 10+ Speed, deal +30% damage <br> {{SkillCon|On Hit}} Inflict 3 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit}} At 10+ Speed, Reuse Coin once (once per Skill) <br> {{SkillCon|Reuse - On Hit}} Inflict {{StatusEffect|Deathrite -Haste-|d}}
+}}
+<!--Skill4-->
+|skill3-2={{Skill|level=60
+|slevel=3
+|sin=Gluttony
+|name=Ascendant Heishou - Mao Technique: Cloudsplitting Manifestation
+|type=Slash
+|icon=Ascendant Heishou - Mao Technique Cloudsplitting Manifestation Faust Icon
+|spower=5
+|cpower=+ 4
+|coin=3
+|amt=0
+|atkmod=+4
+|atkweight=1
+|se=If this unit's Speed is faster than the target's, deal +(Speed difference x {{StatusEffect|Rupture|d}} Potency on target)% damage (max 50%) <br> If this unit's Speed is faster than the target's, gain Coin Power based on Speed difference (Coin Power +1 for every 2 Speed difference; max 2) <br> {{SkillCon|On Use}} Coin Power +1 for every 10 {{StatusEffect|Rupture|d}} on target (max 2) <br> {{SkillCon|On Use}} At 10+ Speed, gain 20 {{StatusEffect|Poise|b}}; if this unit has less than 4 {{StatusEffect|Poise|b}} Count, raise {{StatusEffect|Poise|b}} Count up to 4 <br> {{SkillCon|On Use}} Gain 3 {{StatusEffect|Strider -Mao-|b}} <br> {{SkillCon|Clash Win}} Inflict +2 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|Attack End}} Consume 10 {{StatusEffect|Tianjiu Star's Blade|r}}
+|ce1={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Hit}} Inflict {{StatusEffect|Deathrite -Fissure-|d}} <br> {{SkillCon|On Hit}} Inflict {{StatusEffect|Deathrite -Haste-|d}}
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}}
+|ce3=At 10+ Speed, deal +30% damage <br> {{SkillCon|On Hit}} Inflict 3 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit}} At 10+ Speed, Reuse Coin once (once per Skill) <br> {{SkillCon|Reuse - On Hit}} Inflict {{StatusEffect|Deathrite -Fissure-|d}} <br> {{SkillCon|Reuse - On Hit}} Inflict {{StatusEffect|Deathrite -Haste-|d}}
+}}
+<!--Defense Skill-->
+|defense={{Skill|level=60
+|slevel=1
+|sin=Gluttony
+|name=It Shall Be Done.
+|type=Slash
+|icon=It Shall be Done Faust Icon
+|spower=5
+|cpower=+ 4
+|coin=2
+|atkmod=+2
+|atkweight=1
+|se={{SkillCon|Clashable Counter}} <br> {{SkillCon|Combat Start}} Gain 1 {{StatusEffect|Assist Defense|r}} (once per turn) <br> {{SkillCon|On Use}} This Skill gains +1 Offense Level for every 10% HP this unit has cumulatively lost in this Encounter (max 6; based on max HP at the time of activation) <br> {{SkillCon|On Use}} Gain 3 {{StatusEffect|Strider -Mao-|b}} <br> {{SkillCon|On Use}} If this unit's Speed is faster than the target's by 2 or more, gain Base Power based on Speed difference (Base Power +1 for every 2 Speed difference; max 2)
+|ce1={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}}
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}}
+}}
+<!--Defense Skill 2-->
+|defense2={{Skill|level=60
+|slevel=1
+|sin=Gluttony
+|name=Swiftfeet Protection
+|type=Guard
+|icon=Swiftfeet Protection Faust Icon
+|spower=4
+|cpower=+ 10
+|3cpower=+ 8
+|coin=1
+|defmod=+2
+|atkweight=1
+|se={{StatusEffect|Clashable Guard|r}} <br> Exclusive Skill for {{StatusEffect|Assist Defense|r}} <br> {{SkillCon|Before Use}} At 10+ {{StatusEffect|Tianjiu Star's Blade|r}}, activates "Ascendant Heishou - Mao Technique: Cloudsplitting Manifestation" instead <br> {{SkillCon|On Use}} This Skill gains +1 Defense Level for every 10% HP this unit has cumulatively lost in this Encounter (max 6; based on max HP at the time of activation) <br> {{SkillCon|On Use}} Cannot be Staggered by damage until this Skill ends <br> {{SkillCon|On Use}} Gain 2 {{StatusEffect|Protection|b}} (once per turn)
+|ce1={{StatusEffect|Unbreakable Coin|r}}
+}}
+<!--Passives-->
+|passive0={{Passive|Tianjiu Star|When {{StatusEffect|Deathrite -Fissure-|d}} Stack drops to 0 and expires, gain {{StatusEffect|Mark of Decay|d}}}}
+|passive1={{Passive|Heishou Mutation [Mao] / Mao Branch Adept|sin=Gluttony|req=5 Owned|If this unit's Speed is faster than the target's, deal +2% more damage for every 1 Speed difference (max 10%) <br><br> Gain 1 {{StatusEffect|Tianjiu Star's Blade|r}} every time an ally triggers a Deathrite effect (5 times per turn) <br> - If this unit triggered a Deathrite effect, gain 1 additional {{StatusEffect|Tianjiu Star's Blade|r}} <br> When activating the {{StatusEffect|Assist Defense|r}} effect, gain 5 {{StatusEffect|Tianjiu Star's Blade|r}}}}
+|passive2={{Passive|Refracted Mind|Entry SP +30}}
+|passive3={{Passive|Refracted Struggle|At 10+ Clashes against the same enemy, randomly gain or lose Clash Power by (Clash Count / 10) in a Clash. (rounded down)}}
+|passive4={{Passive|Refracted Egress|Cannot Retreat}}
+<!--Passive 2-->
+|spassive={{Passive|Blinkblade|sin=Gluttony|req=4 Res|When 1 ally with the fastest Speed inflicts {{StatusEffect|Rupture|d}} damage, gain 1 {{StatusEffect|Offense Level Up|b}} next turn (3 times per turn)}}
+}}
+
+=='''Refracted Peccatulum Invidiae - Heishou Pack - Wu Branch Adept Yi Sang Class 2'''==
+{{ENPage/Invidiae|type=Refracted Peccatulum Invidiae|suffix=Class 2
+<!--General Info-->
+|prefix=Heishou Pack - Wu Branch Adept
+|sinner=Yi Sang
+|level=60
+|rarity=3
+|season=6e
+|uptie=4
+|keyword={{Keyword|H Corp.}} {{Keyword|Jia Family}} {{Keyword|Heishou Pack}} {{Keyword|Heishou Pack Adept}} {{Keyword|Heishou Pack - Wu Branch}}
+|zayin=Crow's Eye View
+|teth=Wishing Cairn
+|he=Dimension Shredder
+|waw=Sunshower
+<!--Status, Resistances & Stagger Thresholds-->
+|hp=66
+|hpgrowth=3.41
+|speed=4~7
+|defmod=+5
+|slash=Ineff
+|pierce=Fatal
+|blunt=Normal
+|wrath=Normal
+|lust=Normal
+|sloth=Endure
+|gluttony=Normal
+|gloom=Fatal
+|pride=Normal
+|envy=Fatal
+|stagger1=60
+|stagger2=30
+<!--Skill1-->
+|skill1={{Skill|level=60
+|slevel=1
+|sin=Sloth
+|name=Cut Down and Trample
+|type=Slash
+|icon=Cut Down and Trample Yi Sang Icon
+|spower=3
+|cpower=+ 4
+|coin=2
+|amt=3
+|atkmod=+1
+|atkweight=1
+|se=If this unit's Speed is faster than the target's, Coin Power +1 <br> {{SkillCon|On Use}} If target has 5+ ({{StatusEffect|Rupture|d}} + {{StatusEffect|Tremor|d}}), Coin Power +1 <br> {{SkillCon|Clash Win}} Inflict 1 {{StatusEffect|Bind|d}} next turn (2 times per turn)
+|ce1={{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Rupture|d}}
+|ce2={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Tremor|d}}
+}}
+<!--Skill2-->
+|skill2={{Skill|level=60
+|slevel=2
+|sin=Envy
+|name=Crescent Blade Strike ['''月刀擊''']
+|type=Slash
+|icon=Crescent Blade Strike -月刀擊- Yi Sang Icon
+|spower=4
+|cpower=+ 5
+|coin=2
+|amt=2
+|atkmod=+2
+|atkweight=1
+|se=If this unit's Speed is faster than the target's: <br> - Coin Power +1 <br> - If this unit's Speed is faster than the target's by 2 or more, deal +({{StatusEffect|Linebreaker|b}} on self x 20)% damage (max 100%) <br><br> {{SkillCon|On Use}} Coin Power +1 for every 5 ({{StatusEffect|Rupture|d}} + {{StatusEffect|Tremor|d}}) on target (max 2) <br> {{SkillCon|On Use}} Gain 2 {{StatusEffect|Haste|b}} next turn (once per turn)
+|ce1={{SkillCon|On Hit}} Inflict +2 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Hit}} Inflict 3 {{StatusEffect|Tremor|d}}
+|ce2={{SkillCon|On Hit}} Trigger {{StatusEffect|Tremor Burst|d}}; then, reduce target's {{StatusEffect|Tremor|d}} Count by 1 <br> {{SkillCon|On Hit}} If target doesn't have Deathrite, inflict 1 {{StatusEffect|Concussion|d}} <br> {{SkillCon|On Hit}} If target has Deathrite, inflict 3 {{StatusEffect|Rupture|d}}
+}}
+<!--Skill3-->
+|skill3={{Skill|level=60
+|slevel=3
+|sin=Gluttony
+|name=Cavalry's Vanguard Charge
+|type=Slash
+|icon=Cavalry's Vanguard Charge Yi Sang Icon
+|spower=5
+|cpower=+ 4
+|coin=3
+|amt=1
+|atkmod=+3
+|atkweight=1
+|se=If this unit's Speed is faster than the target's: <br> - Final Power +1 <br> - Deal +({{StatusEffect|Linebreaker|b}} on self x 20)% damage (max 80%) <br><br> Deal +(Shield HP on self x 2)% damage (max 50%) <br><br> {{SkillCon|Before Use}} At 5 {{StatusEffect|Linebreaker|b}}, consume all of it to activate "Obsidian Stormrider's Crescent Decapitator" instead <br> {{SkillCon|On Use}} Gain 3 {{StatusEffect|Strider -Wu-|b}} <br> {{SkillCon|On Use}} Coin Power +1 for every 5 ({{StatusEffect|Rupture|d}} + {{StatusEffect|Tremor|d}}) on target (max 2) <br> {{SkillCon|On Use}} At 3+ {{StatusEffect|Linebreaker|b}}, convert all Coins to {{StatusEffect|Unbreakable Coin|r}}s
+|ce1={{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Tremor|d}}
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Bind|d}} next turn <br> - At 3+ {{StatusEffect|Linebreaker|b}}, inflict 1 additional {{StatusEffect|Bind|d}} <br> {{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Tremor|d}} Count
+|ce3={{SkillCon|On Hit}} Trigger {{StatusEffect|Tremor Burst|d}}; then, reduce target's {{StatusEffect|Tremor|d}} Count by 1 <br> {{SkillCon|On Hit}} At 2+ {{StatusEffect|Strider -Wu-|b}}, inflict 2 {{StatusEffect|Concussion|d}}
+}}
+<!--Skill3 - 2-->
+|skill3-2={{Skill|level=60
+|slevel=3
+|sin=Gluttony
+|name=Obsidian Stormrider's Crescent Decapitator ['''黑風馬脚月斬''']
+|type=Slash
+|icon=Obsidian Stormrider's Crescent Decapitator -黑風馬脚月斬- Yi Sang Icon
+|spower=5
+|cpower=+ 3
+|coin=4
+|amt=0
+|atkmod=+4
+|atkweight=3
+|se=If this unit's Speed is faster than the target's, Final Power +1 <br> {{SkillCon|On Use}} Apply 1 {{StatusEffect|Commanding Cry|b}} on all other allies next turn (once per turn) <br> {{SkillCon|On Use}} Gain 3 {{StatusEffect|Strider -Wu-|b}} <br> {{SkillCon|On Use}} Coin Power +1 for every 5 ({{StatusEffect|Rupture|d}} + {{StatusEffect|Tremor|d}}) on target (max 2) <br> {{SkillCon|Clash Win}} If this unit's Speed is faster than the target's, deal +50% damage <br> {{SkillCon|Clash Win}} Inflict 1 {{StatusEffect|Concussion|d}} against the main target
+|ce1={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit}} Inflict 3 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit}} Inflict 4 {{StatusEffect|Tremor|d}}
+|ce2={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit}} Inflict +2 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Hit}} Inflict +2 {{StatusEffect|Tremor|d}} Count
+|ce3={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Concussion|d}}
+|ce4={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit}} Trigger {{StatusEffect|Tremor Burst|d}}; then, reduce target's {{StatusEffect|Tremor|d}} Count by 1 <br> {{SkillCon|On Hit}} Trigger {{StatusEffect|Tremor Burst|d}}; then, reduce target's {{StatusEffect|Tremor|d}} Count by 1
+}}
+<!--Defense Skill-->
+|defense={{Skill|level=60
+|slevel=1
+|sin=Gluttony
+|name=Preparation Afore the Charge.
+|type=Guard
+|icon=Preparation Afore the Charge. Yi Sang Icon
+|spower=3
+|cpower=+ 10
+|coin=1
+|defmod=+2
+|atkweight=1
+|se={{StatusEffect|Clashable Guard|r}} <br> {{SkillCon|Combat Start}} Gain 3 {{StatusEffect|Strider -Wu-|b}} next turn <br> {{SkillCon|Turn End}} Remove 1 random removable negative effect applied to self (once per turn)
+|ce1={{StatusEffect|Unbreakable Coin|r}}
+}}
+<!--Passives-->
+|passive0={{Passive|The Steed's Houndlike Loyalty ['''狗馬之心''']|When activating {{StatusEffect|Exalted Command|r}}, [[The Lord of Hongyuan Hong Lu]] gains the following effect as the {{StatusEffect|Heishou Bolus Contamination -黑獸丸染-|b}} effect: <br> - On Hit using a Base Skill's Final Coin, trigger {{StatusEffect|Tremor Burst|d}} once (once per turn) <br><br> If [[Family Hierarch Candidate Ishmael]] is on the field, activate the following: <br> - When Family Hierarch Candidate Ishmael inflicts {{StatusEffect|Rupture|d}} or {{StatusEffect|Rupture|d}} Count using its Skill effects, that unit gains 3 {{StatusEffect|Poise|b}} Potency (2 times per turn; excluding E.G.O Skills) <br> - Turn Start: Apply 1 {{StatusEffect|Attack Power Up|b}} on Family Hierarch Candidate Ishmael. If Ishmael has 10+ {{StatusEffect|Poise|b}} Potency, apply 1 more {{StatusEffect|Attack Power Up|b}} <br> - After this unit uses the Skill "Obsidian Stormrider's Crescent Decapitator", Family Hierarch Candidate Ishmael uses "Crimson Spring" as Assist Attack (once per turn)}}
+|passive1={{Passive|Adept Vanguard|When applying {{StatusEffect|Commanding Cry|b}}, gain 3 {{StatusEffect|Offense Level Up|b}} this turn and next turn <br> (If this unit has already gained {{StatusEffect|Offense Level Up|b}} from this passive, gain it only for the next turn)}}
+|passive2={{Passive|Obsidian Stormrider ['''黑風馬脚''']|sin=Gluttony|req=5 Owned|Gain 1 {{StatusEffect|Linebreaker|b}} when meeting one of the following conditions: <br> - Attack Start: When this unit's Speed is faster than the target's by 2 or more <br> - When this unit triggers {{StatusEffect|Tremor Burst|d}} twice using its Skills (including E.G.O Skills) <br> - When this unit wins a Clash while having {{StatusEffect|Strider -Wu-|b}} <br> ※ Only 3 {{StatusEffect|Linebreaker|b}} can be gained per turn; cannot gain {{StatusEffect|Linebreaker|b}} using the Skill "Obsidian Stormrider's Crescent Decapitator" <br><br> When this unit has Shield, gain (Shield HP / 10) Defense Level (max 5; rounded down)}}
+|passive3={{Passive|Refracted Mind|Entry SP +30}}
+|passive4={{Passive|Refracted Struggle|At 10+ Clashes against the same enemy, randomly gain or lose Clash Power by (Clash Count / 10) in a Clash. (rounded down)}}
+|passive5={{Passive|Refracted Egress|Cannot Retreat}}
+<!--Passive 2-->
+|spassive={{Passive|Obsidian Exoskeleton Shall Rend and Protect My Flesh|sin=Gluttony|req=4 Owned|Apply the following effect to 1 ally that has the highest max HP <br> - Combat Start: Gain (affected unit's Speed difference between this turn and last turn x 2) Defense Level (max 5; if the affected unit was not an Active participant last turn, use its minimum base Speed value to calculate) <br> - Combat Start: If the affected unit is at less than 50% HP, and if the Speed difference between this turn and last turn is 3 or higher, heal 50 HP (once per Encounter)}}
+}}
+
+=='''Refracted Peccatulum Invidiae - Heishou Pack - Mao Branch Ryōshū Class 2'''==
+{{ENPage/Invidiae|type=Refracted Peccatulum Invidiae|suffix=Class 2
+<!--General Info-->
+|prefix=Heishou Pack - Mao Branch
+|sinner=Ryōshū
+|quote=I still have some time… to finish smoking this L.C.
+|level=60
+|rarity=3
+|season=5e
+|uptie=4
+|keyword={{Keyword|H Corp.}} {{Keyword|Heishou Pack}} {{Keyword|Heishou Pack - Mao Branch}}
+|zayin=Forest for the Flames
+|teth=Blind Obsession
+|he=Thoracalgia
+|waw=Contempt, Awe
+<!--Status, Resistances & Stagger Thresholds-->
+|hp=69
+|hpgrowth=2.34
+|speed=4~7
+|defmod=-2
+|slash=Ineff
+|pierce=Normal
+|blunt=Fatal
+|wrath=Normal
+|lust=Endure
+|sloth=Normal
+|gluttony=Fatal
+|gloom=Normal
+|pride=Normal
+|envy=Fatal
+|stagger1=65
+|stagger2=35
+<!--Skill1-->
+|skill1={{Skill|level=60
+|slevel=1
+|sin=Lust
+|name=Blinkstep
+|type=Slash
+|icon=Blinkstep Ryōshū Icon
+|spower=3
+|cpower=+ 4
+|coin=2
+|atkmod=+1
+|atkweight=1
+|amt=3
+|se=If this unit's Speed is faster than the target's by 3 or more, Coin Power +1 <br> {{SkillCon|On Use}} If target has 4+ {{StatusEffect|Rupture|d}}, Coin Power +1 <br> {{SkillCon|Clash Win}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+|ce1={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}}
+|ce2={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Hit}} At 10+ Speed, Reuse Coin once (once per Skill)
+}}
+<!--Skill2-->
+|skill2={{Skill|level=60
+|slevel=2
+|sin=Gluttony
+|name=As Written
+|type=Slash
+|icon=As Written Ryōshū Icon
+|spower=4
+|cpower=+ 6
+|coin=2
+|atkmod=+2
+|atkweight=1
+|amt=2
+|se=If this unit's Speed is faster than the target's, deal +(Speed difference x {{StatusEffect|Rupture|d}} Potency on target)% damage (max 50%) <br> If this unit's Speed is faster than the target's by 3 or more, Coin Power +1 <br> {{SkillCon|On Use}} If target has 4+ {{StatusEffect|Rupture|d}}, Coin Power +1 <br> {{SkillCon|On Use}} Gain 2 {{StatusEffect|Haste|b}} next turn (once per turn) <br> {{SkillCon|Clash Win}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+|ce1={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit}} At 10+ Speed, inflict +1 {{StatusEffect|Rupture|d}} Count
+|ce2=At 10+ Speed, deal +30% damage <br> {{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}}
+}}
+<!--Skill3-->
+|skill3={{Skill|level=60
+|slevel=3
+|sin=Pride
+|name=I'll gut you with a curse-engraved blade
+|type=Slash
+|icon=I'll gut you with a curse-engraved sword Ryōshū Icon
+|spower=5
+|cpower=+ 4
+|coin=3
+|atkmod=+4
+|atkweight=1
+|amt=1
+|se=If this unit's Speed is faster than the target's, deal +(Speed difference x {{StatusEffect|Rupture|d}} Potency on target)% damage (max 50%) <br> If this unit's Speed is faster than the target's, gain Coin Power based on Speed difference (Coin Power +1 for every 2 Speed difference; max 2) <br> {{SkillCon|On Use}} If target has 15+ {{StatusEffect|Rupture|d}}, Coin Power +1 <br> {{SkillCon|On Use}} Gain 3 {{StatusEffect|Strider -Mao-|b}} <br> {{SkillCon|Clash Win}} Inflict +2 {{StatusEffect|Rupture|d}} Count
+|ce1={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Hit}} Inflict {{StatusEffect|Deathrite -Haste-|d}}
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}}
+|ce3=At 10+ Speed, deal +30% damage <br> {{SkillCon|On Hit}} Inflict 3 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit}} At 10+ Speed, Reuse Coin once (once per Skill) <br> {{SkillCon|Reuse - On Hit}} Inflict {{StatusEffect|Deathrite -Haste-|d}} 
+}}
+<!--Defense Skill-->
+|defense={{Skill|level=60
+|slevel=1
+|sin=Gluttony
+|name=Strider. Unleashed. Heh
+|type=Slash
+|icon=Strider. Unleashed. Heh Ryōshū Icon
+|spower=5
+|cpower=+ 8
+|coin=1
+|atkmod=+1
+|atkweight=1
+|se={{SkillCon|Clashable Counter}} <br> {{SkillCon|On Use}} Gain 3 {{StatusEffect|Strider -Mao-|b}} <br> {{SkillCon|On Use}} If this unit's Speed is faster than the target's, gain Base Power based on Speed difference (Base Power +1 for every 2 Speed difference; max 2)
+|ce1={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+}}
+<!--Passives-->
+|passive1={{Passive|Heishou Mutation [Mao]|sin=Gluttony|req=3 Owned|If this unit has {{StatusEffect|Strider -Mao-|b}}, deal +5% damage <br> If the target has {{StatusEffect|Deathrite -Haste-|d}}, deal +5% damage}}
+|passive2={{Passive|Refracted Struggle|At 10+ Clashes against the same enemy, randomly gain or lose Clash Power by (Clash Count / 10) in a Clash. (rounded down)}}
+|passive3={{Passive|Refracted Egress|Cannot Retreat}}
+<!--Passive 2-->
+|spassive={{Passive|Partial Heishou Mutation Training|sin=Gluttony|req=5 Owned|Turn End: 1 ally with the fastest Speed gains 2 {{StatusEffect|Haste|b}} next turn}}
+}}
+
+=='''Refracted Peccatulum Invidiae - Heishou Pack - Mao Branch Outis Class 2'''==
+{{ENPage/Invidiae|type=Refracted Peccatulum Invidiae|suffix=Class 2
+<!--General Info-->
+|prefix=Heishou Pack - Mao Branch
+|sinner=Outis
+|level=60
+|rarity=3
+|season=5e
+|uptie=4
+|keyword={{Keyword|H Corp.}} {{Keyword|Heishou Pack}} {{Keyword|Heishou Pack - Mao Branch}}
+|zayin=To Páthos Máthos
+|teth=Sunshower
+|he=Ebony Stem
+|waw=Binds
+<!--Status, Resistances & Stagger Thresholds-->
+|hp=69
+|hpgrowth=2.34
+|speed=4~7
+|defmod=-3
+|slash=Ineff
+|pierce=Normal
+|blunt=Fatal
+|wrath=Normal
+|lust=Fatal
+|sloth=Normal
+|gluttony=Normal
+|gloom=Normal
+|pride=Endure
+|envy=Fatal
+|stagger1=70
+|stagger2=40
+|stagger3=20
+<!--Skill1-->
+|skill1={{Skill|level=60
+|slevel=1
+|sin=Sloth
+|name=Blinkstep
+|type=Slash
+|icon=Blinkstep Outis Icon
+|spower=4
+|cpower=+ 3
+|coin=2
+|atkmod=+2
+|atkweight=1
+|amt=3
+|se=If this unit's Speed is faster than the target's by 3 or more, Coin Power +1 <br> {{SkillCon|On Use}} If target has 4+ {{StatusEffect|Rupture|d}}, Coin Power +1
+|ce1={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}}
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit}} At 10+ Speed, Reuse Coin once (once per Skill)
+}}
+<!--Skill2-->
+|skill2={{Skill|level=60
+|slevel=2
+|sin=Gluttony
+|name=Perforating Kill
+|type=Slash
+|icon=Perforating Kill Outis Icon
+|spower=4
+|cpower=+ 6
+|2cpower=+ 5
+|coin=2
+|atkmod=+3
+|atkweight=1
+|amt=2
+|se=If this unit's Speed is faster than the target's by 3 or more, Coin Power +1 <br> {{SkillCon|On Use}} If target has 4+ {{StatusEffect|Rupture|d}}, Coin Power +1 <br> {{SkillCon|On Unopposed Attack}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+|ce1={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Hit}} Gain 1 {{StatusEffect|Haste|b}} next turn (2 times per turn)
+|ce2=At 10+ Speed, deal +30% damage <br> {{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+}}
+<!--Skill3-->
+|skill3={{Skill|level=60
+|slevel=3
+|sin=Gloom
+|name=Cursewrit Butcherblade
+|type=Slash
+|icon=Cursewrit Butcherblade Outis Icon
+|spower=5
+|cpower=+ 4
+|coin=3
+|atkmod=+5
+|atkweight=1
+|amt=1
+|se=If this unit's Speed is faster than the target's, deal +(Speed difference x {{StatusEffect|Rupture|d}} Potency on target)% damage (max 50%) <br> If this unit's Speed is faster than the target's, gain Coin Power based on Speed difference (Coin Power +1 for every 2 Speed difference; max 2) <br> {{SkillCon|On Use}} If target has 15+ {{StatusEffect|Rupture|d}}, Coin Power +1 <br> {{SkillCon|On Use}} Gain 3 {{StatusEffect|Strider -Mao-|b}} <br> {{SkillCon|On Unopposed Attack}} Inflict +2 {{StatusEffect|Rupture|d}} Count
+|ce1={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit}} Inflict {{StatusEffect|Deathrite -Haste-|d}}
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}} 
+|ce3={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit}} At 10+ Speed, Reuse Coin once (once per Skill) <br> {{SkillCon|Reuse - On Hit}} Inflict {{StatusEffect|Deathrite -Haste-|d}}
+}}
+<!--Defense Skill-->
+|defense={{Skill|level=60
+|slevel=1
+|sin=Gluttony
+|name=Partial Heishou Mutation
+|type=Slash
+|icon=Partial Heishou Mutation Outis Icon
+|spower=5
+|cpower=+ 7
+|coin=1
+|atkmod=+0
+|atkweight=1
+|se={{SkillCon|Clashable Counter}} <br> {{SkillCon|On Use}} Gain 3 {{StatusEffect|Strider -Mao-|b}} <br> {{SkillCon|On Use}} If this unit's Speed is faster than the target's, gain Base Power based on Speed difference (Base Power +1 for every 2 Speed difference; max 2)
+|ce1={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+}}
+<!--Passives-->
+|passive1={{Passive|Heishou Mutation [Mao]|sin=Gluttony|req=3 Owned|If this unit has {{StatusEffect|Strider -Mao-|b}} and the target has {{StatusEffect|Deathrite -Haste-|d}}, deal +5% damage for every {{StatusEffect|Strider -Mao-|b}} (max 15%)}}
+|passive2={{Passive|Refracted Struggle|At 10+ Clashes against the same enemy, randomly gain or lose Clash Power by (Clash Count / 10) in a Clash. (rounded down)}}
+|passive3={{Passive|Refracted Egress|Cannot Retreat}}
+<!--Passive 2-->
+|spassive={{Passive|A Husk of Hares|sin=Gluttony|req=3 Res|1 ally with the fastest Speed: when attacking targets with {{StatusEffect|Rupture|d}}, deal +10% damage <br> Gain 1 {{StatusEffect|Haste|b}} next turn (once per turn)}}
+}}
+
+=='''Refracted Peccatulum Invidiae - Heishou Pack - Si Branch Rodion Class 2'''==
+{{ENPage/Invidiae|type=Refracted Peccatulum Invidiae|suffix=Class 2
+<!--General Info-->
+|prefix=Heishou Pack - Si Branch
+|sinner=Rodion
+|level=60
+|rarity=3
+|season=6
+|uptie=4
+|keyword={{Keyword|H Corp.}} {{Keyword|Heishou Pack}} {{Keyword|Heishou Pack - Si Branch}}
+|zayin=What is Cast
+|teth=Rime Shank
+|he=Pursuance
+|waw=Indicant's Trial
+<!--Status, Resistances & Stagger Thresholds-->
+|hp=69
+|hpgrowth=2.39
+|speed=3~7
+|defmod=+0
+|slash=Ineff
+|pierce=Normal
+|blunt=Fatal
+|wrath=Normal
+|lust=Normal
+|sloth=Normal
+|gluttony=Normal
+|gloom=Fatal
+|pride=Endure
+|envy=Fatal
+|stagger1=70
+|stagger2=40
+|stagger3=20
+<!--Skill1-->
+|skill1={{Skill|level=60
+|slevel=1
+|sin=Envy
+|name=Serpent Glint
+|type=Slash
+|icon=Serpent Glint Rodion Icon
+|spower=3
+|cpower=+ 4
+|coin=2
+|atkmod=+1
+|atkweight=1
+|amt=3
+|se={{SkillCon|On Use}} Coin Power +1 for every 10 ({{StatusEffect|Poise|b}} on self + {{StatusEffect|Rupture|d}} on target) (max 2) <br> {{SkillCon|On Use}} Gain +2 {{StatusEffect|Poise|b}} Count
+|ce1={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}}
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Crit}} If this unit has {{StatusEffect|Serpent Arm|b}}, inflict 2 {{StatusEffect|Rupture|d}}
+}}
+<!--Skill2-->
+|skill2={{Skill|level=60
+|slevel=2
+|sin=Gluttony
+|name=Snake Fang
+|type=Slash
+|icon=Snake Fang Rodion Icon
+|spower=4
+|cpower=+ 4
+|coin=3
+|atkmod=+2
+|atkweight=1
+|amt=2
+|se={{SkillCon|On Use}} Coin Power +1 for every 10 ({{StatusEffect|Poise|b}} on self + {{StatusEffect|Rupture|d}} on target) (max 2) <br> {{SkillCon|Clash Win}} Inflict +2 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|Clash Win}} Gain +2 {{StatusEffect|Poise|b}} Count
+|ce1={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}}
+|ce2={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+|ce3={{SkillCon|On Hit}} At 30+ {{StatusEffect|Poise|b}}, consume 10 {{StatusEffect|Poise|b}} on self to Reuse Coin once (1 time max) <br> {{SkillCon|On Hit}} Inflict {{StatusEffect|Deathrite -Venom-|d}} <br> {{SkillCon|On Crit}} Gain 1 {{StatusEffect|Serpent Arm|b}}
+}}
+<!--Skill3-->
+|skill3={{Skill|level=60
+|slevel=3
+|sin=Gloom
+|name=Serpent's Mortal Flurry
+|type=Pierce
+|icon=Serpent's Mortal Flurry Rodion Icon
+|spower=5
+|cpower=+ 4
+|coin=3
+|atkmod=+5
+|atkweight=3
+|amt=1
+|se={{StatusEffect|Unfocused Volley|r}} <br> {{SkillCon|On Use}} Coin Power +1 for every 10 ({{StatusEffect|Poise|b}} on self + {{StatusEffect|Rupture|d}} on the main target) (max 2) <br> {{SkillCon|On Use}} Gain Clash Power equal to {{StatusEffect|Serpent Arm|b}} on self <br> {{SkillCon|On Use}} Gain 3 {{StatusEffect|Serpent Arm|b}} <br> {{SkillCon|Clash Win}} Inflict +1 {{StatusEffect|Rupture|d}} Count on all targets
+|ce1={{SkillCon|On Hit}} Gain +2 {{StatusEffect|Poise|b}} Count
+|ce2={{SkillCon|On Hit}} Gain 2 {{StatusEffect|Poise|b}}
+|ce3={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Crit}} Reduce {{StatusEffect|Deathrite -Venom-|d}} on target by 1 <br> {{SkillCon|On Crit}} Reuse this Coin once (2 times per Skill)
+}}
+<!--Defense Skill-->
+|defense={{Skill|level=60
+|slevel=1
+|sin=Gluttony
+|name=Reversal Kick
+|type=Guard
+|icon=Reversal Kick Rodion Icon
+|spower=3
+|cpower=+ 10
+|coin=1
+|defmod=+0
+|atkweight=1
+|se={{StatusEffect|Clashable Guard|r}} <br> {{SkillCon|Combat Start}} Gain 3 {{StatusEffect|Serpent Arm|b}} next turn <br> {{SkillCon|On Use}} At 10+ {{StatusEffect|Poise|b}} Count, Coin Power +1
+|ce1={{StatusEffect|Unbreakable Coin|r}}
+}}
+<!--Passives-->
+|passive1={{Passive|Heishou Mutation [Si]|sin=Gluttony|req=5 Owned|If this unit has {{StatusEffect|Serpent Arm|b}}, deal +5% damage <br> If target has {{StatusEffect|Deathrite -Venom-|d}}, deal +5% damage}}
+|passive2={{Passive|Refracted Struggle|At 10+ Clashes against the same enemy, randomly gain or lose Clash Power by (Clash Count / 10) in a Clash. (rounded down)}}
+|passive3={{Passive|Refracted Egress|Cannot Retreat}}
+<!--Passive 2-->
+|spassive={{Passive|Intravascular Venom|sin=Gluttony|req=4 Owned|When 1 ally with the fastest Speed inflicts {{StatusEffect|Rupture|d}} damage to an enemy, inflict 1 {{StatusEffect|Offense Level Down|d}} and 1 {{StatusEffect|Defense Level Down|d}} next turn (once per turn)}}
+}}
+
+=='''Backup Identities'''==
+==='''Refracted Peccatulum Invidiae - Heishou Pack - Si Branch Gregor Class 2'''===
+{{ENPage/Invidiae|type=Refracted Peccatulum Invidiae|suffix=Class 2
+<!--General Info-->
+|prefix=Heishou Pack - Si Branch
+|sinner=Gregor
+|level=60
+|rarity=3
+|season=6
+|uptie=4
+|keyword={{Keyword|H Corp.}} {{Keyword|Heishou Pack}} {{Keyword|Heishou Pack - Si Branch}}
+|zayin=Suddenly, One Day
+|teth=Lantern
+|he=AEDD
+|waw=Garden of Thorns
+<!--Status, Resistances & Stagger Thresholds-->
+|hp=69
+|hpgrowth=2.39
+|speed=3~7
+|defmod=+0
+|slash=Ineff
+|pierce=Normal
+|blunt=Fatal
+|wrath=Normal
+|lust=Normal
+|sloth=Endure
+|gluttony=Normal
+|gloom=Fatal
+|pride=Normal
+|envy=Fatal
+|stagger1=70
+|stagger2=40
+|stagger3=20
+<!--Skill1-->
+|skill1={{Skill|level=60
+|slevel=1
+|sin=Pride
+|name=Snake Fang
+|type=Slash
+|icon=Snake Fang Gregor Icon
+|spower=3
+|cpower=+ 4
+|coin=2
+|atkmod=+2
+|atkweight=1
+|amt=3
+|se={{SkillCon|On Use}} Coin Power +1 for every 10 ({{StatusEffect|Poise|b}} on self + {{StatusEffect|Rupture|d}} on target) (max 2) <br> {{SkillCon|On Use}} Gain +2 {{StatusEffect|Poise|b}} Count
+|ce1={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}}
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Crit}} If this unit has {{StatusEffect|Serpent Arm|b}}, inflict +1 {{StatusEffect|Rupture|d}} Count
+}}
+<!--Skill2-->
+|skill2={{Skill|level=60
+|slevel=2
+|sin=Gluttony
+|name=Blindsiding Cleave
+|type=Slash
+|icon=Blindsiding Cleave Gregor Icon
+|spower=4
+|cpower=+ 4
+|coin=3
+|atkmod=+3
+|atkweight=1
+|amt=2
+|se={{SkillCon|On Use}} Coin Power +1 for every 10 ({{StatusEffect|Poise|b}} on self + {{StatusEffect|Rupture|d}} on target) (max 2) <br> {{SkillCon|Clash Win}} Inflict +2 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|Clash Win}} Gain +2 {{StatusEffect|Poise|b}} Count
+|ce1={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}}
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}}
+|ce3={{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit}} At 30+ {{StatusEffect|Poise|b}}, consume 10 {{StatusEffect|Poise|b}} on self to Reuse Coin once (1 time max) <br> {{SkillCon|On Hit}} Inflict {{StatusEffect|Deathrite -Venom-|d}} <br> {{SkillCon|On Crit}} Gain 1 {{StatusEffect|Serpent Arm|b}}
+}}
+<!--Skill3-->
+|skill3={{Skill|level=60
+|slevel=3
+|sin=Envy
+|name=Serpentshear Puncturing Arm
+|type=Pierce
+|icon=Serpentshear Puncturing Arm Gregor Icon
+|spower=8
+|cpower=+ 14
+|coin=1
+|atkmod=+4
+|atkweight=1
+|amt=1
+|se={{SkillCon|On Use}} Coin Power +1 for every 8 ({{StatusEffect|Poise|b}} on self + {{StatusEffect|Rupture|d}} on target) (max 4) <br> - If this unit has {{StatusEffect|Serpent Arm|b}}, Coin Power +1 for every 5 ({{StatusEffect|Poise|b}} on self + {{StatusEffect|Rupture|d}} on target) instead (max 6) <br> {{SkillCon|On Use}} Gain 3 {{StatusEffect|Serpent Arm|b}} <br> {{SkillCon|Clash Win}} If target has 5+ {{StatusEffect|Rupture|d}}, gain 5 {{StatusEffect|Poise|b}}
+|ce1=Deal +10% damage for every ({{StatusEffect|Poise|b}} on self + {{StatusEffect|Rupture|d}} on target) (max 200%) <br> If this unit has {{StatusEffect|Serpent Arm|b}}, deal +100% Damage on Critical Hit <br> {{SkillCon|On Hit}} Reduce {{StatusEffect|Deathrite -Venom-|d}} on target by 2 <br> {{SkillCon|On Crit}} Reduce {{StatusEffect|Deathrite -Venom-|d}} on target by 3 <br> {{SkillCon|On Crit}} Inflict +2 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Hit}} Inflict {{StatusEffect|Deathrite -Venom-|d}}
+}}
+<!--Defense Skill-->
+|defense={{Skill|level=60
+|slevel=1
+|sin=Gluttony
+|name=Reversal Kick
+|type=Guard
+|icon=Reversal Kick Gregor Icon
+|spower=3
+|cpower=+ 10
+|coin=1
+|defmod=+0
+|atkweight=1
+|se={{StatusEffect|Clashable Guard|r}} <br> {{SkillCon|Combat Start}} Gain 3 {{StatusEffect|Serpent Arm|b}} next turn <br> {{SkillCon|On Use}} At 10+ {{StatusEffect|Poise|b}} Count, Coin Power +1
+|ce1={{StatusEffect|Unbreakable Coin|r}}
+}}
+<!--Passives-->
+|passive1={{Passive|Heishou Mutation [Si]|sin=Gluttony|req=5 Owned|If target has {{StatusEffect|Deathrite -Venom-|d}}, deal +5% damage for every {{StatusEffect|Serpent Arm|b}} on self (max 15%) <br> If this unit reduced the target's {{StatusEffect|Deathrite -Venom-|d}} down to 0 Stack, gain 1 {{StatusEffect|Pierce DMG Up|b}} next turn (max 2)}}
+|passive2={{Passive|Refracted Struggle|At 10+ Clashes against the same enemy, randomly gain or lose Clash Power by (Clash Count / 10) in a Clash. (rounded down)}}
+|passive3={{Passive|Refracted Egress|Cannot Retreat}}
+<!--Passive 2-->
+|spassive={{Passive|Like a Serpent: Flexible, Elastic, and Unpredictable|sin=Gluttony|req=4 Owned|If this unit is killed in this Encounter: every turn, at Combat Start, apply 2 {{StatusEffect|Poise|b}} to the Substituting Identity of the earliest Deployment order.}}
+}}
+
+==='''Refracted Peccatulum Invidiae - Heishou Pack - You Branch Adept Heathcliff Class 2'''===
+{{ENPage/Invidiae|type=Refracted Peccatulum Invidiae|suffix=Class 2
+<!--General Info-->
+|prefix=Heishou Pack - You Branch Adept
+|sinner=Heathcliff
+|level=60
+|rarity=3
+|season=6
+|uptie=4
+|keyword={{Keyword|H Corp.}} {{Keyword|Heishou Pack}} {{Keyword|Heishou Pack Adept}} {{Keyword|Heishou Pack - You Branch}}
+|nsanity=* '''Decreases after losing a Clash based on the Clash count <br> (Base Value is 5, raised by 10% per Clash count after 1)'''
+|zayin=Bodysack
+|teth=Move-in Reg.
+|he=Ya Śūnyatā Tad Rūpam
+|waw=Binds
+<!--Status, Resistances & Stagger Thresholds-->
+|hp=92
+|hpgrowth=2.51
+|speed=4~7
+|defmod=-1
+|slash=Ineff
+|pierce=Normal
+|blunt=Fatal
+|wrath=Normal
+|lust=Fatal
+|sloth=Normal
+|gluttony=Fatal
+|gloom=Normal
+|pride=Normal
+|envy=Endure
+|stagger1=70
+<!--Skill1-->
+|skill1={{Skill|level=60
+|slevel=1
+|sin=Envy
+|name=Peck 'em
+|type=Slash
+|icon=Peck 'em Heathcliff Icon
+|spower=2
+|cpower=+ 3
+|coin=3
+|atkmod=+1
+|atkweight=1
+|amt=3
+|se={{SkillCon|On Use}} If target has 6+ ({{StatusEffect|Burn|d}} + {{StatusEffect|Rupture|d}}), Coin Power +1 <br> {{SkillCon|On Use}} Clash Power +1 for every 10 {{StatusEffect|Burn|d}} on self (max 2) <br> {{SkillCon|Clash Start}} Apply 1 {{StatusEffect|Burn|d}} and +1 {{StatusEffect|Burn|d}} Count to target and self
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}}
+|ce3={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Burn|d}} <br> {{SkillCon|Heads Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+}}
+<!--Skill2-->
+|skill2={{Skill|level=60
+|slevel=2
+|sin=Gluttony
+|name=Mutilating Talons
+|type=Slash
+|icon=Mutilating Talons Heathcliff Icon
+|spower=4
+|cpower=+ 4
+|coin=3
+|atkmod=+2
+|atkweight=1
+|amt=2
+|se={{SkillCon|On Use}} If target has 6+ ({{StatusEffect|Burn|d}} + {{StatusEffect|Rupture|d}}), Coin Power +1 <br> {{SkillCon|On Use}} Clash Power +1 for every 10 {{StatusEffect|Burn|d}} on self (max 2) <br> {{SkillCon|Clash Start}} Apply 1 {{StatusEffect|Burn|d}} and +1 {{StatusEffect|Burn|d}} Count to target and self
+|ce1={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}} <br> {{SkillCon|Heads Hit}} Inflict +1 {{StatusEffect|Burn|d}} Count
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Burn|d}} <br> {{SkillCon|Heads Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+|ce3={{SkillCon|On Hit}} Gain 3 {{StatusEffect|Burn|d}} and +1 {{StatusEffect|Burn|d}} Count <br> {{SkillCon|On Hit}} Deal (({{StatusEffect|Burn|d}} on self x 2)% of this Coin's final damage) Wrath damage (max 20%) <br> {{SkillCon|Heads Hit}} If this unit has {{StatusEffect|Bloodflame -血炎-|b}}, or if this unit has less than 50% HP, Reuse this Coin (once per Skill)
+}}
+<!--Skill3-->
+|skill3={{Skill|level=60
+|slevel=3
+|sin=Wrath
+|name=Bloodflame Massacre ['''血炎亂舞''']
+|type=Slash
+|icon=Bloodflame Massacre 血炎亂舞 Heathcliff Icon
+|spower=4
+|cpower=+ 3
+|coin=4
+|atkmod=+3
+|atkweight=3
+|amt=1
+|se={{StatusEffect|Unfocused Volley|r}} <br> Deal +1.5% damage for every {{StatusEffect|Burn|d}} on self (max 30%) <br> {{SkillCon|Combat Start}} If this unit has {{StatusEffect|Bloodflame -血炎-|b}}, or if this unit has less than 50% HP, convert all Coins to {{StatusEffect|Unbreakable Coin|r}}s <br> {{SkillCon|Before Use}} At 20 {{StatusEffect|Battleblood Instinct|b}}, activate 'Rooster's Rampaging Blades Under the Ensanguined Heaven' instead <br> {{SkillCon|On Use}} Gain 3 {{StatusEffect|Bloodflame -血炎-|b}} <br> {{SkillCon|On Use}} Coin Power +1 for every 6 ({{StatusEffect|Burn|d}} + {{StatusEffect|Rupture|d}}) on the main target (max 2) <br> {{SkillCon|On Use}} Clash Power +1 for every 20% missing HP on self (max 3) <br> {{SkillCon|Attack End}} Gain +2 {{StatusEffect|Burn|d}} Count
+|ce1={{SkillCon|On Hit}} Apply 2 {{StatusEffect|Burn|d}} to target and self <br> {{SkillCon|Heads Hit}} At 50%+ HP, take {{StatusEffect|Burn|d}} damage by {{StatusEffect|Burn|d}} Potency on self
+|ce2={{SkillCon|On Hit}} Apply 2 {{StatusEffect|Burn|d}} to target and self <br> {{SkillCon|Heads Hit}} At 50%+ HP, take {{StatusEffect|Burn|d}} damage by {{StatusEffect|Burn|d}} Potency on self
+|ce3={{SkillCon|On Hit}} Apply 2 {{StatusEffect|Burn|d}} to target and self <br> {{SkillCon|Heads Hit}} At 50%+ HP, take {{StatusEffect|Burn|d}} damage by {{StatusEffect|Burn|d}} Potency on self
+|ce4={{SkillCon|On Hit}} Inflict +3 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Hit}} Deal (({{StatusEffect|Burn|d}} on self + {{StatusEffect|Burn|d}} on the main target)% of this Coin's final damage) Gluttony damage against all targets (max 20%)
+}}
+<!--Skill3-2-->
+|skill3-2={{Skill|level=60
+|slevel=3
+|sin=Wrath
+|name=Rooster's Rampaging Blades Under the Ensanguined Heaven ['''血天下雞舞亂刀''']
+|type=Slash
+|icon=Rooster's Rampaging Blades Under the Ensanguined Heaven 血天下雞舞亂刀 Heathcliff Icon
+|spower=5
+|cpower=+ 3
+|coin=4
+|atkmod=+5
+|atkweight=3
+|amt=0
+|se={{StatusEffect|Unfocused Volley|r}} <br> Deal +3% damage for every {{StatusEffect|Burn|d}} on self (max 60%) <br> Deal +1% damage for every 2% (missing HP percentage on target + missing HP percentage on self) (max 50%) <br> {{SkillCon|On Use}} Gain 3 {{StatusEffect|Bloodflame -血炎-|b}} <br> {{SkillCon|On Use}} Coin Power +1 for every 6 ({{StatusEffect|Burn|d}} + {{StatusEffect|Rupture|d}}) on the main target (max 2) <br> {{SkillCon|On Use}} Clash Power +1 for every 20% missing HP on self (max 3) <br> {{SkillCon|Clash Win}} Gain 10 {{StatusEffect|Burn|d}} <br> {{SkillCon|Attack End}} Consume all {{StatusEffect|Battleblood Instinct|b}} <br> {{SkillCon|Attack End}} At more than 20 {{StatusEffect|Burn|d}}, consume up to 25 excess {{StatusEffect|Burn|d}} and heal ({{StatusEffect|Burn|d}} consumed x 2)% HP
+|ce1={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit}} Inflict +2 {{StatusEffect|Rupture|d}} Count
+|ce2={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit}} Inflict +2 {{StatusEffect|Burn|d}} Count
+|ce3={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Rupture|d}}
+|ce4={{StatusEffect|Unbreakable Coin|r}} <br> {{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Burn|d}} <br> {{SkillCon|On Hit}} If this unit has 20+ {{StatusEffect|Burn|d}}, or if this unit has less than 50% HP, Reuse this Coin (once per Skill) <br> {{SkillCon|On Hit}} Deal (20% of this Coin's final damage) Wrath damage against all targets <br> - If this is the final Coin, heal HP by the amount of damage the above effect dealt
+}}
+<!--Defense Skill-->
+|defense={{Skill|level=60
+|slevel=1
+|sin=Gluttony
+|name=More Grub for Us
+|type=Slash
+|icon=More Grub for Us Heathcliff Icon
+|spower=5
+|cpower=+ 4
+|coin=2
+|atkmod=+2
+|atkweight=1
+|se={{SkillCon|Clashable Counter}} <br> {{SkillCon|On Use}} Gain 3 {{StatusEffect|Bloodflame -血炎-|b}} next turn <br> {{SkillCon|On Use}} If target has 10+ ({{StatusEffect|Burn|d}} + {{StatusEffect|Rupture|d}}), Base Power +1 <br> {{SkillCon|On Use}} If this unit has {{StatusEffect|Bloodflame -血炎-|b}}, Coin Power +1 <br> {{SkillCon|On Use}} This Skill deals +1% damage for every 3% HP this unit cumulatively lost in this Encounter (max 30%) <br> {{SkillCon|Clash Start}} Gain +3 {{StatusEffect|Burn|d}} Count (once per turn)
+|ce1={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Burn|d}}
+}}
+<!--Passives-->
+|passive0={{Passive|Gamefowl|When activating {{StatusEffect|Exalted Command|r}}, [[The Lord of Hongyuan Hong Lu]] gains the following effect as the {{StatusEffect|Heishou Bolus Contamination -黑獸丸染-|b}} effect: <br> - On Hit with this unit's Base Attack Skill: Deal 5% of Gluttony damage dealt as Wrath damage <br><br> Cannot be Staggered or fall below 1 HP due to {{StatusEffect|Burn|d}} damage. <br><br> Gain 3 {{StatusEffect|Bloodflame -血炎-|b}} and +3 {{StatusEffect|Burn|d}} Count in the same turn it Substitutes or Returns in.}}
+|passive1={{Passive|Flame Rooster's Death Defiance ['''炎鳥不死戦''']|In this Encounter, when this unit takes damage that brings their HP down to 0, nullify that damage; then, this unit's HP cannot drop below 1 for the turn. <br> Then, at the next Turn Start, heal (20 + {{StatusEffect|Burn|d}} on self)% HP, and remove all {{StatusEffect|Burn|d}} on self (max 49%; once per Encounter)}}
+|passive2={{Passive|Bloody Storm of Blades|sin=Gluttony|req=5 Owned|Combat Start: gain 1 {{StatusEffect|Offense Level Up|b}} and 1 {{StatusEffect|Defense Level Up|b}} for every 20% missing HP on self (max 3) <br><br> Gain {{StatusEffect|Battleblood Instinct|b}} when meeting one of the following conditions: (10 per turn) <br> - Gain 3 at Clash Start <br> - Gain 1 when this unit hits with a Base Attack Skill or when this unit takes {{StatusEffect|Burn|d}} damage <br> At less than 50% HP, gain 1 more {{StatusEffect|Battleblood Instinct|b}} <br> - Gain 5 On Kill}}
+|passive3={{Passive|Refracted Mind|Entry SP +30}}
+|passive4={{Passive|Refracted Struggle|At 10+ Clashes against the same enemy, randomly gain or lose Clash Power by (Clash Count / 10) in a Clash. (rounded down)}}
+|passive5={{Passive|Refracted Egress|Cannot Retreat}}
+<!--Passive 2-->
+|spassive={{Passive|Backed Against a River|sin=Wrath|req=3|sin2=Gluttony|req2=3 Owned|Turn End: if an ally with the lowest current HP percentage has less than 50% HP, that unit gains 1 {{StatusEffect|Clash Power Up|b}} next turn}}
+}}
+
+==='''Refracted Peccatulum Invidiae - Heishou Pack - Wei Branch Don Quixote Class 2'''===
+{{ENPage/Invidiae|type=Refracted Peccatulum Invidiae|suffix=Class 2
+<!--General Info-->
+|prefix=Heishou Pack - Wei Branch
+|sinner=Don Quixote
+|level=60
+|rarity=3
+|season=6
+|uptie=4
+|keyword={{Keyword|H Corp.}} {{Keyword|Heishou Pack}} {{Keyword|Heishou Pack - Wei Branch}}
+|zayin=La Sangre de Sancho
+|teth=Wishing Cairn
+|he=Red Sheet
+|waw=Yearning-Mircalla
+<!--Status, Resistances & Stagger Thresholds-->
+|hp=82
+|hpgrowth=2.82
+|speed=4~7
+|defmod=+3
+|slash=Ineff
+|pierce=Fatal
+|blunt=Normal
+|wrath=Fatal
+|lust=Endure
+|sloth=Normal
+|gluttony=Normal
+|gloom=Fatal
+|pride=Normal
+|envy=Normal
+|stagger1=65
+|stagger2=35
+<!--Skill1-->
+|skill1={{Skill|level=60
+|slevel=1
+|sin=Lust
+|name=Breakthrough
+|type=Blunt
+|icon=Breakthrough Don Quixote Icon
+|spower=3
+|cpower=+ 4
+|coin=2
+|atkmod=+2
+|atkweight=1
+|amt=3
+|se=If target has {{StatusEffect|Shattermark|d}}, deal +25% damage <br> Coin Power +1 for every 6 ({{StatusEffect|Rupture|d}} + {{StatusEffect|Sinking|d}}) on target (max 2)
+|ce1={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Sinking|d}} Count
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Sinking|d}}
+}}
+<!--Skill2-->
+|skill2={{Skill|level=60
+|slevel=2
+|sin=Gluttony
+|name=Seize the Momentum, Shatter the Wall
+|type=Blunt
+|icon=Seize the Momentum, Shatter the Wall Don Quixote Icon
+|spower=4
+|cpower=+ 4
+|coin=3
+|atkmod=+2
+|atkweight=1
+|amt=2
+|se=Coin Power +1 for every 6 ({{StatusEffect|Rupture|d}} + {{StatusEffect|Sinking|d}}) on target (max 2) <br> {{SkillCon|Combat Start}} If this unit has {{StatusEffect|Burgeoning of Horns -發角-|b}}, convert the last Coin of this Skill into {{StatusEffect|Unbreakable Coin|r}}; the last Coin deals +5% damage for every {{StatusEffect|Burgeoning of Horns -發角-|b}} Stack on this unit (max 15%)
+|ce1={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+|ce2={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Sinking|d}} Count
+|ce3={{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Sinking|d}} <br> {{SkillCon|On Hit}} Deal Slash damage equal to 10% of this Coin's final damage for every {{StatusEffect|Burgeoning of Horns -發角-|b}} Stack on this unit (max 30%)
+}}
+<!--Skill3-->
+|skill3={{Skill|level=60
+|slevel=3
+|sin=Gloom
+|name=Crushing Horns ['''破碎角''']
+|type=Blunt
+|icon=Crushing Horns 破碎角 Don Quixote Icon
+|spower=4
+|cpower=+ 3
+|coin=4
+|atkmod=+3
+|atkweight=1
+|amt=1
+|se=Coin Power +1 for every 6 ({{StatusEffect|Rupture|d}} + {{StatusEffect|Sinking|d}}) on target (max 2) <br> {{SkillCon|Combat Start}} If this unit has {{StatusEffect|Burgeoning of Horns -發角-|b}}, convert all Coins of this Skill into {{StatusEffect|Unbreakable Coin|r}} and deal +10% damage for every {{StatusEffect|Burgeoning of Horns -發角-|b}} Stack on this unit (max 30%) <br> {{SkillCon|On Use}} Gain 3 {{StatusEffect|Burgeoning of Horns -發角-|b}}
+|ce2={{SkillCon|On Hit}} Inflict +2 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Hit}} Inflict +2 {{StatusEffect|Sinking|d}} Count
+|ce3={{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Sinking|d}}
+|ce4=- If target has any of the Panic type changing effects, +10% damage for every Stack (max 30%) <br> {{SkillCon|On Hit}} Deal (25% of this Coin's final damage) Slash damage <br> - If target has {{StatusEffect|Shattermark|d}}, strengthen this effect and deal (50% of this Coin's final damage) Slash damage instead <br> {{SkillCon|On Hit}} Inflict 3 {{StatusEffect|Shattermark|d}} next turn <br> - If target has any of the Panic type changing effects, inflict +3 {{StatusEffect|Sinking|d}} Count (once per turn)
+}}
+<!--Defense Skill-->
+|defense={{Skill|level=60
+|slevel=1
+|sin=Gluttony
+|name=I shall crush all that standeth in our way!
+|type=Blunt
+|icon=I shall crush all that standeth in our way Don Quixote Icon
+|spower=5
+|cpower=+ 4
+|coin=2
+|atkmod=+1
+|atkweight=1
+|se={{SkillCon|Clashable Counter}} <br> Final Power +1 for every 3 ({{StatusEffect|Rupture|d}} + {{StatusEffect|Sinking|d}}) on target (max 3) <br> {{SkillCon|On Use}} Gain 3 {{StatusEffect|Burgeoning of Horns -發角-|b}} next turn
+|ce1={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}}
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Sinking|d}}
+}}
+<!--Passives-->
+|passive0={{Passive|Lament of the Lost Sheep ['''亡羊之嘆''']|When activating {{StatusEffect|Exalted Command|r}}, [[The Lord of Hongyuan Hong Lu]] gains the following effect as the {{StatusEffect|Heishou Bolus Contamination -黑獸丸染-|b}} effect: <br> - Inflict 1 {{StatusEffect|Sinking|d}} upon inflicting {{StatusEffect|Rupture|d}} Potency or Count by using a Skill (3 times per turn) <br><br> On the turn this unit Substituted or Returned to the field, gain 3 {{StatusEffect|Burgeoning of Horns -發角-|b}}}}
+|passive1={{Passive|Explosive Battering Ram|sin=Gluttony|req=3|sin2=Gloom|req2=3 Owned|Deal (-Target's SP / 3)% more damage against targets at less than 0 SP (max 15%, rounded down) <br><br> Deal +1% damage for every 2 ({{StatusEffect|Rupture|d}} + {{StatusEffect|Sinking|d}}) on target (max 15%) <br> - Double this effect and max value against Non-SP targets <br><br> If this unit has {{StatusEffect|Burgeoning of Horns -發角-|b}}, the last Coin of this unit's Base Skills deals +15% damage <br> - When attacking Skill Slots equipped with a Defense Skill, the last Coin deals +30% damage instead <br> - When Clashing against a {{StatusEffect|Clashable Guard|r}} Skill, Clash Power +3}}
+|passive2={{Passive|Refracted Mind|Entry SP +20}}
+|passive3={{Passive|Refracted Struggle|At 10+ Clashes against the same enemy, randomly gain or lose Clash Power by (Clash Count / 10) in a Clash. (rounded down)}}
+|passive4={{Passive|Refracted Egress|Cannot Retreat}}
+<!--Passive 2-->
+|spassive={{Passive|Flesh-Rending Horn Growth|sin=Gluttony|req=3|sin2=Gloom|req2=3 Owned|Ally with the fastest Speed: On Hit using a Base Attack Skill against enemies that have 2+ {{StatusEffect|Rupture|d}} Count or {{StatusEffect|Sinking|d}} Count, inflict 1 {{StatusEffect|Defense Level Down|d}} (2 times per turn)}}
+}}
+
+==='''Refracted Peccatulum Invidiae - Heishou Pack - You Branch Sinclair Class 2'''===
+{{ENPage/Invidiae|type=Refracted Peccatulum Invidiae|suffix=Class 2
+<!--General Info-->
+|prefix=Heishou Pack - You Branch
+|sinner=Sinclair
+|level=60
+|rarity=3
+|season=6e
+|uptie=4
+|keyword={{Keyword|H Corp.}} {{Keyword|Heishou Pack}} {{Keyword|Heishou Pack - You Branch}}
+|zayin=Branch of Knowledge
+|teth=Impending Day
+|he=Lantern
+|waw=Tears of the Tarnished Blood 汚血泣淚 
+<!--Status, Resistances & Stagger Thresholds-->
+|hp=75
+|hpgrowth=2.5
+|speed=4~6
+|defmod=-4
+|slash=Ineff
+|pierce=Normal
+|blunt=Fatal
+|wrath=Fatal
+|lust=Normal
+|sloth=Normal
+|gluttony=Endure
+|gloom=Normal
+|pride=Fatal
+|envy=Normal
+|stagger1=65
+|stagger2=35
+|stagger3=15
+<!--Skill1-->
+|skill1={{Skill|level=60
+|slevel=1
+|sin=Lust
+|name=Oh, Let the Smell of Burning Blood…
+|type=Slash
+|icon=Oh, Let the Smell of Burning Blood… Sinclair Icon
+|spower=2
+|cpower=+ 3
+|coin=3
+|atkmod=+1
+|atkweight=1
+|amt=3
+|se={{SkillCon|On Use}} If target has 6+ ({{StatusEffect|Burn|d}} + {{StatusEffect|Rupture|d}}), Coin Power +1
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}} <br> {{SkillCon|Heads Hit}} Inflict 1 {{StatusEffect|Burn|d}}
+|ce3={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Burn|d}} Count <br> {{SkillCon|Heads Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+}}
+<!--Skill2-->
+|skill2={{Skill|level=60
+|slevel=2
+|sin=Gluttony
+|name=… Fuel My Rampage.
+|type=Slash
+|icon=… Fuel My Rampage. Sinclair Icon
+|spower=4
+|3spower=3
+|cpower=+ 4
+|coin=3
+|atkmod=+2
+|atkweight=1
+|amt=2
+|se={{SkillCon|On Use}} If target has 6+ ({{StatusEffect|Burn|d}} + {{StatusEffect|Rupture|d}}), Coin Power +1
+|ce1={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}} <br> {{SkillCon|Heads Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Burn|d}} <br> {{SkillCon|Heads Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+|ce3={{SkillCon|Heads Hit}} If this unit has {{StatusEffect|Bloodflame -血炎-|b}}, or if this unit has less than 50% HP, Reuse this Coin (once per Skill) <br> {{SkillCon|Heads Hit}} Deal (10% of this Coin's final damage) bonus Wrath damage
+}}
+<!--Skill3-->
+|skill3={{Skill|level=60
+|slevel=3
+|sin=Wrath
+|name=Bloodflame Massacre ['''血炎亂舞''']
+|type=Slash
+|icon=Bloodflame Massacre -血炎亂舞- Sinclair Icon
+|spower=4
+|cpower=+ 3
+|coin=4
+|atkmod=+3
+|atkweight=3
+|amt=1
+|se={{StatusEffect|Unfocused Volley|r}} <br> Deal +1% damage for every 2% (missing HP percentage on target + missing HP percentage on self) (max 50%) <br> {{SkillCon|Combat Start}} If this unit has {{StatusEffect|Bloodflame -血炎-|b}}, or if this unit has less than 50% HP, convert all Coins to {{StatusEffect|Unbreakable Coin|r}}s <br> {{SkillCon|On Use}} Gain 1 {{StatusEffect|Bloodflame -血炎-|b}} <br> {{SkillCon|On Use}} Coin Power +1 for every 6 ({{StatusEffect|Burn|d}} + {{StatusEffect|Rupture|d}}) on target (max 2) <br> {{SkillCon|On Use}} Clash Power +1 for every 20% missing HP on self (max 2) <br> {{SkillCon|Clash Lose}} Apply 2 {{StatusEffect|Burn|d}} to target and self
+|ce2={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Burn|d}} Count <br> {{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+|ce3={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Burn|d}} <br> {{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}} <br> {{SkillCon|Heads Hit}} Deal (10% of this Coin's final damage) bonus Gluttony damage
+|ce4={{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Burn|d}} <br> {{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Rupture|d}} <br> {{SkillCon|Heads Hit}} Deal (20% of this Coin's final damage) bonus Gluttony damage against all targets
+}}
+<!--Defense Skill-->
+|defense={{Skill|level=60
+|slevel=1
+|sin=Gluttony
+|name=Rooster's Deathstrike ['''鷄窮則殺''']
+|type=Slash
+|icon=Rooster's Deathstrike -鷄窮則殺- Sinclair Icon
+|spower=5
+|cpower=+ 4
+|coin=2
+|atkmod=+2
+|atkweight=1
+|se={{SkillCon|Clashable Counter}} <br> {{SkillCon|On Use}} Gain 3 {{StatusEffect|Bloodflame -血炎-|b}} next turn <br> {{SkillCon|On Use}} If target has 10+ ({{StatusEffect|Burn|d}} + {{StatusEffect|Rupture|d}}), Base Power +1 <br> {{SkillCon|On Use}} If this unit has {{StatusEffect|Bloodflame -血炎-|b}}, Coin Power +1 <br> {{SkillCon|On Use}} This Skill deals +1% damage for every 3% HP this unit cumulatively lost in this Encounter (max 30%) <br> {{SkillCon|Clash Lose}} Apply 2 {{StatusEffect|Burn|d}} to target and self
+|ce1={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Burn|d}}
+}}
+<!--Passives-->
+|passive0={{Passive|Gamefowl|When activating {{StatusEffect|Exalted Command|r}}, [[The Lord of Hongyuan Hong Lu]] gains the following effect as the {{StatusEffect|Heishou Bolus Contamination -黑獸丸染-|b}} effect: <br> - When using a Skill to inflict {{StatusEffect|Rupture|d}} Potency or Count, inflict 1 {{StatusEffect|Burn|d}} (3 times per turn) <br><br> Cannot be Staggered or fall below 1 HP due to {{StatusEffect|Burn|d}} damage. <br><br> Gain 3 {{StatusEffect|Bloodflame -血炎-|b}} in the same turn it Substitutes or Returns in}}
+|passive1={{Passive|Let's Get Battle-drunk|sin=Wrath|req=3|sin2=Gluttony|req2=3 Owned|On Hit against targets that have 7+ {{StatusEffect|Rupture|d}}, (highest Reson. x 15)% chance to inflict 1 {{StatusEffect|Burn|d}} (4 times per turn) <br><br> Combat End: If this unit has {{StatusEffect|Burn|d}}, gain 1 {{StatusEffect|Bloodflame -血炎-|b}}, 1 {{StatusEffect|Wrath DMG Up|b}}, and 1 {{StatusEffect|Gluttony DMG Up|b}} at the next Turn Start <br><br> Combat Start: Gain 1 {{StatusEffect|Offense Level Up|b}} and {{StatusEffect|Defense Level Up|b}} for every 20% missing HP on self (max 3)}}
+|passive2={{Passive|Refracted Mind|Entry SP +20}}
+|passive3={{Passive|Refracted Struggle|At 10+ Clashes against the same enemy, randomly gain or lose Clash Power by (Clash Count / 10) in a Clash. (rounded down)}}
+|passive4={{Passive|Refracted Egress|Cannot Retreat}}
+<!--Passive 2-->
+|spassive={{Passive|Bloodflame Blade ['''血炎刀''']|sin=Wrath|req=3|sin2=Gluttony|req2=3 Owned|When an ally with the fastest Speed inflicts {{StatusEffect|Burn|d}} or {{StatusEffect|Rupture|d}} Potency with its Skills, inflict 1 {{StatusEffect|Burn|d}} and 1 {{StatusEffect|Rupture|d}} Potency (once per turn)}}
+}}
+
+==='''Refracted Peccatulum Invidiae - Family Hierarch Candidate Ishmael Class 2'''===
+{{ENPage/Invidiae|type=Refracted Peccatulum Invidiae|suffix=Class 2
+<!--General Info-->
+|prefix=Family Hierarch Candidate
+|sinner=Ishmael
+|level=60
+|rarity=3
+|season=6
+|uptie=4
+|keyword={{Keyword|H Corp.}} {{Keyword|Family Hierarch Candidate}} {{Keyword|Jia Family}}
+|zayin=Snagharpoon
+|teth=Capote
+|he=Wingbeat
+|waw=Blind Obsession
+<!--Status, Resistances & Stagger Thresholds-->
+|hp=70
+|hpgrowth=2.28
+|speed=3~7
+|defmod=+0
+|slash=Normal
+|pierce=Fatal
+|blunt=Ineff
+|wrath=Normal
+|lust=Fatal
+|sloth=Fatal
+|gluttony=Normal
+|gloom=Endure
+|pride=Normal
+|envy=Normal
+|stagger1=70
+|stagger2=40
+|stagger3=15
+<!--Skill1-->
+|skill1={{Skill|level=60
+|slevel=1
+|sin=Gloom
+|name=Crimson Strike
+|type=Blunt
+|icon=Crimson Strike Ishmael Icon
+|spower=3
+|cpower=+ 4
+|coin=2
+|atkmod=+1
+|atkweight=1
+|amt=3
+|se={{SkillCon|On Use}} If target has 5+ types of negative effects, Clash Power +1 <br> {{SkillCon|On Use}} Coin Power +1 for every 3 {{StatusEffect|Rupture|d}} on target (max 2) <br> {{SkillCon|Clash Win}} Gain 3 {{StatusEffect|Poise|b}} and +2 {{StatusEffect|Poise|b}} Count
+|ce1={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count
+|ce2={{SkillCon|On Hit}} Inflict 2 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Crit}} Gain 1 {{StatusEffect|Offense Level Up|b}} next turn (2 times per turn)
+}}
+<!--Skill1-2-->
+|skill1-2={{Skill|level=60
+|slevel=1
+|sin=Gloom
+|name=Crimson Strike - Launcher ['''始''']
+|type=Blunt
+|icon=Crimson Strike - Launcher -始- Ishmael Icon
+|spower=2
+|cpower=+ 2
+|coin=2
+|atkmod=+0
+|atkweight=1
+|amt=0
+|se={{SkillCon|Unclashable}} <br> {{SkillCon|On Use}} Gain 5 {{StatusEffect|Poise|b}} and +2 {{StatusEffect|Poise|b}} Count <br> {{SkillCon|On Use}} At 3+ {{StatusEffect|Ready -待-|r}}, Coin Power +2 <br> {{SkillCon|Before Attack}} Consume all {{StatusEffect|Ready -待-|r}} on self to gain +({{StatusEffect|Ready -待-|r}} on self x 2) Atk Weight (max 5)
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}}
+}}
+<!--Skill2-->
+|skill2={{Skill|level=60
+|slevel=2
+|sin=Gluttony
+|name=Crimson Phoenix
+|type=Blunt
+|icon=Crimson Phoenix Ishmael Icon
+|spower=2
+|cpower=+ 3
+|coin=4
+|atkmod=+3
+|atkweight=1
+|amt=2
+|se={{SkillCon|On Use}} If target has 5+ types of negative effects, Coin Power +1 <br> {{SkillCon|On Use}} If target has 4+ {{StatusEffect|Rupture|d}}, Coin Power +1
+|ce1={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Crit}} Inflict 2 {{StatusEffect|Defense Level Down|d}} next turn
+|ce2={{SkillCon|On Hit}} Inflict +1 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Crit}} Inflict 2 {{StatusEffect|Defense Level Down|d}} next turn
+|ce3={{SkillCon|On Hit}} Gain {{StatusEffect|Poise|b}} equal to {{StatusEffect|Rupture|d}} on target (max 5) <br> {{SkillCon|Heads Hit}} Gain {{StatusEffect|Poise|b}} Count equal to {{StatusEffect|Rupture|d}} Count on target (max 3)
+|ce4=Deal +(20 + {{StatusEffect|Poise|b}} on self + {{StatusEffect|Rupture|d}} on target)% damage on Critical Hit (max 50%) <br> {{SkillCon|On Crit Kill Against Enemy}} Gain 3 {{StatusEffect|Offense Level Up|b}} next turn (once per turn)
+}}
+<!--Skill3-->
+|skill3={{Skill|level=60
+|slevel=3
+|sin=Envy
+|name=Crimson Spring
+|type=Slash
+|icon=Crimson Spring Ishmael Icon
+|spower=8
+|cpower=+ 14
+|coin=1
+|atkmod=+5
+|atkweight=1
+|amt=1
+|se={{SkillCon|Before Attack}} If main target has 5+ types of negative effects, Atk Weight +1 <br> {{SkillCon|Before Attack}} At 3+ {{StatusEffect|Launcher -始-|r}}, Atk Weight +1 <br> {{SkillCon|On Use}} Coin Power +2 for every 3 types of negative effect on the main target (max 6) <br> {{SkillCon|On Use}} Coin Power +1 for every 7 ({{StatusEffect|Rupture|d}} + {{StatusEffect|Rupture|d}} Count) on the main target (max 5) <br> {{SkillCon|Clash Win}} Gain 4 {{StatusEffect|Poise|b}}
+|ce1={{StatusEffect|Unbreakable Coin|r}} <br> Deal +(50 + {{StatusEffect|Poise|b}} on self + {{StatusEffect|Rupture|d}} on the main target)% damage (max 75%) <br> Deal +(80 + {{StatusEffect|Poise|b}} on self + {{StatusEffect|Rupture|d}} on the main target)% damage on Critical Hit (max 105%) <br> +5% Damage on Critical Hit for every {{StatusEffect|Launcher -始-|r}} on self (max 30%) <br> {{SkillCon|On Hit}} Inflict 5 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Crit}} Inflict +1 {{StatusEffect|Rupture|d}} Count <br> {{SkillCon|On Crit}} Gain 2 {{StatusEffect|Poise|b}} and +1 {{StatusEffect|Poise|b}} Count <br> {{SkillCon|On Crit Kill Against Enemy}} Gain +2 {{StatusEffect|Poise|b}} Count (3 times per turn)
+}}
+<!--Defense Skill-->
+|defense={{Skill|level=60
+|slevel=1
+|sin=Gloom
+|name=Adept Evasion
+|type=Evade
+|icon=Adept Evasion Ishmael Icon
+|spower=4
+|cpower=+ 10
+|coin=1
+|defmod=+0
+|atkweight=1
+|se={{SkillCon|Combat Start}} At 3+ {{StatusEffect|Launcher -始-|r}}, perform a {{StatusEffect|Battlefield Retreat|r}} at Turn End. <br> - Upon Retreat, move to the frontmost place in the Backup units' Deployment order (Returns first before the other Backup units Substitute in) <br> {{SkillCon|On Use}} Gain +1 {{StatusEffect|Poise|b}} Count (2 times per turn) <br> {{SkillCon|On Evade}} Gain 2 {{StatusEffect|Poise|b}} (2 times per turn)
+}}
+<!--Passives-->
+|passive0={{Passive|Launching Maneuver ['''始動''']|Upon Retreat: apply 1 {{StatusEffect|Offense Level Up|b}} next turn to allies in their Deployment order <br> - Number of affected allies <nowiki>=</nowiki> {{StatusEffect|Launcher -始-|r}} Stack on self <br> - If the affected ally is a "Jia Family" unit, apply 2 {{StatusEffect|Offense Level Up|b}} next turn instead <br> - Does not affect allies that either Return or Substitute next turn <br><br> On the turn this unit Substituted or Returned to the field, gain {{StatusEffect|Ready -待-|r}}; then, at Combat Start, as the very first Skill in the Skill order, use 'Crimson Strike - Launcher【始】' against a random target.}}
+|passive1={{Passive|Rupture-breathing Resolve ['''破吸自桓''']|sin=Gluttony|req=5 Owned|When killing the target with this unit's Attack Skills, gain {{StatusEffect|Poise|b}} equal to {{StatusEffect|Rupture|d}} on target (3 per 1 enemy; once per turn) <br> - If this unit gained 3 {{StatusEffect|Poise|b}} with the above effect, gain {{StatusEffect|Poise|b}} Count equal to {{StatusEffect|Rupture|d}} Count on target (2 per 1 enemy; once per turn) <br><br> In a Clash, if this unit's Offense Level is higher than the target's, Clash Power +1 <br><br> In a Clash, if this unit's Offense Level is higher than the target's, inflict +1 more {{StatusEffect|Rupture|d}} Potency or {{StatusEffect|Rupture|d}} Count with this unit's Base Attack Skills (2 times per turn)}}
+|passive2={{Passive|Refracted Mind|Entry SP +20}}
+|passive3={{Passive|Refracted Struggle|At 10+ Clashes against the same enemy, randomly gain or lose Clash Power by (Clash Count / 10) in a Clash. (rounded down)}}
+|passive4={{Passive|Refracted Egress|Cannot Retreat}}
+<!--Passive 2-->
+|spassive={{Passive|Lingering Resolve ['''餘桓''']|sin=Gluttony|req=4 Res|If this unit is defeated in an Encounter, apply {{StatusEffect|Assist -援-|b}} to the subsequently Substituting Identity (the fastest Backup Unit in the Deployment Order) next turn <br><br> In Chain Battles, if this unit is a Backup unit or has Retreated, activate the following: <br> - Combat Start: Among units who 1) are at 50% HP or lower, and 2) used a Defense Skill, choose the Identity with the earliest Deployment order. At Turn End, that Identity recovers from Stagger due to damage and performs a {{StatusEffect|Battlefield Retreat|r}} (2 times per Encounter)}}
+}}
+
+==='''Refracted Peccatulum Invidiae - Cinq Assoc. West Section 3 Meursault Class 2'''===
+{{ENPage/Invidiae|type=Refracted Peccatulum Invidiae|suffix=Class 2
+<!--General Info-->
+|prefix=Cinq Assoc. West Section 3
+|sinner=Meursault
+|level=60
+|rarity=3
+|season=5
+|uptie=4
+|keyword={{Keyword|Fixer}} {{Keyword|Cinq Association}}
+|zayin=Chains of Others
+|teth=Regret
+|he=Pursuance
+|waw=Crushbound Past
+<!--Status, Resistances & Stagger Thresholds-->
+|hp=69
+|hpgrowth=2.39
+|speed=4~7
+|defmod=+2
+|slash=Normal
+|pierce=Ineff
+|blunt=Fatal
+|wrath=Normal
+|lust=Fatal
+|sloth=Normal
+|gluttony=Fatal
+|gloom=Normal
+|pride=Endure
+|envy=Normal
+|stagger1=65
+|stagger2=35
+<!--Skill1-->
+|skill1={{Skill|level=60
+|sin=Pride
+|slevel=1
+|name=Allez
+|type=Pierce
+|icon=Allez Meursault Icon
+|spower=3
+|cpower=+ 4
+|coin=2
+|atkmod=+2
+|atkweight=1
+|amt=3
+|se=If this unit's Speed is faster than the target's, gain Coin Power based on Speed difference (Coin Power +1 for every 3 Speed difference; max 2) <br> {{SkillCon|On Use}} If target has 15+ {{StatusEffect|Rupture|d}} and 3+ {{StatusEffect|Rupture|d}} Count, this Skill does not inflict {{StatusEffect|Rupture|d}} Potency with its effects, but does not consume {{StatusEffect|Rupture|d}} Count On Hit <br> {{SkillCon|On Use}} Gain +2 {{StatusEffect|Poise|b}} Count
+|ce1={{SkillCon|On Hit}} Gain +1 {{StatusEffect|Poise|b}} Count
+|ce2={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit}} If this unit's Speed is faster than the target's, inflict {{StatusEffect|Rupture|d}} equal to their Speed difference (max 3)
+}}
+<!--Skill2-->
+|skill2={{Skill|level=60
+|sin=Gluttony
+|slevel=2
+|name=Fente
+|type=Pierce
+|icon=Fente Meursault Icon
+|spower=4
+|cpower=+ 4
+|coin=3
+|atkmod=+2
+|atkweight=1
+|amt=2
+|se=If this unit's Speed is faster than the target's by 3 or more, Coin Power +1 <br> {{SkillCon|On Use}} If target has 15+ {{StatusEffect|Rupture|d}} and 3+ {{StatusEffect|Rupture|d}} Count, this Skill does not inflict {{StatusEffect|Rupture|d}} Potency or Count with its effects, but does not consume {{StatusEffect|Rupture|d}} Count On Hit <br> {{SkillCon|Clash Win}} Gain +2 {{StatusEffect|Poise|b}} Count
+|ce1={{SkillCon|On Hit}} Gain +2 {{StatusEffect|Poise|b}} Count
+|ce2={{SkillCon|On Hit}} Gain 2 {{StatusEffect|Poise|b}}
+|ce3=If this unit does not inflict {{StatusEffect|Rupture|d}}, +5% Damage on Critical Hit for every {{StatusEffect|Rupture|d}} Potency and Count it would have inflicted <br> {{SkillCon|On Hit}} Inflict 4 {{StatusEffect|Rupture|d}} <br> {{SkillCon|On Hit}} At 7+ Speed, inflict +2 {{StatusEffect|Rupture|d}} Count
+}}
+<!--Skill3-->
+|skill3={{Skill|level=60
+|sin=Gloom
+|slevel=3
+|name=Salut
+|type=Pierce
+|icon=Salut Meursault Icon
+|spower=5
+|cpower=+ 4
+|coin=3
+|atkmod=+3
+|atkweight=1
+|amt=1
+|se=If this unit's Speed is faster than the target's, gain Coin Power based on Speed difference (Coin Power +1 for every 2 Speed difference; max 3) <br> {{SkillCon|On Use}} If target has 15+ {{StatusEffect|Rupture|d}} and 3+ {{StatusEffect|Rupture|d}} Count, this Skill does not consume {{StatusEffect|Rupture|d}} Count On Hit <br> {{SkillCon|Clash Win}} Gain 5 {{StatusEffect|Poise|b}} <br> - If target has {{StatusEffect|Focused Attack - Meursault|d}}, gain 5 additional {{StatusEffect|Poise|b}}
+|ce1={{SkillCon|Hit after Clash Win}} The final Coin deals +10% damage
+|ce2={{SkillCon|Hit after Clash Win}} The final Coin deals +10% damage
+|ce3=Deal +20% damage for every {{StatusEffect|Focused Attack - Meursault|d}} on the Slot <br> +30% Damage on Critial Hit <br> - Deal +2% Damage on Critical Hit for every {{StatusEffect|Rupture|d}} on target (max 30%) <br> {{SkillCon|Attack End}} If this Coin defeated the target or destroyed the Part, Reuse this Skill once against a random target (does not activate on Reuse)
+}}
+<!--Defense Skill-->
+|defense={{Skill|level=60
+|sin=Gloom
+|slevel=1
+|name=Défensive
+|type=Evade
+|icon=Défensive Meursault Icon
+|spower=4
+|cpower=+ 10
+|coin=1
+|defmod=+2
+|atkweight=1
+|se={{SkillCon|On Use}} If this unit's Speed is faster than the target's by 3 or more, Coin Power +2
+}}
+<!--Passives-->
+|passive1={{Passive|Duel Livestream|sin=Pride|req=2|sin2=Gluttony|req2=2 Owned|Gain 1 {{StatusEffect|Haste|b}} next turn for every 3 {{StatusEffect|Poise|b}} Potency on self at Turn End (max 2) <br> On Hit using Base Skills: Inflict {{StatusEffect|Focused Attack - Meursault|d}} next turn (once per Skill) <br> If this unit attacked the Slot that has {{StatusEffect|Focused Attack - Meursault|d}} and defeated its owner or broke the Part, heal 7 SP}}
+|passive2={{Passive|Refracted Mind|Entry SP +20}}
+|passive3={{Passive|Refracted Struggle|At 10+ Clashes against the same enemy, randomly gain or lose Clash Power by (Clash Count / 10) in a Clash. (rounded down)}}
+|passive4={{Passive|Refracted Egress|Cannot Retreat}}
+<!--Passive 2-->
+|spassive={{Passive|One Step Ahead|sin=Pride|req=3 Res|The fastest ally, on Clash Win, gains 1 {{StatusEffect|Haste|b}} next turn (2 times per turn)}}
+}}
+
+[[Category:Enemy]]
+[[Category:Peccatulum Invidiae]]

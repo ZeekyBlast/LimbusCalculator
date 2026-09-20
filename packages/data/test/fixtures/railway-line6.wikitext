@@ -1,0 +1,160 @@
+{{RRLine
+| color=#AE6B30
+| title=Line 6: Maru no Uchi no Sanzu no Kawa
+| image=Line 6 Maru no Uchi no Sanzu no kawa Reveal.jpg
+| start=May 28th, 2026
+| end=TBD
+| stations=8
+| prev=Line 5: Merry Go Round
+}}
+'''Line 6: Maru no Uchi no Sanzu no Kawa''' (Japanese: 丸ノ内ノ三途ノ川, lit. '''The River Sanzu Within a Circle''') is the sixth line of [[Refraction Railway]] introduced in [[Season 7: Kumo no ito • oti on akA]]. It is unlocked by completing [[Canto IX]].
+
+Line 6 is composed of 8 total Stations, divided into 5 Sections. Each Station offer difficult Encounters based on enemies encountered in [[Canto IX]] or [[Intervallo V - 1]], [[Peccatulum|Peccatula Invidiae]] of various Identities, and 3 new Abnormalities that had E.G.O available from [[Season 6]] and Season 7's battle passes. <br> The Stations in each Section are treated as multiple waves of a single Encounter.
+
+Line 6 uses the Chain Battle mechanic, with all Sinners being required to be Deployed before the start of the battle, with the last 5 Sinners reserved as Backup. Backup Units receive bonus Starting SP, with Minus Coin Identities gaining negative Starting SP buffs instead. Identities also give E.G.O resources upon death according to their Sin Affinities: Identity death gives 1 Skill 1-Affinity resource, 2 Skill 2-Affinity resources, and 3 Skill 3-Affinity resources.
+
+The team loadout can be changed after the completion of each Section. With the exception of Section 5, entering a new section will revive all defeated allies, restore their HP to full, and reset their SP to 0. Section 5 will instead use the team's HP percentage and SP at the point of clearing Section 1. <br>
+Sections 3 and 4 will restrict the use of any Identities deployed in the loadout in the immediately preceding Section. That is, the Identities deployed in Section 2 cannot be deployed for Section 3, and the Identities deployed for Section 3 cannot be deployed for Section 4. Sections 2 and 5 have no restrictions on deployable Identities.
+
+==Duration==
+* May 28th, 2026 12:00 - TBD (Line 7 Opening) 10:00 (KST Time)
+* Requires clearance of [[Canto IX|Canto 9-51]]
+
+==Reward==
+===Banners===
+* '''Basic''' - Obtained by clearing Section 5 of Refraction Railway Line 6
+* '''Decorated''' - Obtained by clearing Section 5 of Refraction Railway Line 6 with 111 or less Total Turns before the end of [[Season 7: Kumo no ito • oti on akA]]
+<gallery>
+UserInfo Banner 84.png|Basic
+UserInfo Banner 85.png|Decorated
+</gallery>
+
+===Business Card Decorations===
+* '''Line 6''' - Obtained by clearing Section 5 of Refraction Railway Line 6
+* '''Line 6: Maru no Uchi no Sanzu no Kawa''' - Obtained by clearing Section 5 of Refraction Railway Line 6 with 111 or less Total Turns before the end of [[Season 7: Kumo no ito • oti on akA]]
+<gallery>
+Line 6 Business Card Deco.png|Line 6
+Line 6 Maru no Uchi no Sanzu no Kawa Business Card Deco.png|Line 6: Maru no Uchi no Sanzu no Kawa
+</gallery>
+
+==Stage List==
+{| class="ABMobile wikitable sortable mw-collapsible" style="width:75%; border:2px solid #AE6B30; border-radius:7.5px; clear:both; font-size:75%; text-align:center" 
+! colspan="6" style="background:#AE6B30; border-radius:3.25px;" align="center" |<div style="margin-left:35px;color:#FFFFFF;">''Line 6: Maru no Uchi no Sanzu no Kawa''
+|-
+! scope="col" style="color:#FFFFFF; background-color:#733B1B; text-align:center" width="10%" |Section Number
+! scope="col" style="color:#FFFFFF; background-color:#733B1B; text-align:center" width="20%" |Station Number 
+! scope="col" style="color:#FFFFFF; background-color:#733B1B; text-align:center" width="15%" |Image 
+! scope="col" style="color:#FFFFFF; background-color:#733B1B; text-align:center" width="30%" |Abnormality/Faction
+! scope="col" style="color:#FFFFFF; background-color:#733B1B; text-align:center" width="35%" |First-Clear Reward
+|-
+! scope="col" style="color:#FFFFFF; background-color:#422009; text-align:center" |Section #1
+! scope="col" style="color:#FFFFFF; background-color:#422009; text-align:center" |Station #1: Weighing of Robes
+|{{EnBox|9563}}
+|[[Butterfly of Entangled Lives 羅生蝶|Refracted Butterfly of Entangled Lives::The Pupa]]
+|{{Bpitem|i|Identity Training Ticket IV|45}}
+|-
+! scope="col" style="color:#FFFFFF; background-color:#422009; text-align:center" |Section #2
+! scope="col" style="color:#FFFFFF; background-color:#422009; text-align:center" |Station #2: Tarnishing
+|{{EnBox|9568}}
+|[[Yinglong|Refracted Yinglong]] <br> Refracted Peccatulum Invidiae - H Corp. Identities
+|{{Bpitem|i|Identity Training Ticket IV|125}}{{Bpitem|i|Thread|200}}
+|-
+! rowspan="2" scope="col" style="color:#FFFFFF; background-color:#422009; text-align:center" |Section #3
+! scope="col" style="color:#FFFFFF; background-color:#422009; text-align:center" |Station #3: Heart of Innocence
+|{{EnBox|9556}}
+|[[Will You Play?|Refracted Will You Play?]] <br> Refracted Peccatulum Invidiae - The Middle Identities
+| rowspan="2" |{{Bpitem|i|Random Egoshard Crate|20|[Season 7] Random Egoshard Crate}}{{Bpitem|i|Level Boost Ticket VI|1}}
+|-
+! scope="col" style="color:#FFFFFF; background-color:#422009; text-align:center" |Station #4: Face of Things
+|{{EnBox|9553}}
+|[[Hohenheim|Refracted Distorted Hohenheim]]
+|-
+! rowspan="3" scope="col" style="color:#FFFFFF; background-color:#422009; text-align:center" |Section #4
+! scope="col" style="color:#FFFFFF; background-color:#422009; text-align:center" |Station #5: Tangled Knots
+|{{EnBox|9550}}
+|[[Shiomi Yoru|The Refracted Pinky Nursefather - Shiomi Yoru]]
+| rowspan="3" |{{Bpitem|i|Nominable Egoshard Crate|60|[Season 7] Nominable Egoshard Crate}}{{Bpitem|i|Decaextraction Ticket|3}}
+|-
+! scope="col" style="color:#FFFFFF; background-color:#422009; text-align:center" |Station #6: Drowning Desire
+|{{EnBox|9554}}
+|[[Callisto|The Refracted Ring Nursefather - Callisto]] <br> [[Albina|The Refracted Ring Apprentice - Albina]]
+|-
+! scope="col" style="color:#FFFFFF; background-color:#422009; text-align:center" |Station #7: Blind Folly
+|{{EnBox|9551}}
+|[[Rien|The Refracted Index Nursefather - Rien]]
+|-
+! scope="col" style="color:#FFFFFF; background-color:#422009; text-align:center" |Section #5
+! scope="col" style="color:#FFFFFF; background-color:#422009; text-align:center" |Station #8: Advent
+|{{EnBox|9567}}
+|[[Butterfly of Entangled Lives 羅生蝶|Refracted Butterfly of Entangled Lives::Imago]]
+|{{Bpitem|i|(Season 7) 3★ Guarantee Decaextraction Ticket|1|[Season 7] 3★ Guarantee Decaextraction Ticket}}<br>{{Bpitem|b|Line 6 Business Card Deco|Line 6 Profile Decoration}}<br>{{Bpitem|b|Line 6 Maru no Uchi no Sanzu no Kawa Business Card Deco|Line 6: Maru no Uchi no Sanzu no Kawa Profile Decoration}}
+|}
+
+==Encounter Details==
+{| class="wikitable sortable mw-collapsible mw-collapsed" style="width:100%; border:2px solid #AE6B30; border-radius:7.5px;  clear:both; font-size:75%; text-align:center" 
+! colspan="4" style="background:#AE6B30; border-radius:3.25px;" align="center" |<div style="margin-left:35px;color:#FFFFFF;">''Line 6: Maru no Uchi no Sanzu no Kawa''
+|-
+! width=15% style="color:#FFFFFF; background-color:#733B1B; text-align:center" |Section
+! width=5% style="color:#FFFFFF; background-color:#733B1B; text-align:center" |Wave
+! width=80% style="color:#FFFFFF; background-color:#733B1B; text-align:center" |Enemies
+|-
+!Section #1 : Weighing of Robes
+!Wave 1
+|{{EnBox|9563}}
+|-
+! rowspan="4"|Section #2 : Tarnishing
+!Wave 1
+|{{EnBox|9568}}
+|-
+!Wave 2
+|{{EnBox|9570}} <br> {{EnBox|9543}} {{EnBox|9539}} {{EnBox|9538}} {{EnBox|9541}} {{EnBox|9548}} {{EnBox|9546}} <br> Reinforcements <br> {{EnBox|9549}} {{EnBox|9544}} {{EnBox|9540}} {{EnBox|9547}} {{EnBox|9545}} {{EnBox|9542}}
+|-
+!Wave 3
+|{{EnBox|9569}}
+|-
+!Wave 4
+|{{EnBox|9564}}
+|-
+! rowspan="3"|Section #3 : Heart of Innocence - Face of Things
+!Wave 1
+|{{EnBox|9556}} <br> {{EnBox|9557}} {{EnBox|9558}} {{EnBox|9559}} {{EnBox|9560}} {{EnBox|9561}} {{EnBox|9562}}
+|-
+!Wave 2
+|{{EnBox|9553}}
+|-
+!Wave 3
+|{{EnBox|9565}}
+|-
+! rowspan="4"|Section #4 : Tangled Knots - Drowning Desire - Blind Folly
+!Wave 1
+|{{EnBox|9550}}
+|-
+!Wave 2
+|{{EnBox|9554}} {{EnBox|9555}}
+|-
+!Wave 3
+|{{EnBox|9551}}
+|-
+!Wave 4
+|{{EnBox|9566}}
+|-
+! Section #5 : Advent
+!Wave 1
+|{{EnBox|9567}} <br> {{EnBox|9572}} {{EnBox|9573}} {{EnBox|9574}}
+|}
+
+==New Enemies==
+{| class="article-table nohover mw-collapsible" style="width:100%; margin:auto;text-align:center"
+! colspan="3" scope="col" style="color:#FFFFFF; background-color:#AE6B30; text-align:center" |Line 6
+|-
+! colspan="3" scope="col" style="color:#FFFFFF; background-color:#733B1B; text-align:center" |Abnormalities
+|-
+|{{AbnoBox|9568}}
+|{{AbnoBox|9556}}
+|{{AbnoBox|9567|Refracted Butterfly of Entangled Lives}}
+|}
+
+==Gallery==
+{{#ev:youtube|hjYfZAiQ08s}} Line 6 PV
+
+[[Category:Refraction Railway Lines]]

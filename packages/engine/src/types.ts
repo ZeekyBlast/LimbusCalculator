@@ -19,6 +19,8 @@ export interface Unit {
   kind: 'identity' | 'enemy'
   name: string
   group?: string
+  /** Wiki image filename for the unit portrait, e.g. "Yinglong-9568_portrait.png". */
+  portrait?: string
   level: number
   hp: number
   hpGrowth: number
@@ -68,8 +70,10 @@ export interface SkillUptieOverride {
 export interface Skill {
   id: string
   name: string
-  slot: 'skill1' | 'skill2' | 'skill3' | 'defense' | 'enemy'
+  slot: 'skill1' | 'skill2' | 'skill3' | 'skill4' | 'defense' | 'enemy'
   variant?: string
+  /** Wiki image basename for the skill icon (without extension). */
+  icon?: string
   sin: Sin
   damageType: SkillDamageType
   offenseLevelMod: number

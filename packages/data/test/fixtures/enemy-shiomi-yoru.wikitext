@@ -1,0 +1,798 @@
+{{IDTab|3}}
+<!--
+-->{{DISPLAYTITLE:The Pinky Nursefather - Shiomi Yoru}}<!--
+-->
+{{For|other versions of this enemy|Araya/Enemy}}
+__FORCETOC__
+''Prior to the January 15th, 2026 update, this enemy was erroneously named 'The Index Nursefather - Shiomi Yoru'.''
+==The Pinky Nursefather - Shiomi Yoru==
+{{ABPage
+<!--General Info-->
+|sin=Pride
+|name=The Pinky Nursefather - Shiomi Yoru
+|faction=The Pinky
+|keyword={{Keyword|The Pinky|en}} {{Keyword|The House of Spiders|en}} {{Keyword|The Fingers|en}}
+|location=Canto IX
+|id=1322
+|portrait=Pinky-1322_portrait.png
+|hp=532
+|hpgrowth=18
+|level=77
+|panic=Affection and Resentment
+|psanity=* Increases after winning a Clash based on Clash count <br> (Base Value is 10, raised by 20% per Clash count after 1)
+|nsanity=* '''Decreases after losing a Clash based on the Clash count <br> (Base Value is 3, raised by 10% per Clash count after 1)'''
+<!--Parts1-->
+|abnoparts1={{ABPage/Parts
+|partsname=Body
+|partsicon=Body
+|level=77
+|hp=532
+|hpgrowth=18
+|speed=3~5
+|defmod=+0
+|slotweight=2
+|stagger1=50
+|slash=1.2
+|pierce=1
+|blunt=1
+|wrath=1.2
+|lust=1
+|sloth=0.8
+|gluttony=0.8
+|gloom=1.2
+|pride=0.8
+|envy=1
+}}
+<!--Skill1-->
+|skillparts1={{Icons|Abno Part Body}} Body
+|skill1={{Skill|level=77
+|sin=Envy
+|slevel=1
+|name=Twinslash ['''二連''']
+|type=Slash
+|icon=Twinslash -二連- Shiomi Yoru
+|spower=7
+|cpower=+ 3
+|coin=2
+|atkmod=-3
+|atkweight=1
+|se={{SkillCon|On Use}} Gain +2 {{StatusEffect|Poise|b}} Count
+|ce1={{SkillCon|On Hit}} Gain 1 {{StatusEffect|Poise|b}}
+|ce2={{SkillCon|On Hit}} Gain 1 {{StatusEffect|Poise|b}}
+}}
+<!--Skill2-->
+|skillparts2={{Icons|Abno Part Body}} Body
+|skill2={{Skill|level=77
+|sin=Envy
+|slevel=1
+|name=Tripleslash ['''三連''']
+|type=Slash
+|icon=Tripleslash -三連- Shiomi Yoru
+|spower=7
+|cpower=+ 2
+|coin=3
+|atkmod=-3
+|atkweight=1
+|se={{SkillCon|On Use}} Gain +3 {{StatusEffect|Poise|b}} Count
+|ce1={{SkillCon|On Hit}} Gain 1 {{StatusEffect|Poise|b}}
+|ce2={{SkillCon|On Hit}} Gain 1 {{StatusEffect|Poise|b}}
+|ce3={{SkillCon|On Hit}} Gain 1 {{StatusEffect|Poise|b}}
+}}
+<!--Skill3-->
+|skillparts3={{Icons|Abno Part Body}} Body
+|skill3={{Skill|level=77
+|hint=1
+|sin=Pride
+|slevel=2
+|name=Swift Glimmer ['''快閃''']
+|type=Slash
+|icon=Swift Glimmer -快閃- Shiomi Yoru
+|spower=10
+|cpower=+ 6
+|coin=1
+|atkmod=+1
+|atkweight=3
+|se={{SkillCon|On Unopposed Attack}} Gain 5 {{StatusEffect|Poise|b}} <br> {{SkillCon|Clash Lose}} -2 Atk Weight
+|ce1={{StatusEffect|Unbreakable Coin|r}} <br> +30% Damage on Critical Hit <br> {{SkillCon|On Hit}} Gain 2 {{StatusEffect|Poise|b}} <br> {{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} <br> {{SkillCon|On Hit without Cracking}} Inflict 1 {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}}
+}}
+<!--Skill4-->
+|skillparts4={{Icons|Abno Part Body}} Body
+|skill4={{Skill|level=77
+|hint=1
+|sin=Wrath
+|slevel=2
+|name=Formless Cut ['''無形斬''']
+|type=Slash
+|icon=Formless Cut -無形斬- Shiomi Yoru
+|spower=12
+|cpower=+ 1
+|coin=1
+|atkmod=+1
+|atkweight=4
+|se={{StatusEffect|Unfocused Volley|r}} <br> Can Clash with this Skill regardless of Speed; cannot be Staggered until this Skill ends <br> {{SkillCon|Clash Lose}} Deal -80% damage and damage dealt by this Skill cannot Stagger the target
+|ce1={{StatusEffect|Unbreakable Coin|r}} <br> Reuse this Coin (4 times max) <br> {{SkillCon|On Hit}} Gain 1 {{StatusEffect|Poise|b}} <br> {{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} <br> {{SkillCon|On Hit without Cracking}} Inflict 1 {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}}
+}}
+<!--Skill5-->
+|skillparts5={{Icons|Abno Part Body}} Body
+|skill5={{Skill|level=77
+|hint=3
+|sin=Pride
+|slevel=3
+|name=Rend Space ['''空間斬''']
+|type=Slash
+|icon=Rend Space -空間斬- Shiomi Yoru
+|spower=15
+|cpower=+ 4
+|coin=1
+|atkmod=+3
+|atkweight=7
+|se=Can Clash with this Skill regardless of Speed; cannot be Staggered until this Skill ends <br> {{SkillCon|Clash Lose}} Deal -80% damage and damage dealt by this Skill cannot Stagger the target <br> {{SkillCon|Attack End}} End this turn
+|ce1={{StatusEffect|Unbreakable Coin|r}} <br> +100% Damage on Critical Hit <br> {{SkillCon|On Hit}} {{SkillHint|Consume all {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} on target}} and deal ({{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} consumed)% HP damage against each target, respectively
+}}
+<!--Skill6-->
+|skillparts6={{Icons|Abno Part Body}} Body
+|skill6={{Skill|level=77
+|hint=1
+|sin=Sloth
+|slevel=1
+|name=Phantom Step ['''殘像步''']
+|type=Slash
+|icon=Phantom Step -殘像步- Shiomi Yoru
+|spower=4
+|cpower=+ 3
+|coin=1
+|atkmod=-3
+|atkweight=1
+|se={{SkillCon|Clash Lose}} {{SkillHint|Halve the {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} Stack on target}} (rounded down) <br> {{SkillCon|Clash Lose}} Lose 5 SP
+}}
+<!--Skill7-->
+|skillparts7={{Icons|Abno Part Body}} Body
+|skill7={{Skill|level=77
+|hint=2
+|sin=Gluttony
+|slevel=1
+|name=Silent Regard
+|type=Slash
+|icon=Silent Regard Shiomi Yoru
+|spower=2
+|cpower=+ 1
+|coin=1
+|atkmod=-5
+|atkweight=1
+|se={{SkillHint|{{SkillCon|Clash Lose}} Gain 2 {{StatusEffect|Attack Power Down|d}}}} <br> {{SkillCon|Clash Lose}} Target heals 5 SP
+|ce1={{StatusEffect|Unbreakable Coin|r}}
+}}
+<!--Skill8-->
+|skillparts8={{Icons|Abno Part Body}} Body
+|skill8={{Skill|level=77
+|hint=2
+|sin=Wrath
+|slevel=3
+|name=Deathedge ['''絶命''']
+|type=Slash
+|icon=Deathedge -絶命- Shiomi Yoru
+|spower=9
+|cpower=+ 5
+|coin=2
+|atkmod=+3
+|atkweight=1
+|se=This Skill does not trigger the target's Defense Skill <br> Prioritizes the target with the least HP percentage <br> - Prioritizes targets that aren't Ryōshū
+|ce1={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} for every 1% missing HP on target
+|ce2={{SkillCon|On Hit}} {{SkillHint|Consume all {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} on target}} and deal ({{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} consumed)% HP damage
+}}
+<!--Skill9-->
+|skillparts9={{Icons|Abno Part Body}} Body
+|skill9={{Skill|level=77
+|hint=3
+|sin=Pride
+|slevel=3
+|name=Rend Space - String Connection ['''空間斬-緣''']
+|type=Slash
+|icon=Rend Space - Multitudes -空間斬-緣- Shiomi Yoru
+|spower=20
+|cpower=+ 6
+|coin=1
+|atkmod=+3
+|atkweight=7
+|se={{SkillCon|On Use}} At 10+ SP, generate 1 Mang. Final Power +5 <br> Can Clash with this Skill regardless of Speed; cannot be Staggered until this Skill ends <br> {{SkillCon|Clash Lose}} Deal -80% damage and damage dealt by this Skill cannot Stagger the target <br> {{SkillCon|Attack End}} If this skill generated 1 Mang, lose 10 SP <br> {{SkillCon|Attack End}} End this turn
+|ce1={{StatusEffect|Unbreakable Coin|r}} <br> +100% Damage on Critical Hit <br> {{SkillCon|On Hit}} {{SkillHint|Consume all {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} on target}} and deal ({{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} consumed)% HP damage against each target, respectively <br> {{SkillCon|On Crit}} Gain 1 {{StatusEffect|Poise|b}}
+|flavor=A technique that cuts through space itself. Sundering the fabric of space has long been the ambition of of those who live by the sword——a hard-won feat reached through divergent disciplines.
+}}
+<!--Passives-->
+|passive1={{Passive|Superposed Afterimage|hint=2|Encounter Start: Gain {{StatusEffect|Fourfold Afterimage Entanglement|r}} <br> At the start of the first turn of each pattern, gain {{StatusEffect|Disjunction|b}} equal to ({{StatusEffect|Afterimage Entanglement|r}} stage x 400) (once per {{StatusEffect|Afterimage Entanglement|r}} stage) <br><br> At stage 3 and 4 {{StatusEffect|Afterimage Entanglement|r}}, {{SkillHint|if this unit loses all {{StatusEffect|Disjunction|b}}, the pattern changes and become Staggered for the next turn}} <br><br> Take -30% HP, SP damage from {{StatusEffect|Burn|d}}, {{StatusEffect|Bleed|d}}, {{StatusEffect|Rupture|d}}, and {{StatusEffect|Sinking|d}}; -30% to Stagger Threshold raised by {{StatusEffect|Tremor|d}}}}
+|passive2={{Passive|Unsheathing Dihui Star's Blade|hint=3|flavor='… I'm weary of this stigma of a blade.'|Use a powerful attack pattern every 4 turns <br> - At 50+ {{StatusEffect|Dihui Star's Blade (Araya)|r}}, the pattern above becomes empowered}}
+|passive3={{Passive|'I Shall Give You Some Quarter'|Deal -50% final damage with this unit's Skill against targets that used Defense Skill <br><br> Turn End: Gain 2 {{StatusEffect|Fragile|d}} and 2 {{StatusEffect|Damage Up|b}} every 4 turn in this Encounter (applies cumulatively; max 2 times per Encounter)}}
+|passive4={{Passive|Panic Recovery|Turn End: if in Panic, reset SP to 30.}}
+|passive5={{Passive|Fixed Panic|This unit's Panic Type does not change when inflicted with an effect that changes Panic Types. Instead, this unit is inflicted with an effect that is inflicted against Non-SP Units.}}
+|passive6={{Passive|Afterimage Reverberation|On hit with this unit's Coin, deal Slash damage equal to (the Coin's final damage / 10) <br> - This effect activates ({{StatusEffect|Afterimage Entanglement|r}} stage) times; damage from this effect cannot Stagger target}}
+|passive7={{Passive|Lacerating Afterimages from Myriad Moments|hint=2|Attack Skill End: Deal (# of Slash Coins that hit Critically x 10) Slash damage against each target) (damage from this effect cannot Stagger target) <br><br> Attack Skill End: Consume every surplus {{StatusEffect|Poise|b}} Potency past 20 on self and inflict {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} to target by {{StatusEffect|Poise|b}} Potency consumed}}
+}}
+
+===Behavior===
+The Pinky Nursefather - Shiomi Yoru enters battle with 45 SP and 1 {{StatusEffect|Shin (心) - Dihui Star|b}}. Ryōshū will gain {{StatusEffect|Twisted and Disjointed Memory and Recollection|r}} for the fight.<br/>
+The battle ends in a brief cutscene and scripted defeat when Shiomi Yoru loses all {{StatusEffect|Disjunction|b}} for the first time, or after Turn 11 ends.
+
+====Attack Pattern====
+Shiomi Yoru uses the following Skill Rotation for the first 4 turns of the Encounter:
+* Silent Regard, Silent Regard, Silent Regard, Swift Glimmer [快閃], Tripleslash [三連], Tripleslash [三連], Twinslash [二連]
+* Silent Regard, Silent Regard, Formless Cut [無形斬], Tripleslash [三連], Tripleslash [三連], Twinslash [二連], Twinslash [二連]
+* Phantom Step [殘像步], Phantom Step [殘像步], Phantom Step [殘像步], Phantom Step [殘像步], Swift Glimmer [快閃], Tripleslash [三連], Twinslash [二連]
+* Rend Space [空間斬]
+
+After finishing the above rotation, she will switch to the following one for the rest of the battle:
+* Silent Regard, Swift Glimmer [快閃], Swift Glimmer [快閃],  Tripleslash [三連], Twinslash [二連]
+* Silent Regard, Formless Cut [無形斬], Formless Cut [無形斬], Tripleslash [三連], Twinslash [二連]
+* Phantom Step [殘像步], Phantom Step [殘像步], Phantom Step [殘像步], Swift Glimmer [快閃], Tripleslash [三連]
+* Rend Space [空間斬]
+
+When Shiomi Yoru has at least 50 {{StatusEffect|Dihui Star's Blade (Araya)|b}}, all instances of Rend Space [空間斬] are replaced by Rend Space - String Connection [空間斬-緣]<br/>
+Shiomi Yoru will always fix her Speed at 20 on the turn she uses Rend Space [空間斬], or 30 if using Rend Space - String Connection [空間斬-緣]
+
+If at least 1 Sinner has less than 50% HP at the start of a turn during either Skill Rotation (excluding turns when Rend Space [空間斬] or Rend Space - String Connection [空間斬-緣] are being used), Shiomi Yoru gains another Skill Slot using Deathedge [絶命].
+
+===Battle Tips===
+''These are official tips that display in-game upon defeat in 9-33.''
+* Examine the "Silent Regard" Skill—it provides a way to lower the enemy's Power for this turn.
+* Examine the "Phantom Step [殘像步]" Skill—it may have a way to mitigate the enemy's unique debuff, "Bladetrail [Afterimage]."
+
+==<span id="9-41"/>Araya (9-41)==
+{{ABPage
+<!--General Info-->
+|sin=Pride
+|name=The Pinky Nursefather - Shiomi Yoru
+|faction=The Pinky
+|keyword={{Keyword|The Pinky|en}} {{Keyword|The House of Spiders|en}} {{Keyword|The Fingers|en}}
+|location=Canto IX
+|id=1323
+|portrait=Pinky-1322_portrait.png
+|hp=532
+|hpgrowth=18
+|level=77
+|panic=Affection and Resentment
+|psanity=* Increases after winning a Clash based on the Clash count <br> (Base Value is 10, raised by 20% per Clash count after 1)
+|nsanity=* '''Decreases after losing a Clash based on the Clash count <br> (Base Value is 3, raised by 10% per Clash count after 1)'''
+<!--Parts1-->
+|abnoparts1={{ABPage/Parts
+|partsname=Body
+|partsicon=Body
+|level=77
+|hp=532
+|hpgrowth=18
+|speed=2~5
+|defmod=+0
+|slotweight=2
+|stagger1=20
+|slash=1.2
+|pierce=1
+|blunt=1
+|wrath=1.2
+|lust=1
+|sloth=0.8
+|gluttony=0.8
+|gloom=1.2
+|pride=0.8
+|envy=1
+}}
+<!--Skill1-->
+|skillparts1={{Icons|Abno Part Body}} Body
+|skill1={{Skill|level=77
+|sin=Envy
+|slevel=1
+|name=Twinslash ['''二連''']
+|type=Slash
+|icon=Twinslash -二連- Shiomi Yoru
+|spower=7
+|cpower=+ 3
+|coin=2
+|atkmod=-3
+|atkweight=1
+|se={{SkillCon|On Use}} Gain +2 {{StatusEffect|Poise|b}} Count
+|ce1={{SkillCon|On Hit}} Gain 1 {{StatusEffect|Poise|b}}
+|ce2={{SkillCon|On Hit}} Gain 1 {{StatusEffect|Poise|b}}
+}}
+<!--Skill2-->
+|skillparts2={{Icons|Abno Part Body}} Body
+|skill2={{Skill|level=77
+|sin=Envy
+|slevel=1
+|name=Tripleslash ['''三連''']
+|type=Slash
+|icon=Tripleslash -三連- Shiomi Yoru
+|spower=7
+|cpower=+ 2
+|coin=3
+|atkmod=-3
+|atkweight=1
+|se={{SkillCon|On Use}} Gain +3 {{StatusEffect|Poise|b}} Count
+|ce1={{SkillCon|On Hit}} Gain 1 {{StatusEffect|Poise|b}}
+|ce2={{SkillCon|On Hit}} Gain 1 {{StatusEffect|Poise|b}}
+|ce3={{SkillCon|On Hit}} Gain 1 {{StatusEffect|Poise|b}}
+}}
+<!--Skill3-->
+|skillparts3={{Icons|Abno Part Body}} Body
+|skill3={{Skill|level=77
+|hint=1
+|sin=Pride
+|slevel=2
+|name=Swift Glimmer ['''快閃''']
+|type=Slash
+|icon=Swift Glimmer -快閃- Shiomi Yoru
+|spower=10
+|cpower=+ 6
+|coin=1
+|atkmod=+1
+|atkweight=3
+|se={{SkillCon|On Unopposed Attack}} Gain 5 {{StatusEffect|Poise|b}} <br> {{SkillCon|Clash Lose}} -2 Atk Weight
+|ce1={{StatusEffect|Unbreakable Coin|r}} <br> +30% Damage on Critical Hit <br> {{SkillCon|On Hit}} Gain 2 {{StatusEffect|Poise|b}} <br> {{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} <br> {{SkillCon|On Hit without Cracking}} Inflict 1 {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}}
+}}
+<!--Skill4-->
+|skillparts4={{Icons|Abno Part Body}} Body
+|skill4={{Skill|level=77
+|hint=1
+|sin=Wrath
+|slevel=2
+|name=Formless Cut ['''無形斬''']
+|type=Slash
+|icon=Formless Cut -無形斬- Shiomi Yoru
+|spower=12
+|cpower=+ 1
+|coin=1
+|atkmod=+1
+|atkweight=4
+|se={{StatusEffect|Unfocused Volley|r}} <br> Can Clash with this Skill regardless of Speed; cannot be Staggered until this Skill ends <br> {{SkillCon|Clash Lose}} Deal -80% damage and damage dealt by this Skill cannot Stagger the target
+|ce1={{StatusEffect|Unbreakable Coin|r}} <br> Reuse this Coin (4 times max) <br> {{SkillCon|On Hit}} Gain 1 {{StatusEffect|Poise|b}} <br> {{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} <br> {{SkillCon|On Hit without Cracking}} Inflict 1 {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}}
+}}
+<!--Skill5-->
+|skillparts5={{Icons|Abno Part Body}} Body
+|skill5={{Skill|level=77
+|hint=1
+|sin=Sloth
+|slevel=1
+|name=Phantom Step ['''殘像步''']
+|type=Slash
+|icon=Phantom Step -殘像步- Shiomi Yoru
+|spower=4
+|cpower=+ 3
+|coin=1
+|atkmod=-3
+|atkweight=1
+|se={{SkillCon|Clash Lose}} {{SkillHint|Halve the {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} Stack on target}} (rounded down) <br> {{SkillCon|Clash Lose}} Lose 5 SP
+}}
+<!--Skill6-->
+|skillparts6={{Icons|Abno Part Body}} Body
+|skill6={{Skill|level=77
+|hint=2
+|sin=Gluttony
+|slevel=1
+|name=Silent Regard
+|type=Slash
+|icon=Silent Regard Shiomi Yoru
+|spower=2
+|cpower=+ 1
+|coin=1
+|atkmod=-5
+|atkweight=1
+|se={{SkillHint|{{SkillCon|Clash Lose}} Gain 2 {{StatusEffect|Attack Power Down|d}}}} <br> {{SkillCon|Clash Lose}} Target heals 5 SP
+|ce1={{StatusEffect|Unbreakable Coin|r}}
+}}
+<!--Skill7-->
+|skillparts7={{Icons|Abno Part Body}} Body
+|skill7={{Skill|level=77
+|hint=2
+|sin=Wrath
+|slevel=3
+|name=Deathedge ['''絶命''']
+|type=Slash
+|icon=Deathedge -絶命- Shiomi Yoru
+|spower=9
+|cpower=+ 5
+|coin=2
+|atkmod=+3
+|atkweight=1
+|se=This Skill does not trigger the target's Defense Skill <br> Prioritizes the target with the least HP percentage <br> - Prioritizes targets that aren't Ryōshū
+|ce1={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} for every 1% missing HP on target
+|ce2={{SkillCon|On Hit}} {{SkillHint|Consume all {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} on target}} and deal ({{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} consumed)% HP damage
+}}
+<!--Skill8-->
+|skillparts8={{Icons|Abno Part Body}} Body
+|skill8={{Skill|level=77
+|hint=3
+|sin=Pride
+|slevel=3
+|name=Uttermost Rend Space - String Severance ['''空間斬 - 絕緣''']
+|type=Slash
+|icon=Rend Space - Multitudes -空間斬-緣- Shiomi Yoru
+|spower=14
+|cpower=+ 10
+|coin=1
+|atkmod=+0
+|atkweight=7
+|se=Can Clash with this Skill regardless of Speed; this unit cannot be Staggered until this Skill ends <br> {{SkillCon|On Use}} At 20+ SP, generate 3 Mang. Final Power +10 <br> {{SkillCon|Attack End}} If this Skill generated Mang, lose 20 SP <br> {{SkillCon|Clash Win}} Gain 2 {{StatusEffect|Slash DMG Up|b}} <br> {{SkillCon|Clash Lose}} Deal -80% damage and damage dealt by this Skill cannot Stagger the target
+|ce1={{StatusEffect|Unbreakable Coin|r}} <br> Deal +100% Damage on Critical Hit <br> {{SkillCon|On Hit}} {{SkillHint|Consume all {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} on target}} and deal ({{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} consumed)% HP damage against each target, respectively
+}}
+<!--Skill9-->
+|skillparts9={{Icons|Abno Part Body}} Body
+|skill9={{Skill|level=77
+|hint=2
+|sin=Lust
+|slevel=2
+|name=Destinated Opponent
+|type=Slash
+|icon=Destinated Opponent Shiomi Yoru
+|spower=3
+|cpower=+ 1
+|coin=1
+|atkmod=+0
+|atkweight=1
+|se={{SkillHint|Only targets with the corresponding buff}} among {{StatusEffect|Dawn's First Crow (雞鳴)|r}}, {{StatusEffect|The Sun's Descent (日入)|r}}, or {{StatusEffect|Eventide Glow (黃昏)|r}} can Clash with this Skill <br> This Skill does not trigger the target's Defense Skill <br><br> {{SkillCon|Clash Lose}} Gain 1 {{StatusEffect|Fragile|d}} <br> {{SkillCon|Clash Lose}} Remove {{StatusEffect|Dawn's First Crow (雞鳴)|r}}, {{StatusEffect|The Sun's Descent (日入)|r}}, {{StatusEffect|Eventide Glow (黃昏)|r}} from target <br><br> {{SkillCon|On Unopposed Attack}} Final Power +10
+}}
+<!--Skill10-->
+|skillparts10={{Icons|Abno Part Body}} Body
+|skill10={{Skill|level=77
+|hint=1
+|sin=Pride
+|slevel=3
+|name=You Have Failed to Stop the Future - Scartrail Slash ['''殘痕斬''']
+|type=Slash
+|icon=You Have Failed to Stop the Future - Scartrail Slash 殘痕斬 Shiomi Yoru
+|spower=9
+|cpower=+ 7
+|complexcoin=unbreakable,1
+|atkmod=+3
+|atkweight=7
+|se=Can Clash with this Skill regardless of Speed; cannot be Staggered until this Skill ends <br> {{SkillCon|Combat Start}} Gain 1 {{StatusEffect|Damage Down|d}} for every enemy that has equipped Defense Skills this turn (max 5) <br> {{SkillCon|Clash Lose}} Deal -80% damage and damage dealt by this Skill cannot Stagger the target
+|ce1={{SkillCon|On Hit}} If target has {{SkillHint|{{StatusEffect|Dawn's First Crow (雞鳴)|r}}, {{StatusEffect|The Sun's Descent (日入)|r}}, {{StatusEffect|Eventide Glow (黃昏)|r}},}} deal (this Coin's Final Power x 5) Pride damage to target
+}}
+<!--Passives-->
+|passive1={{Passive|Superposed Afterimage|hint=2|Encounter Start: Gain {{StatusEffect|Fourfold Afterimage Entanglement|r}} <br> At the start of the first turn of each pattern, gain {{StatusEffect|Disjunction|b}} equal to ({{StatusEffect|Afterimage Entanglement|r}} stage x 400) (once per {{StatusEffect|Afterimage Entanglement|r}} stage) <br><br> At stage 3 and 4 {{StatusEffect|Afterimage Entanglement|r}}, {{SkillHint|if this unit loses all {{StatusEffect|Disjunction|b}}, the pattern changes and become Staggered for the next turn}} <br><br> Take -30% HP, SP damage from {{StatusEffect|Burn|d}}, {{StatusEffect|Bleed|d}}, {{StatusEffect|Rupture|d}}, and {{StatusEffect|Sinking|d}}; -30% to Stagger Threshold raised by {{StatusEffect|Tremor|d}}}}
+|passive2={{Passive|Afterimage of the Future|hint=2|Every few turn, use the "Destinated Opponent" Skill <br> {{SkillHint|Only the target of this unit's attack can Clash with the said Skill Slot}} <br><br> If this unit's "Destinated Opponent" Skill loses a Clash, take 36 ~ 60 fixed damage <br><br> Combat End: {{SkillHint|If every "Destinated Opponent" Skill this unit used this turn lost a Clash}}, gain 1 {{StatusEffect|Fragile|d}} next turn}}
+|passive3={{Passive|'I Shall Give You Some Quarter'|Deal -50% final damage with this unit's Skill against targets that used Defense Skill <br><br> Turn End: Gain 2 {{StatusEffect|Fragile|d}} and 2 {{StatusEffect|Damage Up|b}} every 4 turn in this Encounter (applies cumulatively; max 2 times per Encounter)}}
+|passive4={{Passive|Panic Recovery|Turn End: if in Panic, reset SP to 30.}}
+|passive5={{Passive|Fixed Panic|This unit's Panic Type does not change when inflicted with an effect that changes Panic Types. Instead, this unit is inflicted with an effect that is inflicted against Non-SP Units.}}
+|passive6={{Passive|Afterimage Reverberation|On hit with this unit's Coin, deal Slash damage equal to (the Coin's final damage / 10) <br> - This effect activates ({{StatusEffect|Afterimage Entanglement|r}} stage) times; damage from this effect cannot Stagger target}}
+|passive7={{Passive|Lacerating Afterimages from Myriad Moments|hint=2|Attack Skill End: Deal (# of Slash Coins that hit Critically x 10) Slash damage against each target) (damage from this effect cannot Stagger target) <br><br> Attack Skill End: Consume every surplus {{StatusEffect|Poise|b}} Potency past 20 on self and inflict {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} to target by {{StatusEffect|Poise|b}} Potency consumed}}
+}}
+===Behavior===
+Shiomi Yoru enters battle with 30 SP and 2 {{StatusEffect|Shin (心) - Dihui Star|b}}. Ryōshū will gain {{StatusEffect|Unsevered Memory|r}} for the duration of the fight. 
+
+The battle will end in victory when Shiomi Yoru reaches 50% (959) HP.
+====Attack Pattern====
+Whenever {{StatusEffect|Disjunction|b}} is depleted, Shiomi Yoru will immediately end the turn and progress to the next stage of {{StatusEffect|Afterimage Entanglement|r}}.
+
+While having {{StatusEffect|Fourfold Afterimage Entanglement|r}}, Shiomi Yoru uses the following skill rotation:
+*Silent Regard, Silent Regard, Tripleslash [三連], Destinated Opponent, Twinslash [二連], Twinslash [二連]
+*Silent Regard, Formless Cut [無形斬], Tripleslash [三連], Destinated Opponent, Swift Glimmer [快閃], Destinated Opponent
+*Silent Regard, You Have Failed to Stop the Future - Scartrail Slash [殘痕斬], Destinated Opponent, Twinslash [二連], Destinated Opponent, Destinated Opponent.
+
+While having {{StatusEffect|Threefold Afterimage Entanglement|r}}, Shiomi Yoru switches to the following skill rotation:
+*Silent Regard, Silent Regard, Formless Cut [無形斬], Destinated Opponent, Tripleslash [三連], Phantom Step [殘像步]
+*Silent Regard, Silent Regard, Swift Glimmer [快閃], Formless Cut [無形斬], Tripleslash [三連], Destinated Opponent
+*Phantom Step [殘像步], Phantom Step [殘像步], Destinated Opponent, Swift Glimmer [快閃], You Have Failed to Stop the Future - Scartrail Slash [殘痕斬], Destinated Opponent
+
+While having {{StatusEffect|Twofold Afterimage Entanglement|r}}, Shiomi Yoru switches to the following skill rotation:
+*Silent Regard, Silent Regard, Formless Cut [無形斬], Destinated Opponent,  Phantom Step [殘像步]
+*Silent Regard, Silent Regard, Swift Glimmer [快閃], Formless Cut [無形斬], Destinated Opponent
+*Silent Regard, Silent Regard, Destinated Opponent, You Have Failed to Stop the Future - Scartrail Slash [殘痕斬], Swift Glimmer [快閃]
+
+While having {{StatusEffect|Onefold Afterimage Entanglement|r}}, Shiomi Yoru switches to the following skill rotation:
+*Phantom Step [殘像步], Phantom Step [殘像步], Tripleslash [三連], Uttermost Rend Space - String Severance [空間斬 - 絕緣]
+*Silent Regard, Silent Regard, Formless Cut [無形斬], Deathedge [絶命]
+*Phantom Step, Formless Cut [無形斬], Swift Glimmer [快閃], Deathedge [絶命]
+
+On turns where 'Destinated Opponent' is being used, Shiomi Yoru respectively inflicts {{StatusEffect|Dawn's First Crow (雞鳴)|r}}, {{StatusEffect|The Sun's Descent (日入)|r}}, and {{StatusEffect|Eventide Glow (黃昏)|r}} on random Sinners at the start of the turn, based on the number of 'Destinated Opponent' skills being used.
+
+===Battle Tips===
+''These are official tips that display in-game upon defeat in 9-41.''
+* Check for Sinners that can Clash against 'Destinated Opponent' Skill with suitable Attack Skills, and build up damage on The Pinky Nursefather.
+* Depending on the situation, it is important to plan impromptu and decide on which of The Pinky Nursefather's Skills should be Clashed first.
+
+===Dialogue===
+{|class="wikitable" style="text-align:center"
+!Condition!!Dialogue
+|-
+|On Turn Start while having 'You Have Failed to Stop the Future - Scartrail Slash [殘痕斬]' in a Skill Slot for the first time
+|<ab>9SV-BAT14-01.wav</ab>Don't ask me who I am. It's a meaningless question.
+|-
+|Using 'You Have Failed to Stop the Future - Scartrail Slash [殘痕斬]'
+|<ab>9SV-BAT14-08.wav</ab>Looking on askance, the resentment may dull...
+|-
+|Using 'You Have Failed to Stop the Future - Scartrail Slash [殘痕斬]' while Sinners have {{StatusEffect|Dawn's First Crow (雞鳴)|r}}, {{StatusEffect|The Sun's Descent (日入)|r}}, and {{StatusEffect|Eventide Glow (黃昏)|r}}
+|<ab>9SV-BAT14-09.wav</ab>Yet noontide and eventide lay forgotten, as I sunder even the close of day.
+|-
+|Using 'Uttermost Rend Space - String Severance [空間斬 - 絕緣]'
+|<ab>9SV-BAT14-03.wav</ab>Mang of Resentment (怨望), Mang of Futility (非望), Mang of Dismay (落望). What rages on is only my wretched heart.
+|-
+|Turn Start after Sinners lose {{StatusEffect|Dawn's First Crow (雞鳴)|r}}, {{StatusEffect|The Sun's Descent (日入)|r}}, {{StatusEffect|Eventide Glow (黃昏)|r}}
+|<ab>9SV-BAT14-04.wav</ab>This blade... was not strong enough to sever.
+|-
+|Turn Start when Staggered
+|<ab>9SV-BAT14-05.wav</ab>...Not yet. I do not wish... to return yet.
+|}
+
+==The Refracted Pinky Nursefather - Shiomi Yoru==
+{{ABPage
+<!--General Info-->
+|sin=Pride
+|name=The Refracted Pinky Nursefather - Shiomi Yoru
+|filename=The Pinky Nursefather - Shiomi Yoru
+|faction=The Pinky
+|keyword={{Keyword|The Pinky|en}} {{Keyword|The House of Spiders|en}} {{Keyword|The Fingers|en}}
+|location=Line 6: Maru no Uchi no Sanzu no Kawa
+|id=9550
+|collapse=9550
+|portrait=Pinky-1322_portrait.png
+|hp=532
+|hpgrowth=18
+|level=77
+|panic=Refracted Affection and Resentment
+|psanity=* Increases after winning a Clash based on the Clash count <br> (Base Value is 10, raised by 20% per Clash count after 1)
+|nsanity=* '''Decreases after losing a Clash based on the the Clash count <br> (Base Value is 3, raised by 10% per Clash count after 1)'''
+<!--Parts1-->
+|abnoparts1={{ABPage/Parts
+|partsname=Body
+|partsicon=Body
+|level=77
+|hp=532
+|hpgrowth=18
+|speed=2~5
+|defmod=+5
+|stagger1=20
+|slash=1.2
+|pierce=1
+|blunt=1
+|wrath=1.2
+|lust=1
+|sloth=0.8
+|gluttony=0.8
+|gloom=1.2
+|pride=0.8
+|envy=1
+}}
+<!--Skill1-->
+|skillparts1={{Icons|Abno Part Body}} Body
+|skill1={{Skill|level=77
+|sin=Envy
+|slevel=1
+|name=Twinslash ['''二連''']
+|type=Slash
+|icon=Twinslash -二連- Shiomi Yoru
+|spower=7
+|cpower=+ 3
+|coin=2
+|atkmod=-3
+|atkweight=1
+|se={{SkillCon|On Use}} Gain +2 {{StatusEffect|Poise|b}} Count
+|ce1={{SkillCon|On Hit}} Gain 1 {{StatusEffect|Poise|b}}
+|ce2={{SkillCon|On Hit}} Gain 1 {{StatusEffect|Poise|b}}
+}}
+<!--Skill2-->
+|skillparts2={{Icons|Abno Part Body}} Body
+|skill2={{Skill|level=77
+|sin=Envy
+|slevel=1
+|name=Tripleslash ['''三連''']
+|type=Slash
+|icon=Tripleslash -三連- Shiomi Yoru
+|spower=7
+|cpower=+ 2
+|coin=3
+|atkmod=-3
+|atkweight=1
+|se={{SkillCon|On Use}} Gain +3 {{StatusEffect|Poise|b}} Count
+|ce1={{SkillCon|On Hit}} Gain 1 {{StatusEffect|Poise|b}}
+|ce2={{SkillCon|On Hit}} Gain 1 {{StatusEffect|Poise|b}}
+|ce3={{SkillCon|On Hit}} Gain 1 {{StatusEffect|Poise|b}}
+}}
+<!--Skill3-->
+|skillparts3={{Icons|Abno Part Body}} Body
+|skill3={{Skill|level=77
+|hint=1
+|sin=Pride
+|slevel=2
+|name=Swift Glimmer ['''快閃''']
+|type=Slash
+|icon=Swift Glimmer -快閃- Shiomi Yoru
+|spower=10
+|cpower=+ 6
+|coin=1
+|atkmod=+1
+|atkweight=3
+|se={{SkillCon|On Unopposed Attack}} Gain 5 {{StatusEffect|Poise|b}} <br> {{SkillCon|Clash Lose}} -2 Atk Weight
+|ce1={{StatusEffect|Unbreakable Coin|r}} <br> +30% Damage on Critical Hit <br> {{SkillCon|On Hit}} Gain 2 {{StatusEffect|Poise|b}} <br> {{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} <br> {{SkillCon|On Hit without Cracking}} Inflict 1 {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}}
+}}
+<!--Skill4-->
+|skillparts4={{Icons|Abno Part Body}} Body
+|skill4={{Skill|level=77
+|hint=1
+|sin=Wrath
+|slevel=2
+|name=Formless Cut ['''無形斬''']
+|type=Slash
+|icon=Formless Cut -無形斬- Shiomi Yoru
+|spower=12
+|cpower=+ 1
+|coin=1
+|atkmod=+1
+|atkweight=4
+|se={{StatusEffect|Unfocused Volley|r}} <br> Can Clash with this Skill regardless of Speed; cannot be Staggered until this Skill ends <br> {{SkillCon|Clash Lose}} Deal -80% damage and damage dealt by this Skill cannot Stagger the target
+|ce1={{StatusEffect|Unbreakable Coin|r}} <br> Reuse this Coin (4 times max) <br> {{SkillCon|On Hit}} Gain 1 {{StatusEffect|Poise|b}} <br> {{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} <br> {{SkillCon|On Hit without Cracking}} Inflict 1 {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}}
+}}
+<!--Skill5-->
+|skillparts5={{Icons|Abno Part Body}} Body
+|skill5={{Skill|level=77
+|hint=1
+|sin=Sloth
+|slevel=1
+|name=Phantom Step ['''殘像步''']
+|type=Slash
+|icon=Phantom Step -殘像步- Shiomi Yoru
+|spower=4
+|cpower=+ 3
+|coin=1
+|atkmod=-3
+|atkweight=1
+|se={{SkillCon|Clash Lose}} {{SkillHint|Halve the {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} Stack on target}} (rounded down)
+}}
+<!--Skill6-->
+|skillparts6={{Icons|Abno Part Body}} Body
+|skill6={{Skill|level=77
+|hint=2
+|sin=Gluttony
+|slevel=1
+|name=Silent Regard
+|type=Slash
+|icon=Silent Regard Shiomi Yoru
+|spower=2
+|cpower=+ 1
+|coin=1
+|atkmod=-5
+|atkweight=1
+|se={{SkillHint|{{SkillCon|Clash Lose}} Gain 2 {{StatusEffect|Attack Power Down|d}}}} <br> {{SkillCon|Clash Lose}} Target heals 5 SP
+|ce1={{StatusEffect|Unbreakable Coin|r}}
+}}
+<!--Skill7-->
+|skillparts7={{Icons|Abno Part Body}} Body
+|skill7={{Skill|level=77
+|hint=3
+|sin=Pride
+|slevel=3
+|name=Uttermost Rend Space - String Severance ['''空間斬 - 絕緣''']
+|type=Slash
+|icon=Rend Space - Multitudes -空間斬-緣- Shiomi Yoru
+|spower=14
+|cpower=+ 10
+|coin=1
+|atkmod=+0
+|atkweight=7
+|se=Can Clash with this Skill regardless of Speed; this unit cannot be Staggered until this Skill ends <br> {{SkillCon|On Use}} At 20+ SP, generate 3 Mang. Final Power +10 <br> {{SkillCon|Attack End}} If this Skill generated Mang, lose 20 SP <br> {{SkillCon|Clash Win}} Gain 2 {{StatusEffect|Slash DMG Up|b}} <br> {{SkillCon|Clash Lose}} Deal -80% damage and damage dealt by this Skill cannot Stagger the target
+|ce1={{StatusEffect|Unbreakable Coin|r}} <br> Deal +100% Damage on Critical Hit <br> {{SkillCon|On Hit}} {{SkillHint|Consume all {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} on target}} and deal ({{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} consumed)% HP damage against each target hit, respectively
+}}
+<!--Skill8-->
+|skillparts8={{Icons|Abno Part Body}} Body
+|skill8={{Skill|level=77
+|hint=2
+|sin=Lust
+|slevel=2
+|name=Destinated Opponent
+|type=Slash
+|icon=Destinated Opponent Shiomi Yoru
+|spower=3
+|cpower=+ 1
+|coin=1
+|atkmod=+0
+|atkweight=1
+|se={{SkillHint|Only targets with the corresponding buff}} among {{StatusEffect|Dawn's First Crow (雞鳴)|r}}, {{StatusEffect|The Sun's Descent (日入)|r}}, or {{StatusEffect|Eventide Glow (黃昏)|r}} can Clash with this Skill <br> This Skill does not trigger the target's Defense Skill <br><br> {{SkillCon|Clash Lose}} Gain 1 {{StatusEffect|Fragile|d}} <br> {{SkillCon|Clash Lose}} Remove {{StatusEffect|Dawn's First Crow (雞鳴)|r}}, {{StatusEffect|The Sun's Descent (日入)|r}}, {{StatusEffect|Eventide Glow (黃昏)|r}} from target <br><br> {{SkillCon|On Unopposed Attack}} Final Power +10
+}}
+<!--Skill9-->
+|skillparts9={{Icons|Abno Part Body}} Body
+|skill9={{Skill|level=77
+|hint=1
+|sin=Pride
+|slevel=3
+|name=You Have Failed to Stop the Future - Scartrail Slash ['''殘痕斬''']
+|type=Slash
+|icon=You Have Failed to Stop the Future - Scartrail Slash 殘痕斬 Shiomi Yoru
+|spower=9
+|cpower=+ 7
+|complexcoin=unbreakable,1
+|atkmod=+3
+|atkweight=7
+|se=Can Clash with this Skill regardless of Speed; cannot be Staggered until this Skill ends <br> {{SkillCon|Combat Start}} Gain 1 {{StatusEffect|Damage Down|d}} for every enemy that has equipped Defense Skill this turn (max 5) <br> {{SkillCon|Clash Lose}} Deal -80% damage and damage dealt by this Skill cannot Stagger the target
+|ce1={{SkillCon|On Hit}} If target has {{SkillHint|{{StatusEffect|Dawn's First Crow (雞鳴)|r}}, {{StatusEffect|The Sun's Descent (日入)|r}}, {{StatusEffect|Eventide Glow (黃昏)|r}},}} deal (this Coin's Final Power x 5) Pride damage to target
+}}
+<!--Skill10-->
+|skillparts10={{Icons|Abno Part Body}} Body
+|skill10={{Skill|level=77
+|hint=2
+|sin=Wrath
+|slevel=3
+|name=Deathedge ['''絶命''']
+|type=Slash
+|icon=Deathedge -絶命- Shiomi Yoru
+|spower=9
+|cpower=+ 5
+|coin=2
+|atkmod=+3
+|atkweight=1
+|se=This Skill does not trigger the target's Defense Skill <br> Prioritizes the target with the least HP percentage
+|ce1={{SkillCon|On Hit}} Inflict 1 {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} for every 1% missing HP on target
+|ce2={{SkillCon|On Hit}} Consume all {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} on target and deal ({{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} consumed)% HP damage
+}}
+<!--Passives-->
+|passive1={{Passive|Refracted Struggle|At 10+ Clashes against the same enemy, randomly gain or lose Clash Power by (Clash Count / 10) in a Clash. (rounded down)}}
+|passive2={{Passive|Superposed Afterimage|hint=2|Upon entering the Encounter, this unit gains {{StatusEffect|Fourfold Afterimage Entanglement|r}} <br> If this unit does not have {{StatusEffect|Disjunction|b}}, this unit gains {{StatusEffect|Disjunction|b}} equal to ({{StatusEffect|Afterimage Entanglement|r}} stage x 400) (once per {{StatusEffect|Afterimage Entanglement|r}} stage) <br><br> At stage 3 and 4 {{StatusEffect|Afterimage Entanglement|r}}, {{SkillHint|if this unit loses all {{StatusEffect|Disjunction|b}}, the pattern changes and become Staggered for the next turn}} <br><br> At stage 2 {{StatusEffect|Afterimage Entanglement|r}}, {{SkillHint|if this unit loses all {{StatusEffect|Disjunction|b}}, the pattern changes}} <br><br> Take -30% HP, SP damage from {{StatusEffect|Burn|d}}, {{StatusEffect|Bleed|d}}, {{StatusEffect|Rupture|d}}, and {{StatusEffect|Sinking|d}}; -30% to Stagger Threshold raised by {{StatusEffect|Tremor|d}}}}
+|passive3={{Passive|Afterimage of the Future|hint=2|Every few turn, use the "Destinated Opponent" Skill <br> {{SkillHint|Only the target of this unit's attack can Clash with the said Skill Slot}} <br><br> If this unit's "Destinated Opponent" Skill loses a Clash, take 36 ~ 60 fixed damage <br><br> Combat End: {{SkillHint|If every "Destinated Opponent" Skill this unit used this turn lost a Clash}}, gain 1 {{StatusEffect|Fragile|d}} next turn}}
+|passive4={{Passive|'I Shall Give You Some Quarter'|Deal -50% final damage with this unit's Skill against targets that used Defense Skill <br><br> Turn End: Gain 2 {{StatusEffect|Fragile|d}} and 2 {{StatusEffect|Damage Up|b}} every 4 turn in this Encounter (applies cumulatively; max 2 times per Encounter)}}
+|passive5={{Passive|Panic Recovery|Turn End: if in Panic, reset SP to 30.}}
+|passive6={{Passive|Fixed Panic|This unit's Panic Type does not change when inflicted with an effect that changes Panic Types. Instead, this unit is inflicted with an effect that is inflicted against Non-SP Units.}}
+|passive7={{Passive|Afterimage Reverberation|On hit with this unit's Coin, deal Slash damage equal to (the Coin's final damage / 10) <br> - This effect activates ({{StatusEffect|Afterimage Entanglement|r}} stage) times; damage from this effect cannot Stagger target}}
+|passive8={{Passive|Lacerating Afterimages from Myriad Moments|hint=2|Attack Skill End: Deal (# of Slash Coins that hit Critically x 10) Slash damage against each target) (damage from this effect cannot Stagger target) <br><br> Attack Skill End: Consume every surplus {{StatusEffect|Poise|b}} Potency past 20 on self and inflict {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} to target by {{StatusEffect|Poise|b}} Potency consumed}}
+}}
+
+===Behavior===
+Shiomi Yoru behaves identically to her original version, but her Panic type has been changed to apply to all Sinners instead of only Ryōshū. In addition, Shiomi Yoru's health must be completely depleted in order to end the fight.
+
+==Unique Status Effects==
+{|class="wikitable" style="text-align:center"
+!Status Effect!!Description
+|-
+|{{StatusEffect|Bladetrail -Afterimage- (Araya)|d}}
+| - Max Stack: 99 <br> - Turn Start: Gain 1 {{StatusEffect|Fragile|d}} for every 10 Stack (max 5)
+|-
+|{{StatusEffect|Dihui Star's Blade (Araya)|r}}
+| - Total sum of {{StatusEffect|Bladetrail -Afterimage- (Araya)|d}} Stack in this Encounter
+|-
+|{{StatusEffect|Disjunction|b}}
+| - Turn Start: The Part gains Shield equal to Stack <br> - Reduction in the Shield reduces the Stack as well
+|-
+|{{StatusEffect|Afterimage Entanglement|r}}
+| Afterimages are Entangled <br> Effect Stage changes with the progress of combat pattern
+|-
+|{{StatusEffect|Onefold Afterimage Entanglement|r}}
+| Stage 1 {{StatusEffect|Afterimage Entanglement|r}} <br> - On Hit, activate the following effects: <br> &nbsp;· Inflict 2 {{StatusEffect|Burn|d}}
+|-
+|{{StatusEffect|Twofold Afterimage Entanglement|r}}
+| Stage 2 {{StatusEffect|Afterimage Entanglement|r}} <br> - On Hit, activate the following effects: <br> &nbsp;· Inflict 1 {{StatusEffect|Bind|d}} next turn <br> &nbsp;· Inflict 2 {{StatusEffect|Burn|d}}
+|-
+|{{StatusEffect|Threefold Afterimage Entanglement|r}}
+| Stage 3 {{StatusEffect|Afterimage Entanglement|r}} <br> - On Hit, activate the following effects: <br> &nbsp;· Inflict 2 {{StatusEffect|Bleed|d}} <br> &nbsp;· Inflict 1 {{StatusEffect|Bind|d}} next turn <br> &nbsp;· Inflict 2 {{StatusEffect|Burn|d}}
+|-
+|{{StatusEffect|Fourfold Afterimage Entanglement|r}}
+| Stage 4 {{StatusEffect|Afterimage Entanglement|r}} <br> - Min & Max Speed -2 for this unit <br> - On Hit, activate the following effects: <br> &nbsp;· Inflict 1 {{StatusEffect|Poison|d}} <br> &nbsp;· Inflict 2 {{StatusEffect|Bleed|d}} <br> &nbsp;· Inflict 1 {{StatusEffect|Bind|d}} next turn <br> &nbsp;· Inflict 2 {{StatusEffect|Burn|d}}
+|-
+|{{StatusEffect|Shin (心) - Dihui Star|b}}
+| - Max Stack: 3 <br> - Turn Start: Apply the following effects <br> &nbsp;· Gain 5 {{StatusEffect|Poise|b}} Potency and +1 {{StatusEffect|Poise|b}} Count for every Stack <br> &nbsp;· Gain 1 {{StatusEffect|Slash DMG Up|b}} for every 15% missing HP on self (max 5)
+|-
+|{{StatusEffect|Twisted and Disjointed Memory and Recollection|r}}
+| - Skill Slot +1 <br> - Deal +20% damage to and take +20% damage from The Pinky Nursefather; On Clash Win, deal 5 SP damage to The Pinky Nursefather <br> - When taking damage that would Stagger this unit, does not get Staggered and remove the corresponding Stagger Threshold; then, gain 1 {{StatusEffect|Attack Power Up|b}} next turn (once per turn) <br> - For this Encounter: After using a Skill, gain 1 E.G.O resource of the Skill's Affinity and 1 E.G.O resource for the least-owned E.G.O resource (2 times per turn) <br> - Cannot Retreat
+|-
+|{{StatusEffect|Dawn's First Crow (雞鳴)|r}}
+| Able to Clash with the enemy's specific Slot
+|-
+|{{StatusEffect|The Sun's Descent (日入)|r}}
+| Able to Clash with the enemy's specific Slot
+|-
+|{{StatusEffect|Eventide Glow (黃昏)|r}}
+| Able to Clash with the enemy's specific Slot
+|}
+
+==Gallery==
+<gallery>
+The Pinky Nursefather - Shiomi Yoru Idle Animation.gif|Idle Animation
+The Pinky Nursefather - Shiomi Yoru Idle Sprite.png|Idle Sprite
+The Pinky Nursefather - Shiomi Yoru Moving Sprite.png|Moving Sprite
+The Pinky Nursefather - Shiomi Yoru Guard Sprite.png|Guard Sprite
+The Pinky Nursefather - Shiomi Yoru Evade Sprite.png|Evade Sprite
+The Pinky Nursefather - Shiomi Yoru Hurt Sprite.png|Hurt Sprite
+</gallery>
+
+==Trivia==
+* The Pinky Nursefather - Shiomi Yoru's max HP of 1918 is a reference to the release year of [[wikipedia:Ryūnosuke Akutagawa|Ryūnosuke Akutagawa]]'s ''[[wikipedia:Hell Screen|Hell Screen]]'' and ''[[wikipedia:The Spider's Thread|The Spider's Thread]]''.
+* Prior to Canto IX Part III, the name of the skill 'Rend Space - String Connection [空間斬-緣]' was 'Rend Space - Multitudes [空間斬-緣]'.
+
+{{Background|Battle LCE Research Team Hallway 5}}
+[[Category:Enemy]]
+[[Category:Boss Enemy]]
+[[Category:The Pinky Enemies]]
+[[Category:The House of Spiders Enemies]]
+[[Category:The Fingers Enemies]]
