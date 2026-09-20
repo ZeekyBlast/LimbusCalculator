@@ -3371,7 +3371,8 @@ const fmtValue = (label: string, value: number) =>
 export function VerdictPanel({ report, a, b }: Props) {
   const verdict = verdictFor(report)
   const thresholds = b.unit.staggerThresholds
-  const coinsLeft = report.coinsLeftIfWin.map((p, coins) => ({ coins, p })).filter(x => x.p > 0.0005)
+  // coinsLeftIfWin is a joint distribution (sums to `win`); show it conditional on winning.
+  const coinsLeft = report.coinsLeftIfWin.map((p, coins) => ({ coins, p: report.win > 0 ? p / report.win : 0 })).filter(x => x.p > 0.0005)
   return (
     <section className="mt-6 rounded border border-paper-light bg-paper p-4" aria-live="polite">
       <div className="flex flex-wrap items-center gap-6">
