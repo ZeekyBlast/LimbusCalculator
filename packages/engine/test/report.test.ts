@@ -81,7 +81,9 @@ describe('guard clash (spec 6.2)', () => {
     expect(r.lose).toBeCloseTo(0.25)
     expect(r.draw).toBe(0)
     expect(r.parryRoundsExpected).toBe(0)
-    expect(r.coinsLeftIfWin).toEqual([0, 1])
+    expect(r.coinsLeftIfWin[0]).toBe(0)
+    expect(r.coinsLeftIfWin[1]).toBeCloseTo(0.75)
+    expect(r.coinsLeftIfLose[1]).toBeCloseTo(0.25)
     // Given the attacker won: guard power 4 with 2/3, 6 with 1/3. Attack roll 5 or 8 each 50%.
     // Reduced rolls: (5-4=1, 8-4=4) and (5-6 -> absorbed 0, 8-6=2). Mean = 2/3*2.5 + 1/3*1 = 2.
     expect(r.damageDealt.mean).toBeCloseTo(2)
@@ -108,7 +110,7 @@ describe('guard clash (spec 6.2)', () => {
     const g2 = makeCombatant({ unit: makeUnit({ id: 'g2' }), skill: makeSkill({ damageType: 'guard', coinCount: 1 }) })
     const r = clashReport(g1, g2)
     expect(r.win + r.lose + r.draw).toBeCloseTo(1)
-    expect(r.coinsLeftIfWin.reduce((sum, p) => sum + p, 0)).toBeCloseTo(1)
+    expect(r.coinsLeftIfWin.reduce((sum, p) => sum + p, 0)).toBeCloseTo(r.win)
   })
 })
 

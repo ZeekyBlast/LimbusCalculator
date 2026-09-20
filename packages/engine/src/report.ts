@@ -48,7 +48,8 @@ export function clashReport(a: Combatant, b: Combatant, options: ReportOptions =
     const g = guardClash(a, b, options)
     return {
       win: g.attackerWins, lose: g.guardWins, draw: g.draw,
-      coinsLeftIfWin: oneHot(g.attackerCoins), coinsLeftIfLose: oneHot(g.guardCoins),
+      coinsLeftIfWin: oneHot(g.attackerCoins).map(p => p * g.attackerWins),
+      coinsLeftIfLose: oneHot(g.guardCoins).map(p => p * g.guardWins),
       parryRoundsExpected: g.parryRoundsExpected,
       damageDealt: g.attackDamage, damageTaken: g.noDamage, breakdown: g.breakdown,
     }
@@ -57,7 +58,8 @@ export function clashReport(a: Combatant, b: Combatant, options: ReportOptions =
     const g = guardClash(b, a, options)
     return {
       win: g.guardWins, lose: g.attackerWins, draw: g.draw,
-      coinsLeftIfWin: oneHot(g.guardCoins), coinsLeftIfLose: oneHot(g.attackerCoins),
+      coinsLeftIfWin: oneHot(g.guardCoins).map(p => p * g.guardWins),
+      coinsLeftIfLose: oneHot(g.attackerCoins).map(p => p * g.attackerWins),
       parryRoundsExpected: g.parryRoundsExpected,
       damageDealt: g.noDamage, damageTaken: g.attackDamage, breakdown: g.breakdown,
     }
@@ -164,10 +166,13 @@ function oneHot(coins: number): number[] {
 }
 
 function sampleIndex(weights: number[], u: number): number {
+  const total = weights.reduce((s, w) => s + w, 0)
+  if (total <= 0) return weights.length - 1
   let acc = 0
+  const target = u * total
   for (let i = 0; i < weights.length; i++) {
     acc += weights[i]
-    if (u < acc) return i
+    if (target < acc) return i
   }
   return weights.length - 1
 }
