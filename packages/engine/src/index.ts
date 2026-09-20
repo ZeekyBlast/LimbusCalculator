@@ -6,8 +6,12 @@ export * from './damage'
 export * from './uptieResolver'
 export * from './statusEffects'
 export * from './unbreakableCoin'
+export * from './clashChain'
 // Legacy: kept for the old ui/ app and as a Monte Carlo test oracle. Removed in Plan 3.
 export * from './legacy/clash'
+// Disambiguate: both legacy/clash and clashChain define clashPowerLevelBonus (same formula);
+// clashChain's is the canonical one going forward.
+export { clashPowerLevelBonus } from './clashChain'
 export * from './legacy/fixedDamageAilment'
 export * from './legacy/skillEffectGrants'
 export * from './types'
