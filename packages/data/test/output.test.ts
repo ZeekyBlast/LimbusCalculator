@@ -54,6 +54,11 @@ describe('committed outputs', () => {
     // recorded in failures.json (e.g. a wiki content gap). Silently dropping one is not allowed.
     const unaccounted = railway.enemyIds.filter(id => !enemyIds.has(id) && !documentedFailures.has(id))
     expect(unaccounted, `railway enemy ids with no unit and no documented failure: ${unaccounted.join(', ')}`).toEqual([])
+    // Bounds the gate above: without this, any regression that broke parsing for many railway
+    // enemies would still pass as long as each one landed in failures.json. This is the exact,
+    // known list of wiki content gaps (see task-9-report.md); update it deliberately, not to make
+    // a new failure disappear.
+    expect(failures.enemies.map(f => f.subject)).toEqual(['9553'])
   })
   it('has a railway line with sections and stations', () => {
     expect(railway.title.length).toBeGreaterThan(0)

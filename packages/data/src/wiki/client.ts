@@ -50,7 +50,18 @@ export class WikiClient {
   async fetchWikitext(title: string): Promise<string | null> {
     if (this.cache.has(title)) return this.cache.get(title) ?? null
     const data = await this.apiGet({ action: 'parse', page: title, prop: 'wikitext', redirects: '1' })
-    const text: string | null = data.parse?.wikitext?.['*'] ?? null
+    if (data.error) {
+      // `ratelimited` is already retried inside apiGet, so anything here is a different error.
+      // `missingtitle` means the page genuinely doesn't exist; anything else (a transient
+      // `internal_api_error_*`, an `invalidtitle`, ...) must not be silently recorded as missing.
+      if (data.error.code === 'missingtitle') {
+        this.cache.set(title, null)
+        return null
+      }
+      throw new Error(`wiki API error "${data.error.code}" fetching "${title}"`)
+    }
+    const text = data.parse?.wikitext?.['*']
+    if (typeof text !== 'string') throw new Error(`unexpected wiki API response fetching "${title}"`)
     this.cache.set(title, text)
     return text
   }

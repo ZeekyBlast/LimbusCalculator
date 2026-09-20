@@ -21,6 +21,14 @@ describe('WikiClient', () => {
     const client = new WikiClient({ fetchImpl: fakeFetch([{ error: { code: 'missingtitle' } }]), sleep: async () => {}, delayMs: 0 })
     expect(await client.fetchWikitext('Nope')).toBeNull()
   })
+  it('rejects with the error code for a non-missingtitle API error, instead of treating it as missing', async () => {
+    const client = new WikiClient({
+      fetchImpl: fakeFetch([{ error: { code: 'internal_api_error_DBQueryError' } }]),
+      sleep: async () => {},
+      delayMs: 0,
+    })
+    await expect(client.fetchWikitext('X')).rejects.toThrow(/internal_api_error_DBQueryError/)
+  })
   it('retries after a ratelimited error, sleeping in between', async () => {
     const sleep = vi.fn(async () => {})
     const fetchImpl = fakeFetch([{ error: { code: 'ratelimited' } }, { parse: { title: 'X', wikitext: { '*': 'ok' } } }])

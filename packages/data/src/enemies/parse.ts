@@ -25,15 +25,19 @@ function escapeRegExp(s: string): string {
   return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
 }
 
+/** Matches the `id="..."` span or `==...==` heading that carries `anchor`, wiki-markup permitting. */
+function anchorHeading(anchor: string): RegExp {
+  const esc = escapeRegExp(anchor)
+  return new RegExp(`(id="${esc}"|==\\s*(?:'''|<span[^>]*>)?\\s*${esc}\\s*(?:'''|</span>)?\\s*==)`)
+}
+
 /** The enemy block for `ref`: by `id` param when present, else the first block after the heading that carries the anchor. */
 export function findEnemyBlock(wikitext: string, ref: EnemyRef): TemplateBlock | undefined {
   const blocks = findTemplateBlocks(wikitext, ENEMY_TEMPLATES)
   const byId = blocks.find(b => b.params.id?.trim() === ref.id)
   if (byId) return byId
   if (!ref.anchor) return blocks[0]
-  const anchor = escapeRegExp(ref.anchor)
-  const heading = new RegExp(`(id="${anchor}"|==\\s*(?:'''|<span[^>]*>)?\\s*${anchor}\\s*(?:'''|</span>)?\\s*==)`)
-  const m = heading.exec(wikitext)
+  const m = anchorHeading(ref.anchor).exec(wikitext)
   if (!m) return undefined
   return blocks.find(b => b.start > m.index)
 }
@@ -44,9 +48,7 @@ export function findEnemyBlock(wikitext: string, ref: EnemyRef): TemplateBlock |
  * undefined if the heading isn't found or isn't followed by such a hatnote.
  */
 export function findRedirectPage(wikitext: string, anchor: string): string | undefined {
-  const esc = escapeRegExp(anchor)
-  const heading = new RegExp(`(id="${esc}"|==\\s*(?:'''|<span[^>]*>)?\\s*${esc}\\s*(?:'''|</span>)?\\s*==)`)
-  const m = heading.exec(wikitext)
+  const m = anchorHeading(anchor).exec(wikitext)
   if (!m) return undefined
   const after = wikitext.slice(m.index + m[0].length, m.index + m[0].length + 500)
   const forBlock = findTemplateBlocks(after, ['For'])[0]
