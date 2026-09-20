@@ -58,6 +58,23 @@ describe('resolveCombatant', () => {
     expect(r.coinPower).toBe(3)
     expect(r.effectsUnparsed).toEqual(['Reuse the final Coin'])
   })
+  it('surfaces coin-scoped effects as unparsed instead of dropping them', () => {
+    const skill = makeSkill({ effects: [
+      effect({ kind: 'coinPower', delta: 3 }, { scope: { coin: 1 }, source: 'On Coin 2: +3 Coin Power' }),
+    ] })
+    const r = resolveCombatant(makeCombatant({ skill }))
+    expect(r.coinPower).toBe(3)
+    expect(r.effectsUnparsed).toEqual(['On Coin 2: +3 Coin Power'])
+    expect(r.effectsApplied).toEqual([])
+  })
+  it('skips applyStatus ops without recording them as applied or unparsed', () => {
+    const skill = makeSkill({ effects: [
+      effect({ kind: 'applyStatus', target: 'target', status: 'bleed', potency: 2, count: 3 }, { source: 'Inflict 2 Bleed' }),
+    ] })
+    const r = resolveCombatant(makeCombatant({ skill }))
+    expect(r.effectsApplied).toEqual([])
+    expect(r.effectsUnparsed).toEqual([])
+  })
   it('applies passive effects from the unit', () => {
     const unit = makeUnit({ passives: [{ name: 'P', text: 'x', effects: [effect({ kind: 'damagePercent', delta: 0.1 }, { trigger: 'passive' })] }] })
     expect(resolveCombatant(makeCombatant({ unit })).damagePercent).toBeCloseTo(0.1)

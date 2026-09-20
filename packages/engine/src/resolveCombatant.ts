@@ -17,7 +17,10 @@ export function resolveCombatant(self: Combatant, opponent?: Combatant): Resolve
   const candidates = [...skill.effects, ...self.unit.passives.flatMap(p => p.effects)]
   for (const e of candidates) {
     if (e.op.kind === 'unparsed') { effectsUnparsed.push(e.source); continue }
-    if (!ACTIVE_TRIGGERS.has(e.trigger) || e.scope !== 'skill') continue
+    // Per-coin effects need the coin index the enumeration is on, which this flat resolve has no
+    // room for. Surface them as unhandled rather than silently dropping them, whatever the trigger.
+    if (e.scope !== 'skill') { effectsUnparsed.push(e.source); continue }
+    if (!ACTIVE_TRIGGERS.has(e.trigger)) continue
     if (e.condition && !holds(e.condition, self, opponent)) continue
     switch (e.op.kind) {
       case 'coinPower': coinPower += e.op.delta; break
