@@ -1,8 +1,9 @@
-import { calculateDynamicModifier, sumCoinRollBonus, type EffectStack } from './statusEffects'
+import { calculateDynamicModifier, getEffectById, sumCoinPowerBonus, sumCoinRollBonus, type EffectStack } from './statusEffects'
 import type { Combatant, Condition, Effect, ResolvedCombatant, Skill, UptieTier } from './types'
 
 const ACTIVE_TRIGGERS = new Set<Effect['trigger']>(['on-use', 'passive', 'combat-start'])
-const TARGET_SIDE_IDS = new Set(['fragile', 'protection'])
+/** Registry slot whose stacks belong to the side being hit (Fragile/Protection and their typed variants). */
+const TARGET_SIDE_SLOT = 'dynamic-additive-fragile-protection'
 
 export function resolveCombatant(self: Combatant, opponent?: Combatant): ResolvedCombatant {
   const skill = applyUptie(self.skill, self.uptie)
@@ -29,10 +30,21 @@ export function resolveCombatant(self: Combatant, opponent?: Combatant): Resolve
   }
 
   const stacks: EffectStack[] = Object.entries(self.status).map(([effectId, v]) => ({ effectId, stacks: v.potency }))
-  const targetStacks = stacks.filter(s => TARGET_SIDE_IDS.has(s.effectId))
-  const attackerStacks = stacks.filter(s => !TARGET_SIDE_IDS.has(s.effectId))
+  // Bucket by registry slot, not by id: every Fragile/Protection variant belongs to the side being
+  // hit. Ids missing from the registry fall to the attacker side and contribute 0 there anyway.
+  const targetStacks = stacks.filter(s => getEffectById(s.effectId)?.slot === TARGET_SIDE_SLOT)
+  const attackerStacks = stacks.filter(s => getEffectById(s.effectId)?.slot !== TARGET_SIDE_SLOT)
+  // Coin Boost / Coin Drop modify Coin Power itself, so they land after effects and manual overrides.
+  coinPower += sumCoinPowerBonus(attackerStacks)
   const poise = self.status['poise'] ?? { potency: 0, count: 0 }
   const sanity = Math.min(45, Math.max(-45, self.sanity))
+
+  // The [-1, 1] clamps inside calculateDynamicModifier apply per side: the attacker's Damage
+  // Up/Down is clamped separately from the target's Fragile/Protection, never as one pooled sum.
+  // That only diverges from clamping the pool once a single side exceeds the clamp on its own.
+  const dynamicAsAttacker = calculateDynamicModifier(attackerStacks, false)
+  const dynamicAsTarget = calculateDynamicModifier(targetStacks, false)
+  const critOnlyModifier = calculateDynamicModifier(attackerStacks, true) - dynamicAsAttacker
 
   return {
     basePower,
@@ -47,8 +59,9 @@ export function resolveCombatant(self: Combatant, opponent?: Combatant): Resolve
     coinRollBonus: sumCoinRollBonus(attackerStacks),
     critChance: Math.min(1, poise.potency * 0.05),
     poiseCount: poise.count,
-    dynamicAsAttacker: calculateDynamicModifier(attackerStacks, false),
-    dynamicAsTarget: calculateDynamicModifier(targetStacks, false),
+    dynamicAsAttacker,
+    critOnlyModifier,
+    dynamicAsTarget,
     maxHp: self.unit.hp,
     currentHp: self.currentHp ?? self.unit.hp,
     sin: skill.sin,

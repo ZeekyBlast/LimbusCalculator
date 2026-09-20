@@ -16,6 +16,8 @@ export interface AttackParams {
   offenseDefenseAdvantage: number
   parryBonus: number
   dynamicModifier: number
+  /** Added to the dynamic modifier only on coins that crit (Crit Damage Up). */
+  critOnlyModifier: number
   defenderMaxHp: number
   defenderCurrentHp: number
   /**
@@ -71,7 +73,7 @@ export function attackDamageDistribution(p: AttackParams): DamageSummary {
             parryBonus: p.parryBonus,
             critical: crit ? p.critModifier : 0,
           },
-          dynamicModifiers: { skillEffects: 0, buffs: p.dynamicModifier },
+          dynamicModifiers: { skillEffects: 0, buffs: p.dynamicModifier + (crit ? p.critOnlyModifier : 0) },
         })
         perCoinMean[w.coinIndex] += damage * prob
         const total = w.total + damage

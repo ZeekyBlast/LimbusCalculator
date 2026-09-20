@@ -122,6 +122,8 @@ export interface ResolvedCombatant {
   poiseCount: number
   /** Damage Up/Down etc. contributed when this combatant attacks. */
   dynamicAsAttacker: number
+  /** Extra dynamic modifier that only applies on a critical hit (Crit Damage Up). */
+  critOnlyModifier: number
   /** Fragile/Protection etc. contributed when this combatant is hit. */
   dynamicAsTarget: number
   maxHp: number

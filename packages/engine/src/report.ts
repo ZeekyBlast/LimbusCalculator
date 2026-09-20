@@ -81,6 +81,7 @@ function conditionalDamage(
     offenseDefenseAdvantage: offenseDefenseAdvantage(attacker.offenseLevel, target.defenseLevel),
     parryBonus,
     dynamicModifier: attacker.dynamicAsAttacker + target.dynamicAsTarget + attacker.damagePercent,
+    critOnlyModifier: attacker.critOnlyModifier,
     defenderMaxHp: target.maxHp,
     defenderCurrentHp: target.currentHp,
     staggerThresholds: targetCombatant.unit.staggerThresholds,

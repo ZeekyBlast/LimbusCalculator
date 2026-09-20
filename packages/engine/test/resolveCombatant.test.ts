@@ -83,4 +83,19 @@ describe('resolveCombatant', () => {
   it('counts unbreakable coins from the skill', () => {
     expect(resolveCombatant(makeCombatant({ skill: makeSkill({ coinCount: 3, unbreakableCoins: [2] }) })).unbreakableCoins).toBe(1)
   })
+
+  it('adds coin-power-additive status (Coin Boost) to coin power', () => {
+    const r = resolveCombatant(makeCombatant({ status: { 'coin-boost': { potency: 2, count: 0 } } }))
+    expect(r.coinPower).toBe(5)
+  })
+  it('buckets every dynamic-additive-fragile-protection id on the target side', () => {
+    const r = resolveCombatant(makeCombatant({ status: { 'fragile-slash': { potency: 3, count: 0 } } }))
+    expect(r.dynamicAsTarget).toBeCloseTo(0.3)
+    expect(r.dynamicAsAttacker).toBeCloseTo(0)
+  })
+  it('reports crit-only modifiers separately from the always-on attacker modifier', () => {
+    const r = resolveCombatant(makeCombatant({ status: { 'crit-damage-up': { potency: 2, count: 0 } } }))
+    expect(r.critOnlyModifier).toBeCloseTo(0.2)
+    expect(r.dynamicAsAttacker).toBeCloseTo(0)
+  })
 })
