@@ -15,6 +15,31 @@ function mulberry32(seed: number) {
   }
 }
 
+/** Runs the legacy random simulator over a ClashSide pair and returns the same shape clashChain does. */
+function monteCarlo(a: ClashSide, b: ClashSide, n: number, seed: number) {
+  const rng = mulberry32(seed)
+  const legacy = (s: ClashSide) => ({
+    basePower: s.basePower,
+    coinPower: s.coinPower,
+    coinCount: s.breakableCoins + s.unbreakableCoins,
+    unbreakableCoinCount: s.unbreakableCoins,
+    level: s.offenseLevel,
+    sanityPoints: Math.round(s.headsChance * 100 - 50),
+  })
+  const coinsLeftIfWin = new Array<number>(a.breakableCoins + a.unbreakableCoins + 1).fill(0)
+  let wins = 0
+  let parry = 0
+  for (let i = 0; i < n; i++) {
+    const s = simulateClash(legacy(a), legacy(b), rng)
+    if (s.winner === 'a') {
+      wins++
+      coinsLeftIfWin[s.winnerCoinsRemaining]++
+    }
+    parry += s.parryRounds
+  }
+  return { win: wins / n, parryRoundsExpected: parry / n, coinsLeftIfWin: coinsLeftIfWin.map(c => c / n) }
+}
+
 describe('clashPowerLevelBonus', () => {
   it('gives floor(diff/3) to the higher side only', () => {
     expect(clashPowerLevelBonus(50, 44)).toBe(2)
@@ -75,24 +100,49 @@ describe('clashChain', () => {
     const r = clashChain(side({ breakableCoins: 0, unbreakableCoins: 2 }), side({ breakableCoins: 1 }))
     expect(r.win).toBeGreaterThan(0)
   })
-  it('agrees with the legacy random simulator within 0.5 points', () => {
+  it('agrees with the legacy random simulator on wins, parry rounds, and coins left', () => {
     const a = side({ basePower: 3, coinPower: 4, breakableCoins: 2, headsChance: 0.6, offenseLevel: 50 })
     const b = side({ basePower: 5, coinPower: 2, breakableCoins: 3, headsChance: 0.5, offenseLevel: 44 })
     const exact = clashChain(a, b)
-    const rng = mulberry32(12345)
-    const n = 200_000
-    let wins = 0
-    let parry = 0
-    for (let i = 0; i < n; i++) {
-      const s = simulateClash(
-        { basePower: a.basePower, coinPower: a.coinPower, coinCount: a.breakableCoins, level: a.offenseLevel, sanityPoints: 10 },
-        { basePower: b.basePower, coinPower: b.coinPower, coinCount: b.breakableCoins, level: b.offenseLevel, sanityPoints: 0 },
-        rng,
-      )
-      if (s.winner === 'a') wins++
-      parry += s.parryRounds
+    const sim = monteCarlo(a, b, 200_000, 12345)
+    expect(Math.abs(sim.win - exact.win)).toBeLessThan(0.005)
+    expect(Math.abs(sim.parryRoundsExpected - exact.parryRoundsExpected)).toBeLessThan(0.02)
+    expect(sim.coinsLeftIfWin).toHaveLength(exact.coinsLeftIfWin.length)
+    exact.coinsLeftIfWin.forEach((p, k) => {
+      expect(Math.abs(sim.coinsLeftIfWin[k] - p)).toBeLessThan(0.01)
+    })
+  })
+  it('agrees with the legacy random simulator when side A holds an unbreakable coin', () => {
+    const a = side({ basePower: 3, coinPower: 4, breakableCoins: 2, unbreakableCoins: 1, headsChance: 0.6, offenseLevel: 50 })
+    const b = side({ basePower: 5, coinPower: 2, breakableCoins: 3, headsChance: 0.5, offenseLevel: 44 })
+    const exact = clashChain(a, b)
+    const sim = monteCarlo(a, b, 200_000, 54321)
+    expect(Math.abs(sim.win - exact.win)).toBeLessThan(0.005)
+    expect(Math.abs(sim.parryRoundsExpected - exact.parryRoundsExpected)).toBeLessThan(0.02)
+    expect(sim.coinsLeftIfWin).toHaveLength(exact.coinsLeftIfWin.length)
+    exact.coinsLeftIfWin.forEach((p, k) => {
+      expect(Math.abs(sim.coinsLeftIfWin[k] - p)).toBeLessThan(0.01)
+    })
+  })
+  it('keeps probabilities and coin distributions consistent over random inputs', () => {
+    const rng = mulberry32(777)
+    const int = (lo: number, hi: number) => lo + Math.floor(rng() * (hi - lo + 1))
+    const heads = () => [0.05, 0.5, 0.95][int(0, 2)]
+    const random = () => side({
+      basePower: int(0, 10),
+      coinPower: int(-4, 8),
+      breakableCoins: int(1, 5),
+      unbreakableCoins: int(0, 2),
+      headsChance: heads(),
+      offenseLevel: int(30, 60),
+    })
+    for (let i = 0; i < 200; i++) {
+      const a = random()
+      const b = random()
+      const r = clashChain(a, b)
+      expect(Math.abs(r.win + r.lose + r.draw - 1)).toBeLessThan(1e-9)
+      expect(Math.abs(r.coinsLeftIfWin.reduce((x, y) => x + y, 0) - r.win)).toBeLessThan(1e-9)
+      expect(Math.abs(r.coinsLeftIfLose.reduce((x, y) => x + y, 0) - r.lose)).toBeLessThan(1e-9)
     }
-    expect(Math.abs(wins / n - exact.win)).toBeLessThan(0.005)
-    expect(Math.abs(parry / n - exact.parryRoundsExpected)).toBeLessThan(0.02)
   })
 })
