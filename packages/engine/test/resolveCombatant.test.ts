@@ -146,3 +146,18 @@ describe('type and sin scoped status', () => {
     expect(resolveCombatant(makeCombatant({ status, skill: makeSkill({ sin: 'wrath' }) })).coinRollBonus).toBe(0)
   })
 })
+
+describe('combatant without a skill', () => {
+  it('resolves to a zero-coin, non-damaging shape with manual overrides still applied', () => {
+    const c = makeCombatant({ skill: undefined, manual: { coinPower: 0, basePower: 2, clashPower: 0, damagePercent: 0 } })
+    const r = resolveCombatant(c)
+    expect(r.coinCount).toBe(0)
+    expect(r.unbreakableCoins).toBe(0)
+    expect(r.basePower).toBe(2)
+    expect(r.coinPower).toBe(0)
+    expect(r.damageType).toBe('none')
+    expect(r.offenseLevel).toBe(c.level)
+    expect(r.defenseLevel).toBe(c.level)
+    expect(r.effectsApplied).toEqual([])
+  })
+})

@@ -18,6 +18,7 @@ export function damageMultipliers(attacker: ResolvedCombatant, target: Combatant
 }
 
 export function clashReport(a: Combatant, b: Combatant, options: ReportOptions = {}): ClashReport {
+  if (!a.skill || !b.skill) throw new Error('clashReport: both combatants need a skill')
   const ra = resolveCombatant(a, b)
   const rb = resolveCombatant(b, a)
   const chain = clashChain(toSide(ra), toSide(rb))
@@ -38,6 +39,7 @@ export function clashReport(a: Combatant, b: Combatant, options: ReportOptions =
 }
 
 export function unopposedReport(attacker: Combatant, target: Combatant, options: ReportOptions = {}): UnopposedReport {
+  if (!attacker.skill) throw new Error('unopposedReport: the attacker needs a skill')
   const ra = resolveCombatant(attacker, target)
   const rt = resolveCombatant(target, attacker)
   const weights = new Array<number>(ra.coinCount + 1).fill(0)

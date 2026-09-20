@@ -54,3 +54,17 @@ describe('clashReport', () => {
     expect(r.breakdown.find(l => l.label === 'Parry bonus')?.value).toBeCloseTo(0.03)
   })
 })
+
+describe('skill-less combatants', () => {
+  it('clashReport refuses a side without a skill', () => {
+    const a = makeCombatant()
+    const b = makeCombatant({ unit: makeUnit({ id: 'b', skills: [] }), skill: undefined })
+    expect(() => clashReport(a, b)).toThrow(/both combatants need a skill/)
+  })
+  it('unopposedReport hits a skill-less target and refuses a skill-less attacker', () => {
+    const a = makeCombatant({ sanity: 45, skill: makeSkill({ coinCount: 1 }) })
+    const b = makeCombatant({ unit: makeUnit({ id: 'b', skills: [] }), skill: undefined })
+    expect(unopposedReport(a, b).damage.max).toBe(7)
+    expect(() => unopposedReport(b, a)).toThrow(/attacker needs a skill/)
+  })
+})

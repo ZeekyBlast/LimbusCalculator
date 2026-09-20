@@ -22,7 +22,7 @@ export function makeUnit(over: Partial<Unit> = {}): Unit {
 
 export function makeCombatant(over: Partial<Combatant> = {}): Combatant {
   const unit = over.unit ?? makeUnit()
-  return { unit, skill: over.skill ?? unit.skills[0], uptie: 4, level: unit.level, sanity: 0, status: {}, manual: { ...EMPTY_MANUAL }, ...over }
+  return { unit, skill: 'skill' in over ? over.skill : unit.skills[0], uptie: 4, level: unit.level, sanity: 0, status: {}, manual: { ...EMPTY_MANUAL }, ...over }
 }
 
 export function effect(op: Effect['op'], extra: Partial<Effect> = {}): Effect {

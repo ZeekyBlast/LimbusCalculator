@@ -15,7 +15,7 @@ export function primaryAttackSkill(unit: Unit): Skill | undefined {
   return best
 }
 
-export function enemyCombatant(unit: Unit, skill: Skill): Combatant {
+export function enemyCombatant(unit: Unit, skill: Skill | undefined): Combatant {
   return { unit, skill, uptie: 4, level: unit.level, sanity: 0, status: {}, manual: { ...EMPTY_MANUAL } }
 }
 
@@ -23,21 +23,19 @@ export function matchupGrid(team: Combatant[], wave: Unit[], options: ReportOpti
   const rowCombatants = team.flatMap(member =>
     member.unit.skills.filter(isAttack).map(skill => ({ ...member, skill })),
   )
-  const columnCombatants = wave.flatMap(unit => {
-    const skill = primaryAttackSkill(unit)
-    return skill ? [enemyCombatant(unit, skill)] : []
-  })
+  // A part with no attack skill still takes damage, so it keeps a column; its clash cells are null.
+  const columnCombatants = wave.map(unit => enemyCombatant(unit, primaryAttackSkill(unit)))
 
   const cells: MatchupCell[][] = rowCombatants.map(row =>
     columnCombatants.map(col => {
-      const clash = clashReport(row, col, options)
+      const clash = col.skill ? clashReport(row, col, options) : undefined
       const hit = unopposedReport(row, col, options)
       const mult = damageMultipliers(resolveCombatant(row, col), col)
       return {
         attackerSkillId: row.skill.id,
         targetUnitId: col.unit.id,
-        targetSkillId: col.skill.id,
-        win: clash.win,
+        targetSkillId: col.skill?.id ?? null,
+        win: clash ? clash.win : null,
         medianDamage: hit.damage.p50,
         meanDamage: hit.damage.mean,
         sinMultiplier: mult.sin,
@@ -48,7 +46,7 @@ export function matchupGrid(team: Combatant[], wave: Unit[], options: ReportOpti
 
   const columns = columnCombatants.map((col, j) => {
     const bestMean = Math.max(0, ...cells.map(r => r[j].meanDamage))
-    return { unitId: col.unit.id, skillId: col.skill.id, turnsToKill: bestMean > 0 ? Math.ceil(col.unit.hp / bestMean) : Infinity }
+    return { unitId: col.unit.id, skillId: col.skill?.id ?? null, turnsToKill: bestMean > 0 ? Math.ceil(col.unit.hp / bestMean) : Infinity }
   })
 
   return {

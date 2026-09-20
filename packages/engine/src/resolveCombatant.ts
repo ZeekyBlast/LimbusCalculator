@@ -6,15 +6,15 @@ const ACTIVE_TRIGGERS = new Set<Effect['trigger']>(['on-use', 'passive', 'combat
 const TARGET_SIDE_SLOT = 'dynamic-additive-fragile-protection'
 
 export function resolveCombatant(self: Combatant, opponent?: Combatant): ResolvedCombatant {
-  const skill = applyUptie(self.skill, self.uptie)
-  let basePower = skill.basePower + self.manual.basePower
-  let coinPower = skill.coinPower + self.manual.coinPower
+  const skill = self.skill ? applyUptie(self.skill, self.uptie) : undefined
+  let basePower = (skill?.basePower ?? 0) + self.manual.basePower
+  let coinPower = (skill?.coinPower ?? 0) + self.manual.coinPower
   let clashPowerBonus = self.manual.clashPower
   let damagePercent = self.manual.damagePercent
   const effectsApplied: string[] = []
   const effectsUnparsed: string[] = []
 
-  const candidates = [...skill.effects, ...self.unit.passives.flatMap(p => p.effects)]
+  const candidates = [...(skill?.effects ?? []), ...self.unit.passives.flatMap(p => p.effects)]
   for (const e of candidates) {
     if (e.op.kind === 'unparsed') { effectsUnparsed.push(e.source); continue }
     // Per-coin effects need the coin index the enumeration is on, which this flat resolve has no
@@ -37,8 +37,8 @@ export function resolveCombatant(self: Combatant, opponent?: Combatant): Resolve
   // hit. Ids missing from the registry fall to the attacker side and contribute 0 there anyway.
   // Scoped variants (Fragile (Slash), Damage Up (Pride), ...) only count for a matching attack:
   // the attacker's own stacks against its own skill, the Fragile family against the opponent's.
-  const myAttack = { damageType: skill.damageType, sin: skill.sin }
-  const theirAttack = opponent ? { damageType: opponent.skill.damageType, sin: opponent.skill.sin } : undefined
+  const myAttack = skill ? { damageType: skill.damageType, sin: skill.sin } : undefined
+  const theirAttack = opponent?.skill ? { damageType: opponent.skill.damageType, sin: opponent.skill.sin } : undefined
   const targetStacks = stacks.filter(s => getEffectById(s.effectId)?.slot === TARGET_SIDE_SLOT && isEffectApplicable(s.effectId, theirAttack))
   const attackerStacks = stacks.filter(s => getEffectById(s.effectId)?.slot !== TARGET_SIDE_SLOT && isEffectApplicable(s.effectId, myAttack))
   // Coin Boost / Coin Drop modify Coin Power itself, so they land after effects and manual overrides.
@@ -56,10 +56,10 @@ export function resolveCombatant(self: Combatant, opponent?: Combatant): Resolve
   return {
     basePower,
     coinPower,
-    coinCount: skill.coinCount,
-    unbreakableCoins: countUnbreakableCoins(skill),
+    coinCount: skill?.coinCount ?? 0,
+    unbreakableCoins: skill ? countUnbreakableCoins(skill) : 0,
     headsChance: (50 + sanity) / 100,
-    offenseLevel: self.level + skill.offenseLevelMod,
+    offenseLevel: self.level + (skill?.offenseLevelMod ?? 0),
     defenseLevel: self.level + self.unit.defenseMod,
     clashPowerBonus,
     damagePercent,
@@ -71,8 +71,8 @@ export function resolveCombatant(self: Combatant, opponent?: Combatant): Resolve
     dynamicAsTarget,
     maxHp: self.unit.hp,
     currentHp: self.currentHp ?? self.unit.hp,
-    sin: skill.sin,
-    damageType: skill.damageType,
+    sin: skill?.sin ?? 'wrath',
+    damageType: skill?.damageType ?? 'none',
     effectsApplied,
     effectsUnparsed,
   }

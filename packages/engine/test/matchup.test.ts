@@ -45,10 +45,24 @@ describe('matchupGrid', () => {
     expect(grid.cells[1][0].meanDamage).toBe(30)
     expect(grid.cells[0][0].sinMultiplier).toBe(1)
   })
-  it('skips enemies without attack skills', () => {
+  it('keeps a column for enemies without attack skills, with a null clash column', () => {
     const me = makeCombatant()
     const grid = matchupGrid([me], [makeUnit({ id: 'x', skills: [makeSkill({ damageType: 'guard' })] })])
-    expect(grid.columns).toHaveLength(0)
-    expect(grid.cells[0]).toHaveLength(0)
+    expect(grid.columns).toHaveLength(1)
+    expect(grid.columns[0].skillId).toBeNull()
+    expect(grid.cells[0]).toHaveLength(1)
+    expect(grid.cells[0][0].win).toBeNull()
+  })
+
+  it('keeps a column for an enemy part with no attack skill: null clash, real unopposed damage', () => {
+    const team = [makeCombatant({ sanity: 45 })]
+    const part = makeUnit({ id: 'part', kind: 'enemy', hp: 50, skills: [] })
+    const g = matchupGrid(team, [part])
+    expect(g.columns).toHaveLength(1)
+    expect(g.columns[0].skillId).toBeNull()
+    expect(g.cells[0][0].win).toBeNull()
+    expect(g.cells[0][0].targetSkillId).toBeNull()
+    expect(g.cells[0][0].meanDamage).toBeGreaterThan(0)
+    expect(Number.isFinite(g.columns[0].turnsToKill)).toBe(true)
   })
 })

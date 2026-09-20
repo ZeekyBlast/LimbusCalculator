@@ -100,7 +100,8 @@ export interface ManualOverrides {
 
 export interface Combatant {
   unit: Unit
-  skill: Skill
+  /** Absent for an enemy part with no skills: it can be hit but cannot clash or attack. */
+  skill?: Skill
   uptie: UptieTier
   level: number
   /** -45..45. Enemies are always 0. */
@@ -173,8 +174,10 @@ export interface UnopposedReport {
 export interface MatchupCell {
   attackerSkillId: string
   targetUnitId: string
-  targetSkillId: string
-  win: number
+  /** null when the target part has no attack skill: the cell carries unopposed damage only. */
+  targetSkillId: string | null
+  /** Clash win chance, or null when there is nothing to clash against. */
+  win: number | null
   medianDamage: number
   meanDamage: number
   sinMultiplier: number
@@ -183,7 +186,7 @@ export interface MatchupCell {
 
 export interface MatchupGrid {
   rows: { unitId: string; skillId: string }[]
-  columns: { unitId: string; skillId: string; turnsToKill: number }[]
+  columns: { unitId: string; skillId: string | null; turnsToKill: number }[]
   cells: MatchupCell[][]
 }
 
