@@ -28,6 +28,12 @@ export interface AttackParams {
    */
   staggerThresholds: number[]
   staggerMidAttack: boolean
+  /**
+   * Flat power a lost guard clash strips from this attack (spec 6.2). Absorbed by the earliest
+   * coins first: a coin whose whole roll is absorbed deals 0, the remainder carries to the next.
+   * Default 0.
+   */
+  powerReduction?: number
 }
 
 interface Walk {
@@ -36,7 +42,46 @@ interface Walk {
   total: number
   thresholdsCrossed: number
   poiseCount: number
+  reductionLeft: number
   prob: number
+}
+
+export interface SampledCoin { heads: boolean; crit: boolean; roll: number; damage: number; staggered: boolean }
+export interface SampledAttack { coins: SampledCoin[]; total: number; thresholdsCrossed: number }
+
+/** Absolute damage lines for the stagger thresholds, and how many already sit behind current HP. */
+function staggerLinesFor(p: AttackParams): { lines: number[]; alreadyCrossed: number } {
+  const lines = p.staggerThresholds.map(t => p.defenderCurrentHp - t * p.defenderMaxHp)
+  // A line at or below 0 sits behind the defender's current HP: that stagger threshold was broken
+  // before this attack began. Seed the walk past those lines so every coin already benefits from
+  // the stagger multiplier, and leave their staggerChance at 0 - this attack did not cause them.
+  // staggerThresholds is descending, so the already-crossed lines are the leading ones.
+  let alreadyCrossed = 0
+  while (alreadyCrossed < lines.length && lines[alreadyCrossed] <= 0) alreadyCrossed++
+  return { lines, alreadyCrossed }
+}
+
+/** Takes as much of `left` as this coin's roll can absorb. `absorbed` means the whole roll went. */
+function absorb(roll: number, left: number): { roll: number; left: number; absorbed: boolean } {
+  const used = Math.min(roll, left)
+  return { roll: roll - used, left: left - used, absorbed: used > 0 && roll - used <= 0 }
+}
+
+/** Damage of one coin given its (possibly reduced) roll and the walk state before it. */
+function coinDamage(p: AttackParams, coinRoll: number, crit: boolean, thresholdsCrossed: number, absorbed: boolean): number {
+  if (absorbed) return 0
+  const staggered = p.staggerMidAttack && thresholdsCrossed > 0
+  return computeFinalDamage({
+    coinRoll,
+    staticModifiers: {
+      sinResistance: p.sinResistance,
+      damageTypeResistance: staggered ? staggerDamageTypeResistanceModifier(thresholdsCrossed) : p.damageTypeResistance,
+      offenseDefenseAdvantage: p.offenseDefenseAdvantage,
+      parryBonus: p.parryBonus,
+      critical: crit ? p.critModifier : 0,
+    },
+    dynamicModifiers: { skillEffects: 0, buffs: p.dynamicModifier + (crit ? p.critOnlyModifier : 0) },
+  })
 }
 
 /** Exact distribution of total damage for a one-sided attack with `coins` coins, enumerating every heads/crit sequence. */
@@ -44,16 +89,9 @@ export function attackDamageDistribution(p: AttackParams): DamageSummary {
   const histogram = new Map<number, number>()
   const perCoinMean = new Array<number>(p.coins).fill(0)
   const staggerChance = new Array<number>(p.staggerThresholds.length).fill(0)
-  const staggerLines = p.staggerThresholds.map(t => p.defenderCurrentHp - t * p.defenderMaxHp)
+  const { lines: staggerLines, alreadyCrossed } = staggerLinesFor(p)
 
-  // A line at or below 0 sits behind the defender's current HP: that stagger threshold was broken
-  // before this attack began. Seed the walk past those lines so every coin already benefits from
-  // the stagger multiplier, and leave their staggerChance at 0 - this attack did not cause them.
-  // staggerThresholds is descending, so the already-crossed lines are the leading ones.
-  let alreadyCrossed = 0
-  while (alreadyCrossed < staggerLines.length && staggerLines[alreadyCrossed] <= 0) alreadyCrossed++
-
-  const stack: Walk[] = [{ coinIndex: 0, headsSoFar: 0, total: 0, thresholdsCrossed: alreadyCrossed, poiseCount: p.poiseCount, prob: 1 }]
+  const stack: Walk[] = [{ coinIndex: 0, headsSoFar: 0, total: 0, thresholdsCrossed: alreadyCrossed, poiseCount: p.poiseCount, reductionLeft: p.powerReduction ?? 0, prob: 1 }]
   while (stack.length > 0) {
     const w = stack.pop()!
     if (w.coinIndex === p.coins) {
@@ -69,19 +107,8 @@ export function attackDamageDistribution(p: AttackParams): DamageSummary {
         if (pCrit === 0) continue
         const prob = w.prob * pHeads * pCrit
         const headsSoFar = w.headsSoFar + (heads ? 1 : 0)
-        const coinRoll = p.basePower + p.coinRollBonus + p.coinPower * headsSoFar
-        const staggered = p.staggerMidAttack && w.thresholdsCrossed > 0
-        const damage = computeFinalDamage({
-          coinRoll,
-          staticModifiers: {
-            sinResistance: p.sinResistance,
-            damageTypeResistance: staggered ? staggerDamageTypeResistanceModifier(w.thresholdsCrossed) : p.damageTypeResistance,
-            offenseDefenseAdvantage: p.offenseDefenseAdvantage,
-            parryBonus: p.parryBonus,
-            critical: crit ? p.critModifier : 0,
-          },
-          dynamicModifiers: { skillEffects: 0, buffs: p.dynamicModifier + (crit ? p.critOnlyModifier : 0) },
-        })
+        const { roll, left, absorbed } = absorb(p.basePower + p.coinRollBonus + p.coinPower * headsSoFar, w.reductionLeft)
+        const damage = coinDamage(p, roll, crit, w.thresholdsCrossed, absorbed)
         perCoinMean[w.coinIndex] += damage * prob
         const total = w.total + damage
         let crossed = w.thresholdsCrossed
@@ -95,12 +122,38 @@ export function attackDamageDistribution(p: AttackParams): DamageSummary {
           total,
           thresholdsCrossed: crossed,
           poiseCount: crit ? w.poiseCount - 1 : w.poiseCount,
+          reductionLeft: left,
           prob,
         })
       }
     }
   }
   return summarize(histogram, perCoinMean, staggerChance)
+}
+
+/** One random path through the same walk `attackDamageDistribution` enumerates (for "Roll once"). */
+export function sampleAttack(p: AttackParams, rng: () => number = Math.random): SampledAttack {
+  const { lines: staggerLines, alreadyCrossed } = staggerLinesFor(p)
+  let crossed = alreadyCrossed
+  let headsSoFar = 0
+  let total = 0
+  let poiseCount = p.poiseCount
+  let reductionLeft = p.powerReduction ?? 0
+  const coins: SampledCoin[] = []
+  for (let i = 0; i < p.coins; i++) {
+    const heads = rng() < p.headsChance
+    const crit = poiseCount > 0 && rng() < Math.min(1, p.critChance)
+    if (heads) headsSoFar++
+    const { roll, left, absorbed } = absorb(p.basePower + p.coinRollBonus + p.coinPower * headsSoFar, reductionLeft)
+    reductionLeft = left
+    const staggered = p.staggerMidAttack && crossed > 0
+    const damage = coinDamage(p, roll, crit, crossed, absorbed)
+    total += damage
+    while (crossed < staggerLines.length && total >= staggerLines[crossed]) crossed++
+    if (crit) poiseCount--
+    coins.push({ heads, crit, roll, damage, staggered })
+  }
+  return { coins, total, thresholdsCrossed: crossed - alreadyCrossed }
 }
 
 /**

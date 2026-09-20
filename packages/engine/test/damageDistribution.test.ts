@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { attackDamageDistribution, mixDistributions, type AttackParams } from '../src/damageDistribution'
+import { attackDamageDistribution, mixDistributions, sampleAttack, type AttackParams } from '../src/damageDistribution'
 
 function params(over: Partial<AttackParams> = {}): AttackParams {
   return {
@@ -106,5 +106,54 @@ describe('mixDistributions', () => {
     const m = mixDistributions([{ weight: 0.3, summary: one }, { weight: 0.7, summary: two }])
     expect(m.perCoinMean).toHaveLength(2)
     expect(m.perCoinMean.reduce((x, y) => x + y, 0)).toBeCloseTo(m.mean, 12)
+  })
+})
+
+/** Deterministic LCG so sampling tests are reproducible. */
+function lcg(seed: number): () => number {
+  let s = seed >>> 0
+  return () => { s = (s * 1664525 + 1013904223) >>> 0; return s / 2 ** 32 }
+}
+
+describe('powerReduction', () => {
+  it('absorbs the earliest coins first: 9 off rolls 7 and 10 leaves 0 and 8', () => {
+    const d = attackDamageDistribution(params({ coins: 2, headsChance: 1, powerReduction: 9 }))
+    expect(d.histogram).toEqual([[8, 1]])
+    expect(d.perCoinMean).toEqual([0, 8])
+  })
+  it('a partial absorption leaves the remainder of the coin: 3 off rolls 7 and 10 is 4 + 10', () => {
+    const d = attackDamageDistribution(params({ coins: 2, headsChance: 1, powerReduction: 3 }))
+    expect(d.mean).toBe(14)
+  })
+  it('zero reduction is the unchanged distribution', () => {
+    expect(attackDamageDistribution(params({ powerReduction: 0 }))).toEqual(attackDamageDistribution(params()))
+  })
+})
+
+describe('sampleAttack', () => {
+  it('all heads reproduces the walk maximum coin by coin', () => {
+    const s = sampleAttack(params({ headsChance: 0.5 }), () => 0)
+    expect(s.coins.map(c => c.heads)).toEqual([true, true, true])
+    expect(s.coins.map(c => c.damage)).toEqual([7, 10, 13])
+    expect(s.total).toBe(30)
+  })
+  it('all tails with a reduction shows absorbed coins as zero damage', () => {
+    const s = sampleAttack(params({ coins: 2, powerReduction: 9 }), () => 0.99)
+    expect(s.coins.map(c => c.roll)).toEqual([0, 0])
+    expect(s.coins.map(c => c.damage)).toEqual([0, 0])
+    expect(s.total).toBe(0)
+  })
+  it('every sampled total lies in the exact distribution support', () => {
+    const p = params({ coins: 3, critChance: 0.5, poiseCount: 2, critModifier: 0.2 })
+    const support = new Set(attackDamageDistribution(p).histogram.map(([v]) => v))
+    const rng = lcg(7)
+    for (let i = 0; i < 300; i++) expect(support.has(sampleAttack(p, rng).total)).toBe(true)
+  })
+  it('counts thresholds this attack crosses', () => {
+    const s = sampleAttack(params({ headsChance: 1, defenderMaxHp: 100, defenderCurrentHp: 100, staggerThresholds: [0.9, 0.7] }), () => 0)
+    expect(s.thresholdsCrossed).toBe(2)
+    // The second coin crosses the first line; only the coin after it attacks a staggered target.
+    expect(s.coins[1].staggered).toBe(false)
+    expect(s.coins[2].staggered).toBe(true)
   })
 })
