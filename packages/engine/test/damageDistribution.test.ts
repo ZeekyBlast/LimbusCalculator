@@ -69,6 +69,20 @@ describe('attackDamageDistribution', () => {
     const none = attackDamageDistribution(params({ coins: 1, headsChance: 1, critChance: 1, poiseCount: 0, critOnlyModifier: 0.5 }))
     expect(none.mean).toBe(7)
   })
+  it('treats stagger lines already behind current HP as crossed before the attack', () => {
+    // 5 HP of 20 with a threshold at 70% puts the line at 5 - 14 = -9: already crossed.
+    // The single coin therefore uses staggerDamageTypeResistanceModifier(1) = 1: floor(7 * 2) = 14.
+    const d = attackDamageDistribution(params({ coins: 1, headsChance: 1, defenderMaxHp: 20, defenderCurrentHp: 5, staggerThresholds: [0.7] }))
+    expect(d.mean).toBe(14)
+    expect(d.staggerChance).toEqual([0])
+  })
+  it('counts every already-crossed line toward the stagger multiplier', () => {
+    // Lines at 5 - 14 = -9 and 5 - 8 = -3, both already crossed, so the coin uses
+    // staggerDamageTypeResistanceModifier(2) = 1.5: floor(7 * 2.5) = 17.
+    const d = attackDamageDistribution(params({ coins: 1, headsChance: 1, defenderMaxHp: 20, defenderCurrentHp: 5, staggerThresholds: [0.7, 0.4] }))
+    expect(d.mean).toBe(17)
+    expect(d.staggerChance).toEqual([0, 0])
+  })
   it('zero coins deals nothing', () => {
     const d = attackDamageDistribution(params({ coins: 0 }))
     expect(d.mean).toBe(0)

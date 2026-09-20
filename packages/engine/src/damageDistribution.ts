@@ -46,7 +46,14 @@ export function attackDamageDistribution(p: AttackParams): DamageSummary {
   const staggerChance = new Array<number>(p.staggerThresholds.length).fill(0)
   const staggerLines = p.staggerThresholds.map(t => p.defenderCurrentHp - t * p.defenderMaxHp)
 
-  const stack: Walk[] = [{ coinIndex: 0, headsSoFar: 0, total: 0, thresholdsCrossed: 0, poiseCount: p.poiseCount, prob: 1 }]
+  // A line at or below 0 sits behind the defender's current HP: that stagger threshold was broken
+  // before this attack began. Seed the walk past those lines so every coin already benefits from
+  // the stagger multiplier, and leave their staggerChance at 0 - this attack did not cause them.
+  // staggerThresholds is descending, so the already-crossed lines are the leading ones.
+  let alreadyCrossed = 0
+  while (alreadyCrossed < staggerLines.length && staggerLines[alreadyCrossed] <= 0) alreadyCrossed++
+
+  const stack: Walk[] = [{ coinIndex: 0, headsSoFar: 0, total: 0, thresholdsCrossed: alreadyCrossed, poiseCount: p.poiseCount, prob: 1 }]
   while (stack.length > 0) {
     const w = stack.pop()!
     if (w.coinIndex === p.coins) {
