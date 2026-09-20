@@ -38,6 +38,23 @@ export function findEnemyBlock(wikitext: string, ref: EnemyRef): TemplateBlock |
   return blocks.find(b => b.start > m.index)
 }
 
+/**
+ * Some anchor headings carry a `{{For|...|Target{{!}}Label}}` hatnote instead of the enemy block
+ * itself, when the wiki moved that enemy's stats to a subpage. Returns the subpage title, or
+ * undefined if the heading isn't found or isn't followed by such a hatnote.
+ */
+export function findRedirectPage(wikitext: string, anchor: string): string | undefined {
+  const esc = escapeRegExp(anchor)
+  const heading = new RegExp(`(id="${esc}"|==\\s*(?:'''|<span[^>]*>)?\\s*${esc}\\s*(?:'''|</span>)?\\s*==)`)
+  const m = heading.exec(wikitext)
+  if (!m) return undefined
+  const after = wikitext.slice(m.index + m[0].length, m.index + m[0].length + 500)
+  const forBlock = findTemplateBlocks(after, ['For'])[0]
+  if (!forBlock) return undefined
+  const target = (forBlock.params['2'] ?? '').split('{{!}}')[0].trim()
+  return target || undefined
+}
+
 type Params = Record<string, string>
 
 function resistances(p: Params, warnings: string[], owner: string): Unit['resistances'] {

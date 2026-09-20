@@ -1,0 +1,221 @@
+{
+  "title": "Line 6: Maru no Uchi no Sanzu no Kawa",
+  "start": "May 28th, 2026",
+  "stations": [
+    {
+      "number": 1,
+      "name": "Weighing of Robes"
+    },
+    {
+      "number": 2,
+      "name": "Tarnishing"
+    },
+    {
+      "number": 3,
+      "name": "Heart of Innocence"
+    },
+    {
+      "number": 4,
+      "name": "Face of Things"
+    },
+    {
+      "number": 5,
+      "name": "Tangled Knots"
+    },
+    {
+      "number": 6,
+      "name": "Drowning Desire"
+    },
+    {
+      "number": 7,
+      "name": "Blind Folly"
+    },
+    {
+      "number": 8,
+      "name": "Advent"
+    }
+  ],
+  "sections": [
+    {
+      "number": 1,
+      "name": "Weighing of Robes",
+      "waves": [
+        {
+          "number": 1,
+          "enemyIds": [
+            "9563"
+          ],
+          "reinforcementIds": []
+        }
+      ]
+    },
+    {
+      "number": 2,
+      "name": "Tarnishing",
+      "waves": [
+        {
+          "number": 1,
+          "enemyIds": [
+            "9568"
+          ],
+          "reinforcementIds": []
+        },
+        {
+          "number": 2,
+          "enemyIds": [
+            "9570",
+            "9543",
+            "9539",
+            "9538",
+            "9541",
+            "9548",
+            "9546"
+          ],
+          "reinforcementIds": [
+            "9549",
+            "9544",
+            "9540",
+            "9547",
+            "9545",
+            "9542"
+          ]
+        },
+        {
+          "number": 3,
+          "enemyIds": [
+            "9569"
+          ],
+          "reinforcementIds": []
+        },
+        {
+          "number": 4,
+          "enemyIds": [
+            "9564"
+          ],
+          "reinforcementIds": []
+        }
+      ]
+    },
+    {
+      "number": 3,
+      "name": "Heart of Innocence - Face of Things",
+      "waves": [
+        {
+          "number": 1,
+          "enemyIds": [
+            "9556",
+            "9557",
+            "9558",
+            "9559",
+            "9560",
+            "9561",
+            "9562"
+          ],
+          "reinforcementIds": []
+        },
+        {
+          "number": 2,
+          "enemyIds": [
+            "9553"
+          ],
+          "reinforcementIds": []
+        },
+        {
+          "number": 3,
+          "enemyIds": [
+            "9565"
+          ],
+          "reinforcementIds": []
+        }
+      ]
+    },
+    {
+      "number": 4,
+      "name": "Tangled Knots - Drowning Desire - Blind Folly",
+      "waves": [
+        {
+          "number": 1,
+          "enemyIds": [
+            "9550"
+          ],
+          "reinforcementIds": []
+        },
+        {
+          "number": 2,
+          "enemyIds": [
+            "9554",
+            "9555"
+          ],
+          "reinforcementIds": []
+        },
+        {
+          "number": 3,
+          "enemyIds": [
+            "9551"
+          ],
+          "reinforcementIds": []
+        },
+        {
+          "number": 4,
+          "enemyIds": [
+            "9566"
+          ],
+          "reinforcementIds": []
+        }
+      ]
+    },
+    {
+      "number": 5,
+      "name": "Advent",
+      "waves": [
+        {
+          "number": 1,
+          "enemyIds": [
+            "9567",
+            "9572",
+            "9573",
+            "9574"
+          ],
+          "reinforcementIds": []
+        }
+      ]
+    }
+  ],
+  "enemyIds": [
+    "9563",
+    "9568",
+    "9570",
+    "9543",
+    "9539",
+    "9538",
+    "9541",
+    "9548",
+    "9546",
+    "9549",
+    "9544",
+    "9540",
+    "9547",
+    "9545",
+    "9542",
+    "9569",
+    "9564",
+    "9556",
+    "9557",
+    "9558",
+    "9559",
+    "9560",
+    "9561",
+    "9562",
+    "9553",
+    "9565",
+    "9550",
+    "9554",
+    "9555",
+    "9551",
+    "9566",
+    "9567",
+    "9572",
+    "9573",
+    "9574"
+  ]
+}

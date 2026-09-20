@@ -1,7 +1,7 @@
 import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { parseEnBoxData } from '../src/enemies/enbox.ts'
-import { enemyRefFromEnBox, findEnemyBlock, parseEnemyBlock } from '../src/enemies/parse.ts'
+import { enemyRefFromEnBox, findEnemyBlock, findRedirectPage, parseEnemyBlock } from '../src/enemies/parse.ts'
 
 const fixture = (name: string) => readFileSync(new URL(`./fixtures/${name}`, import.meta.url), 'utf8')
 const enbox = parseEnBoxData(fixture('enbox-data.lua'))
@@ -29,6 +29,22 @@ describe('findEnemyBlock', () => {
   })
   it('returns undefined when nothing matches', () => {
     expect(findEnemyBlock('== nothing ==', ref('9568'))).toBeUndefined()
+  })
+})
+
+describe('findRedirectPage', () => {
+  it('reads the subpage title out of a {{For}} hatnote after the anchor heading', () => {
+    const wikitext = [
+      '==The Refracted Index Nursefather - Rien==',
+      '{{For|the Refracted version of this enemy|Rien/Enemy/The Refracted Index Nursefather - Rien{{!}}The Refracted Index Nursefather - Rien}}',
+    ].join('\n')
+    expect(findRedirectPage(wikitext, 'The Refracted Index Nursefather - Rien')).toBe('Rien/Enemy/The Refracted Index Nursefather - Rien')
+  })
+  it('returns undefined when the heading has no hatnote', () => {
+    expect(findRedirectPage('==Some Boss==\n{{ABPage|id=1}}', 'Some Boss')).toBeUndefined()
+  })
+  it('returns undefined when the anchor is not found', () => {
+    expect(findRedirectPage('== nothing ==', 'Missing Anchor')).toBeUndefined()
   })
 })
 
