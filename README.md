@@ -5,7 +5,7 @@ Exact clash odds and damage math for Limbus Company, plus a Refraction Railway p
 ## Packages
 
 - `packages/engine`: pure TypeScript probability engine. No I/O. See `packages/engine/README.md`.
-- `packages/data`: wiki scraper and normalized game data (Plan 2).
+- `packages/data`: wiki scrapers and the committed normalized game data. See `packages/data/README.md`.
 - `apps/web`: the site (Plan 3).
 - `ui/`: the previous prototype, kept until `apps/web` replaces it.
 
