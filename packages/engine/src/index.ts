@@ -1,0 +1,12 @@
+export * from './resistance'
+export * from './offenseDefenseAdvantage'
+export * from './parryBonus'
+export * from './criticalModifier'
+export * from './damage'
+export * from './uptieResolver'
+export * from './statusEffects'
+export * from './unbreakableCoin'
+// Legacy: kept for the old ui/ app and as a Monte Carlo test oracle. Removed in Plan 3.
+export * from './legacy/clash'
+export * from './legacy/fixedDamageAilment'
+export * from './legacy/skillEffectGrants'

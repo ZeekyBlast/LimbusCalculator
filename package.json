@@ -1,15 +1,13 @@
 {
-  "name": "limbuscalculator",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "scripts": {
-    "test": "vitest run"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "name": "limbus-calculator",
+  "private": true,
   "type": "module",
+  "workspaces": ["packages/*", "apps/*"],
+  "engines": { "node": ">=22" },
+  "scripts": {
+    "test": "npm test --workspaces --if-present",
+    "typecheck": "npm run typecheck --workspaces --if-present"
+  },
   "devDependencies": {
     "typescript": "^7.0.2",
     "vitest": "^4.1.10"

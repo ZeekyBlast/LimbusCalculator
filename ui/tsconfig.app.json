@@ -17,7 +17,7 @@
     "jsx": "react-jsx",
 
     "paths": {
-      "@formula/*": ["../formula/*"]
+      "@formula/*": ["../packages/engine/src/*"]
     },
 
     /* Linting */

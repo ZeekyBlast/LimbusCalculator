@@ -1,6 +1,6 @@
 import { describe, it, expect } from "vitest";
 import { headsChance, flipCoins, clashPowerLevelBonus, simulateClash, type ClashCombatant } from "./clash";
-import { computeFinalDamage } from "./damage";
+import { computeFinalDamage } from "../damage";
 
 describe("headsChance", () => {
     it("is 50% at 0 sanity", () => {

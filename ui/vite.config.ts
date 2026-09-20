@@ -8,7 +8,7 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
     alias: {
-      '@formula': path.resolve(__dirname, '../formula'),
+      '@formula': path.resolve(__dirname, '../packages/engine/src'),
     },
   },
   server: {
