@@ -103,7 +103,14 @@ export function attackDamageDistribution(p: AttackParams): DamageSummary {
   return summarize(histogram, perCoinMean, staggerChance)
 }
 
-/** Combine several conditional distributions into one by weight. Weights should sum to 1. */
+/**
+ * Combine several conditional distributions into one by weight.
+ *
+ * `perCoinMean[i]` is the unconditional contribution of coin i - the mean damage coin i adds
+ * across every outcome, not conditional on reaching that coin - so parts with fewer coins are
+ * zero-padded and `sum(perCoinMean)` equals `mean`. Weights need not sum to 1: `summarize`
+ * normalizes everything by the total mass it is handed.
+ */
 export function mixDistributions(parts: { weight: number; summary: DamageSummary }[]): DamageSummary {
   const histogram = new Map<number, number>()
   const coins = Math.max(0, ...parts.map(x => x.summary.perCoinMean.length))

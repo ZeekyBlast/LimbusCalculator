@@ -100,4 +100,11 @@ describe('mixDistributions', () => {
     expect(m.max).toBe(7)
     expect(m.perCoinMean[0]).toBeCloseTo(4.75)
   })
+  it('zero-pads shorter parts and keeps perCoinMean summing to the mixed mean', () => {
+    const one = attackDamageDistribution(params({ coins: 1 }))
+    const two = attackDamageDistribution(params({ coins: 2 }))
+    const m = mixDistributions([{ weight: 0.3, summary: one }, { weight: 0.7, summary: two }])
+    expect(m.perCoinMean).toHaveLength(2)
+    expect(m.perCoinMean.reduce((x, y) => x + y, 0)).toBeCloseTo(m.mean, 12)
+  })
 })

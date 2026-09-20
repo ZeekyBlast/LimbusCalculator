@@ -45,6 +45,12 @@ export function roundOutcome(a: ClashSide, aLive: number, b: ClashSide, bLive: n
 }
 
 const TIE_EPSILON = 1e-12
+/**
+ * The game caps a clash at 99 parry rounds; past that it draws (limbuscompany.wiki.gg's Battles
+ * page, and Syx's blog in the parry-bonus context). A state that can only ever tie therefore sits
+ * at that cap rather than at zero parry rounds.
+ */
+const MAX_PARRY_ROUNDS = 99
 
 /** Exact clash resolution as a Markov chain over (A breakable coins, B breakable coins). */
 export function clashChain(a: ClashSide, b: ClashSide): ChainResult {
@@ -80,6 +86,7 @@ export function clashChain(a: ClashSide, b: ClashSide): ChainResult {
       const o = roundOutcome(aSide, x + aSide.unbreakableCoins, bSide, y + bSide.unbreakableCoins, aBonus, bBonus)
       if (o.tie >= 1 - TIE_EPSILON) {
         r.draw = 1
+        r.parryRoundsExpected = MAX_PARRY_ROUNDS
       } else {
         const denom = 1 - o.tie
         const onWin = solve(x, y - 1)

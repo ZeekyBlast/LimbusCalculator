@@ -18,8 +18,15 @@ Pure functions for Limbus Company clash and damage math. No I/O, no DOM.
 ## Known simplifications (v1)
 
 - Parry bonus uses the expected parry round count, not its distribution.
-- The 99-parry-round draw cap is not modeled; only a guaranteed tie yields a draw.
+- The 99-parry-round draw cap is not modeled round by round; only a guaranteed tie yields a draw, and it reports the 99-round cap as its expected parry rounds.
 - Stagger mid-attack is on by default; pass `{ staggerMidAttack: false }` to disable.
 - Evade skills, guard clashes, multi-target attack weight, and ally-targeted effects are not modeled.
 - Guard, evade, and non-damaging skills report zero damage; the guard clash itself is not modeled until Plan 3.
 - Per-coin effects (`scope: { coin: n }`) are listed as unhandled and not applied.
+
+## Data contract notes
+
+- `Skill.uptie` overrides apply from their tier UPWARD until a higher tier overrides them: the
+  value listed for tier t is what the skill has at t, t+1, ... until the next override. This is the
+  inverse of the retained legacy `resolveUptie` helper, whose base value is Uptie 4 and whose
+  overrides apply downward. Plan 2's scraper must emit the new convention.

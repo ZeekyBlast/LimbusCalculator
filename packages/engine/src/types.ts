@@ -183,6 +183,7 @@ export interface MatchupGrid {
   cells: MatchupCell[][]
 }
 
-export const EMPTY_MANUAL: ManualOverrides = { coinPower: 0, basePower: 0, clashPower: 0, damagePercent: 0 }
+/** Shared default; frozen because callers spread it (`{ ...EMPTY_MANUAL }`) rather than mutate it. */
+export const EMPTY_MANUAL: Readonly<ManualOverrides> = Object.freeze({ coinPower: 0, basePower: 0, clashPower: 0, damagePercent: 0 })
 
-export const ALL_SINS: Sin[] = ['wrath', 'lust', 'sloth', 'gluttony', 'gloom', 'pride', 'envy']
+export const ALL_SINS: readonly Sin[] = Object.freeze<Sin[]>(['wrath', 'lust', 'sloth', 'gluttony', 'gloom', 'pride', 'envy'])

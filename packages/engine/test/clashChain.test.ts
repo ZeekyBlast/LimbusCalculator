@@ -55,9 +55,10 @@ describe('clashChain', () => {
     expect(r.coinsLeftIfWin).toEqual([0, 1])
     expect(r.parryRoundsExpected).toBe(0)
   })
-  it('guaranteed tie every round is a draw', () => {
+  it('guaranteed tie every round is a draw at the 99-round parry cap', () => {
     const r = clashChain(side({ basePower: 5, coinPower: 0, breakableCoins: 1 }), side({ basePower: 5, coinPower: 0, breakableCoins: 1 }))
     expect(r.draw).toBe(1)
+    expect(r.parryRoundsExpected).toBe(99)
   })
   it('win + lose + draw = 1 and coin distributions sum to win/lose', () => {
     const r = clashChain(side({ breakableCoins: 3, unbreakableCoins: 1 }), side({ basePower: 6, coinPower: 2, breakableCoins: 2, headsChance: 0.77 }))
