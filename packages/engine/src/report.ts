@@ -98,6 +98,12 @@ function conditionalDamage(
     { label: 'Dynamic modifier', value: base.dynamicModifier, source: 'Damage Up/Down, Fragile/Protection, damage % effects' },
     { label: 'Crit chance', value: attacker.critChance, source: 'Poise potency x 5%' },
   ]
+  // Guard, Evade and other non-damaging skills still clash, but they land no attack: report a
+  // zero summary rather than running the attack math on a damage type the target cannot resist.
+  const dt = attacker.damageType
+  if (dt !== 'slash' && dt !== 'pierce' && dt !== 'blunt') {
+    return { summary: attackDamageDistribution({ ...base, coins: 0 }), breakdown }
+  }
   const parts = coinWeights
     .map((w, coins) => ({ weight: totalWeight > 0 ? w / totalWeight : 0, coins }))
     .filter(p => p.weight > 0)

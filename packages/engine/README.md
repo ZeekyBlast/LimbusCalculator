@@ -21,3 +21,4 @@ Pure functions for Limbus Company clash and damage math. No I/O, no DOM.
 - The 99-parry-round draw cap is not modeled; only a guaranteed tie yields a draw.
 - Stagger mid-attack is on by default; pass `{ staggerMidAttack: false }` to disable.
 - Evade skills, guard clashes, multi-target attack weight, and ally-targeted effects are not modeled.
+- Guard, evade, and non-damaging skills report zero damage; the guard clash itself is not modeled until Plan 3.

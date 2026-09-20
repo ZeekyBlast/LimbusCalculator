@@ -12,6 +12,13 @@ describe('unopposedReport', () => {
     expect(r.damage.mean).toBeCloseTo(0.95 * 14 + 0.05 * 8)
     expect(r.breakdown.find(l => l.label === 'Damage type resistance')?.value).toBe(1)
   })
+  it('reports zero damage for a non-attack skill', () => {
+    const attacker = makeCombatant({ skill: makeSkill({ damageType: 'guard' }) })
+    const r = unopposedReport(attacker, makeCombatant({ unit: makeUnit({ id: 'b' }) }))
+    expect(r.damage.mean).toBe(0)
+    expect(r.damage.histogram).toEqual([[0, 1]])
+    expect(r.breakdown.length).toBeGreaterThan(0)
+  })
 })
 
 describe('clashReport', () => {
