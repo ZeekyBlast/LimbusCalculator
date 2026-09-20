@@ -12,11 +12,14 @@ Scrapes limbuscompany.wiki.gg into the engine's `Unit` schema and commits the re
 
 Runs take a few minutes: one request per second, User-Agent `LimbusCalculator-DataScraper/0.2`.
 
+A scrape that would drop either committed count (identities, enemy units) by more than 5% refuses to
+write. Re-run it; pass `--force` only when the shrink is real and reviewed.
+
 ## Outputs (committed)
 
 - `out/identities.json`: `Unit[]`, one per Identity, stored at the level cap (`meta.levelCap`).
 - `out/enemies.json`: `Unit[]`, one per enemy PART. `id` is `<enemyId>:<partIndex>`, `group` is the enemy name.
-- `out/railway.json`: the live line: `stations`, `sections[].waves[].enemyIds|reinforcementIds`.
+- `out/railway.json`: the live line: `stations`, `sections[].stationNumbers`, `sections[].waves[].enemyIds|reinforcementIds`.
 - `out/failures.json`: pages or ids that did not parse, with reasons, plus warnings.
 - `out/meta.json`: scrape time, counts, and `effectParseCoverage`.
 - `out/images.json`: wiki filename -> local path under `images/` (or `null` if the wiki has no such file).

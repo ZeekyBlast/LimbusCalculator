@@ -2,6 +2,7 @@ import { existsSync, readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import type { Unit } from '@limbus/engine'
 import type { RailwayLine } from '../src/railway/parse.ts'
+import type { ImageManifest } from '../src/pipeline/images.ts'
 import type { Meta } from '../src/pipeline/write.ts'
 import { DAMAGE_TYPES, SINS, type Failure } from '../src/types.ts'
 
@@ -13,7 +14,7 @@ const load = <T>(name: string): T => JSON.parse(readFileSync(out(name), 'utf8'))
 
 describe('committed outputs', () => {
   it('exist', () => {
-    for (const f of ['identities.json', 'enemies.json', 'railway.json', 'failures.json', 'meta.json']) expect(existsSync(out(f)), f).toBe(true)
+    for (const f of ['identities.json', 'enemies.json', 'railway.json', 'failures.json', 'meta.json', 'images.json']) expect(existsSync(out(f)), f).toBe(true)
   })
 
   const identities = load<Unit[]>('identities.json')
@@ -21,6 +22,16 @@ describe('committed outputs', () => {
   const railway = load<RailwayLine>('railway.json')
   const meta = load<Meta>('meta.json')
   const failures = load<{ identities: Failure[]; enemies: Failure[]; warnings: string[] }>('failures.json')
+  const images = load<ImageManifest>('images.json')
+  const allUnits = [...identities, ...enemies]
+
+  /**
+   * Units the wiki genuinely gives no skill block for. Maintained deliberately: a new id appearing
+   * here means a parser regression or a wiki change, not something to paper over by editing the list.
+   */
+  const KNOWN_SKILL_LESS = ['9572:0', '9573:0', '9574:0']
+  /** Units with no parseable speed range. Same rule as above: this list is meant to stay empty. */
+  const KNOWN_SPEEDLESS: string[] = []
 
   function checkUnit(u: Unit) {
     expect(u.id.length).toBeGreaterThan(0)
@@ -59,6 +70,25 @@ describe('committed outputs', () => {
     // known list of wiki content gaps (see task-9-report.md); update it deliberately, not to make
     // a new failure disappear.
     expect(failures.enemies.map(f => f.subject)).toEqual(['9553'])
+  })
+  it('has no undeclared skill-less or speed-less units', () => {
+    expect(allUnits.filter(u => u.skills.length === 0).map(u => u.id).sort()).toEqual(KNOWN_SKILL_LESS)
+    expect(allUnits.filter(u => u.speed.min === 0 && u.speed.max === 0).map(u => u.id).sort()).toEqual(KNOWN_SPEEDLESS)
+  })
+  it('has an image manifest covering every portrait and skill icon', () => {
+    const refs = new Set<string>()
+    for (const u of allUnits) {
+      if (u.portrait) refs.add(u.portrait)
+      for (const s of u.skills) if (s.icon) refs.add(`${s.icon}.png`)
+    }
+    const missing = [...refs].filter(r => !(r in images)).sort()
+    expect(missing, `image refs absent from images.json: ${missing.join(', ')}`).toEqual([])
+    // A null means the wiki has no such file; keep the list empty rather than tolerating gaps.
+    const nulls = Object.entries(images).filter(([, v]) => v === null).map(([k]) => k).sort()
+    expect(nulls, `image refs the wiki has no file for: ${nulls.join(', ')}`).toEqual([])
+    // Distinct wiki filenames must not collapse onto the same local file after sanitizing.
+    const locals = Object.values(images).filter((v): v is string => v !== null)
+    expect(new Set(locals).size).toBe(locals.length)
   })
   it('has a railway line with sections and stations', () => {
     expect(railway.title.length).toBeGreaterThan(0)

@@ -27,6 +27,7 @@ async function main() {
   const command = process.argv[2] ?? 'all'
   const limitArg = process.argv.find(a => a.startsWith('--limit='))
   const limit = limitArg ? Number(limitArg.split('=')[1]) : undefined
+  const force = process.argv.includes('--force')
   const client = new WikiClient({ log })
 
   const existing: Outputs = {
@@ -60,7 +61,7 @@ async function main() {
     log(`enemies: ${r.units.length} units, ${r.failures.length} failed`)
   }
   next.failures.warnings = warnings
-  const meta = writeOutputs(OUT_DIR, next)
+  const meta = writeOutputs(OUT_DIR, next, { force })
   log(`wrote ${OUT_DIR} (coverage ${meta.effectParseCoverage.parsed}/${meta.effectParseCoverage.total} = ${meta.effectParseCoverage.ratio})`)
 }
 
