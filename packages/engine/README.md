@@ -8,6 +8,7 @@ Pure functions for Limbus Company clash and damage math. No I/O, no DOM.
 - `clashChain(a, b)`: exact win/lose/draw and coins-left distribution for a clash.
 - `attackDamageDistribution(params)`: exact total-damage distribution for a one-sided attack.
 - `clashReport(a, b)` / `unopposedReport(a, b)`: the above combined, with a modifier breakdown.
+- `sampleClash(a, b, options?, rng?, report?)`: one random clash outcome plus one exact damage path, for coin-by-coin reveals.
 - `matchupGrid(team, wave)`: every attack skill on my team against every enemy unit.
 
 ## Sources
@@ -23,6 +24,12 @@ Pure functions for Limbus Company clash and damage math. No I/O, no DOM.
 - Evade skills, guard clashes, multi-target attack weight, and ally-targeted effects are not modeled.
 - Guard, evade, and non-damaging skills report zero damage; the guard clash itself is not modeled until Plan 3.
 - Per-coin effects (`scope: { coin: n }`) are listed as unhandled and not applied.
+- Guard clash (spec 6.2) is one round: the guard's level bonus uses its Defense Level, ties re-roll,
+  and when the guard loses its final power is taken off the attack's coin rolls earliest coin first
+  (a fully absorbed coin deals 0). The guard itself deals no damage. Evade skills still use the
+  ordinary multi-round chain.
+- Type- and sin-scoped statuses (Fragile (Slash), Damage Up (Pride), ...) count only for a matching
+  attacking skill; with no opponent known every variant counts.
 
 ## Data contract notes
 

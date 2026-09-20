@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { clashReport, unopposedReport } from '../src/report'
+import { clashReport, sampleClash, unopposedReport } from '../src/report'
 import { makeCombatant, makeSkill, makeUnit } from './fixtures'
 
 describe('unopposedReport', () => {
@@ -66,5 +66,83 @@ describe('skill-less combatants', () => {
     const b = makeCombatant({ unit: makeUnit({ id: 'b', skills: [] }), skill: undefined })
     expect(unopposedReport(a, b).damage.max).toBe(7)
     expect(() => unopposedReport(b, a)).toThrow(/attacker needs a skill/)
+  })
+})
+
+describe('guard clash (spec 6.2)', () => {
+  // Attacker: 1 coin, base 5, coin 3, heads 50% -> power 5 or 8. Guard: 1 coin, base 4, coin 2 -> 4 or 6.
+  // Same level both sides so neither gets a level bonus. Attacker wins on (5,4), (8,4), (8,6): 75%.
+  const attacker = makeCombatant({ skill: makeSkill({ id: 'atk', basePower: 5, coinPower: 3, coinCount: 1 }) })
+  const guard = makeCombatant({ unit: makeUnit({ id: 'g' }), skill: makeSkill({ id: 'grd', damageType: 'guard', basePower: 4, coinPower: 2, coinCount: 1 }) })
+
+  it('resolves in one round with the guard power distribution conditional on losing', () => {
+    const r = clashReport(attacker, guard)
+    expect(r.win).toBeCloseTo(0.75)
+    expect(r.lose).toBeCloseTo(0.25)
+    expect(r.draw).toBe(0)
+    expect(r.parryRoundsExpected).toBe(0)
+    expect(r.coinsLeftIfWin).toEqual([0, 1])
+    // Given the attacker won: guard power 4 with 2/3, 6 with 1/3. Attack roll 5 or 8 each 50%.
+    // Reduced rolls: (5-4=1, 8-4=4) and (5-6 -> absorbed 0, 8-6=2). Mean = 2/3*2.5 + 1/3*1 = 2.
+    expect(r.damageDealt.mean).toBeCloseTo(2)
+    expect(r.damageTaken.mean).toBe(0)
+    expect(r.breakdown.find(l => l.label === 'Guard reduction')?.value).toBeCloseTo(4 * 2 / 3 + 6 / 3)
+  })
+  it('mirrors the report when the guard is side A', () => {
+    const r = clashReport(guard, attacker)
+    expect(r.win).toBeCloseTo(0.25)
+    expect(r.lose).toBeCloseTo(0.75)
+    expect(r.damageDealt.mean).toBe(0)
+    expect(r.damageTaken.mean).toBeCloseTo(2)
+  })
+  it('reports a guaranteed draw when every outcome ties', () => {
+    const a = makeCombatant({ skill: makeSkill({ basePower: 4, coinPower: 0, coinCount: 1 }) })
+    const g = makeCombatant({ unit: makeUnit({ id: 'g' }), skill: makeSkill({ damageType: 'guard', basePower: 4, coinPower: 0, coinCount: 1 }) })
+    const r = clashReport(a, g)
+    expect(r.draw).toBe(1)
+    expect(r.win).toBe(0)
+    expect(r.damageDealt.histogram).toEqual([[0, 1]])
+  })
+  it('leaves guard versus guard on the ordinary chain', () => {
+    const g1 = makeCombatant({ skill: makeSkill({ damageType: 'guard', coinCount: 2 }) })
+    const g2 = makeCombatant({ unit: makeUnit({ id: 'g2' }), skill: makeSkill({ damageType: 'guard', coinCount: 1 }) })
+    const r = clashReport(g1, g2)
+    expect(r.win + r.lose + r.draw).toBeCloseTo(1)
+    expect(r.coinsLeftIfWin.reduce((sum, p) => sum + p, 0)).toBeCloseTo(1)
+  })
+})
+
+describe('sampleClash', () => {
+  const a = makeCombatant({ sanity: 45, skill: makeSkill({ coinCount: 2 }) })
+  const b = makeCombatant({ unit: makeUnit({ id: 'b' }), skill: makeSkill({ coinCount: 1 }) })
+  const seq = (values: number[]) => { let i = 0; return () => values[Math.min(i++, values.length - 1)] }
+
+  it('maps the first draw onto win, lose, draw in that order', () => {
+    const report = clashReport(a, b)
+    expect(sampleClash(a, b, {}, seq([report.win / 2]), report).outcome).toBe('win')
+    expect(sampleClash(a, b, {}, seq([report.win + report.lose / 2]), report).outcome).toBe('lose')
+    expect(sampleClash(a, b, {}, seq([0.999999]), report).outcome).toBe(report.draw > 0 ? 'draw' : 'lose')
+  })
+  it('samples coins left from the report distribution and one attack path of that length', () => {
+    const report = clashReport(a, b)
+    const s = sampleClash(a, b, {}, seq([0, 0.999999, 0, 0, 0, 0]), report)
+    expect(s.outcome).toBe('win')
+    expect(s.coinsLeft).toBe(report.coinsLeftIfWin.length - 1)
+    expect(s.attack?.coins).toHaveLength(s.coinsLeft)
+    expect(s.attack?.total).toBe(s.attack?.coins.reduce((t, c) => t + c.damage, 0))
+  })
+  it('returns no attack on a draw or when the winner cannot attack', () => {
+    const guard = makeCombatant({ unit: makeUnit({ id: 'g' }), skill: makeSkill({ damageType: 'guard', basePower: 99, coinCount: 1 }) })
+    const s = sampleClash(a, guard, {}, seq([0.999999]))
+    expect(s.outcome).toBe('lose')
+    expect(s.attack).toBeUndefined()
+  })
+  it('carries the sampled guard power into the attack on a lost guard clash', () => {
+    const attacker = makeCombatant({ skill: makeSkill({ basePower: 5, coinPower: 3, coinCount: 1 }) })
+    const guard = makeCombatant({ unit: makeUnit({ id: 'g' }), skill: makeSkill({ damageType: 'guard', basePower: 4, coinPower: 2, coinCount: 1 }) })
+    const s = sampleClash(attacker, guard, {}, seq([0, 0, 0.9, 0, 0]))
+    expect(s.outcome).toBe('win')
+    expect([4, 6]).toContain(s.guardReduction)
+    expect(s.attack?.coins[0].roll).toBe(8 - s.guardReduction)
   })
 })
