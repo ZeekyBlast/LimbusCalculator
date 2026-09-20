@@ -112,6 +112,17 @@ describe('parseEnemyBlock: ABPage single part (refracted human)', () => {
   })
 })
 
+describe('parseEnemyBlock: zero-skill units', () => {
+  it('warns when a parsed enemy unit has no skills', () => {
+    const { value: units, warnings } = parseEnemyBlock(
+      { name: 'ENPage', params: { level: '30', hp: '50' }, start: 0, end: 0 },
+      { id: '1234', name: 'Nobody', page: 'X' },
+    )
+    expect(units[0].skills).toEqual([])
+    expect(warnings).toContain('1234:0: no skills parsed')
+  })
+})
+
 describe('parseEnemyBlock: ENPage/Invidiae', () => {
   it('parses a Peccatulum as an identity-like single unit with word resistances', () => {
     const wikitext = fixture('enemy-station2-invidiae.wikitext')
@@ -128,9 +139,37 @@ describe('parseEnemyBlock: ENPage/Invidiae', () => {
     expect(u.resistances.sin.wrath).toBe(2)
     expect(u.resistances.sin.gloom).toBe(0.75)
     expect(u.staggerThresholds).toEqual([0.65, 0.35])
-    expect(u.skills.map(s => s.slot)).toEqual(['enemy', 'enemy', 'enemy', 'defense', 'defense'])
+    expect(u.skills.map(s => s.slot)).toEqual(['enemy', 'enemy', 'enemy', 'enemy', 'enemy', 'defense', 'defense'])
     expect(u.skills[0].name).toBe('I Wish to Open the Path')
     expect(u.passives.length).toBeGreaterThanOrEqual(3)
+  })
+  it('keeps skillN-M variant skills on a single-body enemy', () => {
+    const wikitext = fixture('enemy-station2-invidiae.wikitext')
+    const { value: units } = parseEnemyBlock(findEnemyBlock(wikitext, ref('9543'))!, ref('9543'))
+    const u = units[0]
+    expect(u.skills.map(s => s.id)).toEqual([
+      '9543:0::skill1', '9543:0::skill2', '9543:0::skill3', '9543:0::skill3-2', '9543:0::skill3-3',
+      '9543:0::defense', '9543:0::defense2',
+    ])
+    const carve = u.skills.find(s => s.name === 'I Carve the Path of a Lord')
+    expect(carve?.id).toBe('9543:0::skill3-2')
+    expect(carve?.variant).toBe('2')
+    expect(u.skills.filter(s => s.variant === undefined).map(s => s.id)).toContain('9543:0::skill3')
+  })
+  it('indexes coin texts by coin number when a ceN key is missing', () => {
+    const wikitext = fixture('enemy-station2-invidiae.wikitext')
+    const { value: units } = parseEnemyBlock(findEnemyBlock(wikitext, ref('9544'))!, ref('9544'))
+    const peck = units[0].skills.find(s => s.name === "Peck 'em")!
+    // The wiki gives this skill ce2 and ce3 but no ce1: coin 1 has no on-hit text.
+    expect(peck.coinCount).toBe(3)
+    expect(peck.rawText.coins).toHaveLength(3)
+    expect(peck.rawText.coins[0]).toBe('')
+    expect(peck.rawText.coins[1]).toContain('Inflict 1 Rupture')
+    expect(peck.rawText.coins[2]).toContain('Inflict 1 Burn')
+    const coinIndexes = peck.effects
+      .filter(e => typeof e.scope === 'object')
+      .map(e => (e.scope as { coin: number }).coin)
+    expect([...new Set(coinIndexes)]).toEqual([1, 2])
   })
   it('locates the Yi Sang block by anchor and reads its first skill', () => {
     const wikitext = fixture('enemy-station2-invidiae.wikitext')

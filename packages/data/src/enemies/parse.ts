@@ -89,10 +89,26 @@ function skillsOf(p: Params, unitId: string, keys: string[], slot: Skill['slot']
   const out: Skill[] = []
   for (const k of keys) {
     if (!p[k]) continue
-    const s = parseSkillTemplate(p[k], `${unitId}::${k}`, slot, undefined, warnings)
+    const variant = k.includes('-') ? k.split('-')[1] : undefined
+    const s = parseSkillTemplate(p[k], `${unitId}::${k}`, slot, variant, warnings)
     if (s) out.push(s)
   }
   return out
+}
+
+/** `skill3` and its condition-gated sub-tab variants `skill3-2`, `skill3-3`, ... */
+const SKILL_KEY = /^skill(\d+)(?:-(\d+))?$/
+
+/**
+ * Every `skillN`/`skillN-M` key the block actually defines, base skill before its variants.
+ * A fixed `skill1..skillN` range would silently drop the variants, which are real skills.
+ */
+function skillKeys(p: Params): string[] {
+  const keyed = Object.keys(p)
+    .map(k => ({ k, m: SKILL_KEY.exec(k) }))
+    .filter((e): e is { k: string; m: RegExpExecArray } => e.m !== null && Boolean(p[e.k]))
+  keyed.sort((a, b) => Number(a.m[1]) - Number(b.m[1]) || Number(a.m[2] ?? 0) - Number(b.m[2] ?? 0))
+  return keyed.map(e => e.k)
 }
 
 const range = (prefix: string, from: number, to: number) => Array.from({ length: to - from + 1 }, (_, i) => `${prefix}${from + i}`)
@@ -114,7 +130,7 @@ function parseAbnormality(p: Params, ref: EnemyRef, warnings: string[]): Unit[] 
 
   const passives = passivesOf(p, warnings, ref.name, range('passive', 1, 5))
   const blockLevel = toNumber(p.level)
-  const skillKeys = range('skill', 1, 13).filter(k => p[k])
+  const allSkillKeys = skillKeys(p)
 
   return parts.map((q, index) => {
     const unitId = `${ref.id}:${index}`
@@ -122,13 +138,15 @@ function parseAbnormality(p: Params, ref: EnemyRef, warnings: string[]): Unit[] 
     const level = toNumber(q.level) ?? blockLevel ?? 1
     const baseHp = toNumber(q.hp) ?? toNumber(p.hp) ?? 0
     const hpGrowth = toNumber(q.hpgrowth) ?? toNumber(p.hpgrowth) ?? 0
-    const ownKeys = skillKeys.filter(k => {
+    const ownKeys = allSkillKeys.filter(k => {
       if (parts.length === 1) return true
       const label = cleanText(p[`skillparts${k.slice('skill'.length)}`])
       return label.includes(partName)
     })
     const speed = parseSpeed(q.speed)
     if (!speed) warnings.push(`${unitId}: unparseable speed "${q.speed ?? ''}"`)
+    const skills = skillsOf(p, unitId, ownKeys, 'enemy', warnings)
+    if (skills.length === 0) warnings.push(`${unitId}: no skills parsed`)
     return {
       id: unitId,
       kind: 'enemy',
@@ -142,7 +160,7 @@ function parseAbnormality(p: Params, ref: EnemyRef, warnings: string[]): Unit[] 
       defenseMod: toNumber(q.defmod) ?? 0,
       resistances: resistances(q, warnings, unitId),
       staggerThresholds: parseStaggerThresholds(q, 5),
-      skills: skillsOf(p, unitId, ownKeys, 'enemy', warnings),
+      skills,
       passives,
     }
   })
@@ -155,6 +173,11 @@ function parseSingleBody(p: Params, ref: EnemyRef, warnings: string[]): Unit {
   const hpGrowth = toNumber(p.hpgrowth) ?? 0
   const speed = parseSpeed(p.speed)
   if (!speed) warnings.push(`${unitId}: unparseable speed "${p.speed ?? ''}"`)
+  const skills = [
+    ...skillsOf(p, unitId, skillKeys(p), 'enemy', warnings),
+    ...skillsOf(p, unitId, ['defense', 'defense2', 'defense3', 'defense4'], 'defense', warnings),
+  ]
+  if (skills.length === 0) warnings.push(`${unitId}: no skills parsed`)
   return {
     id: unitId,
     kind: 'enemy',
@@ -168,10 +191,7 @@ function parseSingleBody(p: Params, ref: EnemyRef, warnings: string[]): Unit {
     defenseMod: toNumber(p.defmod) ?? 0,
     resistances: resistances(p, warnings, unitId),
     staggerThresholds: parseStaggerThresholds(p, 4),
-    skills: [
-      ...skillsOf(p, unitId, range('skill', 1, 9), 'enemy', warnings),
-      ...skillsOf(p, unitId, ['defense', 'defense2', 'defense3', 'defense4'], 'defense', warnings),
-    ],
+    skills,
     passives: passivesOf(p, warnings, ref.name, ['passive0', ...range('passive', 1, 9)]),
   }
 }

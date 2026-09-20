@@ -77,4 +77,9 @@ describe('parseIdentityPage', () => {
   it('reports no warnings for a well-formed page', () => {
     expect(result!.warnings).toEqual([])
   })
+  it('warns when a page yields no skills at all', () => {
+    const bare = parseIdentityPage('Skill-less ID', '{{IDPage|sinner=Nobody|hp=100|speed=4~6}}')
+    expect(bare!.value.skills).toEqual([])
+    expect(bare!.warnings).toContain('Skill-less ID: no skills parsed')
+  })
 })

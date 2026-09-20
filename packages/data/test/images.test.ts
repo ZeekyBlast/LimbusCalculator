@@ -25,6 +25,21 @@ describe('imageRefs / localImagePath', () => {
     expect(localImagePath('E.G.O::Spicebush Full.png')).toBe('E.G.O__Spicebush Full.png')
     expect(localImagePath('a/b c.png')).toBe('a_b c.png')
   })
+  it('replaces every character that is unsafe in a URL path segment or on Windows', () => {
+    expect(localImagePath('Is it You?! Sinclair Icon.png')).toBe('Is it You_! Sinclair Icon.png')
+    expect(localImagePath('"Enwrap 330 times" Yi Sang Icon.png')).toBe('_Enwrap 330 times_ Yi Sang Icon.png')
+    expect(localImagePath('a<b>c|d*e#f\\g.png')).toBe('a_b_c_d_e_f_g.png')
+  })
+  it('keeps distinct filenames distinct after sanitizing', () => {
+    const names = [
+      'Is it You?! Sinclair Icon.png',
+      'Is it You!! Sinclair Icon.png',
+      'Take the Hit to the Last Blow, Please? Hong Lu Icon.png',
+      'You Win... Will You Play?.png',
+      '"Revel with Soundless Applause" Yi Sang Icon.png',
+    ]
+    expect(new Set(names.map(localImagePath)).size).toBe(names.length)
+  })
 })
 
 describe('scrapeImages', () => {

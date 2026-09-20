@@ -44,6 +44,10 @@ function mapClean(over: WikiTierOverrides<string>): WikiTierOverrides<string> {
   return out
 }
 
+function hasCoinKey(params: Record<string, string>, k: number): boolean {
+  return params[`ce${k}`] !== undefined || TIERS.some(tier => params[`${tier}ce${k}`] !== undefined)
+}
+
 function effectsForTier(skillText: string, coinTexts: string[]): Effect[] {
   const effects = parseEffectText(skillText, 'skill', 'on-use')
   coinTexts.forEach((text, i) => effects.push(...parseEffectText(text, { coin: i }, 'on-hit')))
@@ -65,8 +69,11 @@ export function parseSkillTemplate(raw: string, id: string, slot: Skill['slot'],
   const coinPowerTiers = tierNumber(p, 'cpower', toNumber(p.cpower) ?? 0)
 
   const skillTextTiers = resolveWikiTiers(cleanText(p.se), mapClean(tierParam(p, 'se')))
-  const coinTextTiers = COIN_KEYS
-    .filter(k => p[`ce${k}`] !== undefined || TIERS.some(tier => p[`${tier}ce${k}`] !== undefined))
+  // Index coin texts by coin number, not by which `ceN` keys happen to exist: a skill with `ce2`
+  // and `ce3` but no `ce1` must still put coin 2's text at index 1. Compacting the array would
+  // shift every coin-scoped effect, `rawText.coins` entry and unbreakable-coin index by one.
+  const highestCoin = COIN_KEYS.filter(k => hasCoinKey(p, k)).at(-1) ?? 0
+  const coinTextTiers = COIN_KEYS.slice(0, highestCoin)
     .map(k => resolveWikiTiers(cleanText(p[`ce${k}`]), mapClean(tierParam(p, `ce${k}`))))
   const effectTiers = [0, 1, 2, 3].map(i => effectsForTier(skillTextTiers[i], coinTextTiers.map(c => c[i]))) as [Effect[], Effect[], Effect[], Effect[]]
 
@@ -140,6 +147,7 @@ export function parseIdentityPage(title: string, wikitext: string, levelCap: num
     const d = parseSkillTemplate(p.defense, `${title}::defense`, 'defense', undefined, warnings)
     if (d) skills.push(d)
   }
+  if (skills.length === 0) warnings.push(`${title}: no skills parsed`)
 
   const passives: Passive[] = []
   for (const n of [1, 2, 3]) {

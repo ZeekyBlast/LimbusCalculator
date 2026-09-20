@@ -2,7 +2,8 @@ import { readFileSync } from 'node:fs'
 import { describe, expect, it } from 'vitest'
 import { parseLinePage } from '../src/railway/parse.ts'
 
-const line = parseLinePage(readFileSync(new URL('./fixtures/railway-line6.wikitext', import.meta.url), 'utf8'))
+const warnings: string[] = []
+const line = parseLinePage(readFileSync(new URL('./fixtures/railway-line6.wikitext', import.meta.url), 'utf8'), warnings)
 
 describe('parseLinePage', () => {
   it('reads the line header', () => {
@@ -25,6 +26,34 @@ describe('parseLinePage', () => {
     expect(wave2.reinforcementIds).toHaveLength(6)
     expect(line.sections[0].waves).toEqual([{ number: 1, enemyIds: ['9563'], reinforcementIds: [] }])
     expect(line.sections[4].waves[0].enemyIds).toEqual(['9567', '9572', '9573', '9574'])
+  })
+  it('links each section to the stations its name lists', () => {
+    expect(line.sections[0].stationNumbers).toEqual([1])
+    expect(line.sections[1].name).toBe('Tarnishing')
+    expect(line.sections[1].stationNumbers).toEqual([2])
+    expect(line.sections[2].name).toBe('Heart of Innocence - Face of Things')
+    expect(line.sections[2].stationNumbers).toEqual([3, 4])
+    expect(line.sections[3].stationNumbers).toEqual([5, 6, 7])
+    expect(line.sections[4].stationNumbers).toEqual([8])
+    expect(warnings).toEqual([])
+  })
+  it('warns about a section-name segment that matches no station', () => {
+    const w: string[] = []
+    const page = [
+      '{{RRLine|title=T|start=S}}',
+      '{|',
+      '! scope="col" |Station #1: Real Station',
+      '|}',
+      '== Encounter Details ==',
+      '{|',
+      '|-',
+      '! Section #1 : Real Station - Ghost Station',
+      '|Wave 1 {{EnBox|1}}',
+      '|}',
+    ].join('\n')
+    const parsed = parseLinePage(page, w)
+    expect(parsed.sections[0].stationNumbers).toEqual([1])
+    expect(w).toEqual(['Section #1 "Real Station - Ghost Station": no station named "Ghost Station"'])
   })
   it('collects every distinct enemy id', () => {
     expect(line.enemyIds).toContain('9568')

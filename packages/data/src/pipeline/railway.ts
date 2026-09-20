@@ -11,7 +11,8 @@ export async function scrapeRailway(client: WikiClient, linePage: string, log: L
   log(`fetching line page: ${linePage}`)
   const lineText = await client.fetchWikitext(linePage)
   if (!lineText) throw new Error(`line page not found: ${linePage}`)
-  const line = parseLinePage(lineText)
+  const warnings: string[] = []
+  const line = parseLinePage(lineText, warnings)
   log(`${line.sections.length} sections, ${line.enemyIds.length} distinct enemy ids`)
 
   const luaText = await client.fetchWikitext('Module:EnBox/data')
@@ -20,7 +21,6 @@ export async function scrapeRailway(client: WikiClient, linePage: string, log: L
 
   const units: Unit[] = []
   const failures: Failure[] = []
-  const warnings: string[] = []
   for (const id of line.enemyIds) {
     const entry = index.get(id)
     if (!entry) { failures.push({ subject: id, reason: 'not in Module:EnBox/data' }); continue }

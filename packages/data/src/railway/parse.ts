@@ -1,7 +1,13 @@
 import { findTemplateBlocks } from '../wiki/wikitext.ts'
 
 export interface RailwayWave { number: number; enemyIds: string[]; reinforcementIds: string[] }
-export interface RailwaySection { number: number; name: string; waves: RailwayWave[] }
+export interface RailwaySection {
+  number: number
+  name: string
+  /** Station numbers this section covers, read off its name (e.g. "A - B" -> both stations). */
+  stationNumbers: number[]
+  waves: RailwayWave[]
+}
 export interface RailwayStation { number: number; name: string }
 export interface RailwayLine { title: string; start: string; stations: RailwayStation[]; sections: RailwaySection[]; enemyIds: string[] }
 
@@ -16,7 +22,7 @@ function ids(text: string): string[] {
   return [...text.matchAll(ENBOX)].map(m => m[1])
 }
 
-export function parseLinePage(wikitext: string): RailwayLine {
+export function parseLinePage(wikitext: string, warnings: string[] = []): RailwayLine {
   const header = findTemplateBlocks(wikitext, ['RRLine'])[0]?.params ?? {}
 
   const stations = new Map<number, string>()
@@ -35,7 +41,7 @@ export function parseLinePage(wikitext: string): RailwayLine {
     for (const row of table.split(/^\|-\s*$/m)) {
       const sec = SECTION_CELL.exec(row)
       if (sec) {
-        current = { number: Number(sec[1]), name: sec[2].trim(), waves: [] }
+        current = { number: Number(sec[1]), name: sec[2].trim(), stationNumbers: [], waves: [] }
         sections.push(current)
       }
       const wave = WAVE_CELL.exec(row)
@@ -43,6 +49,16 @@ export function parseLinePage(wikitext: string): RailwayLine {
       const cell = row.slice(wave.index)
       const [main, reinforcements = ''] = cell.split(/Reinforcements/i)
       current.waves.push({ number: Number(wave[1]), enemyIds: ids(main), reinforcementIds: ids(reinforcements) })
+    }
+  }
+
+  // Section names list the stations they cover, e.g. "Heart of Innocence - Face of Things".
+  const byName = new Map([...stations.entries()].map(([number, name]) => [name, number]))
+  for (const section of sections) {
+    for (const segment of section.name.split(' - ').map(x => x.trim()).filter(x => x.length > 0)) {
+      const number = byName.get(segment)
+      if (number === undefined) warnings.push(`Section #${section.number} "${section.name}": no station named "${segment}"`)
+      else section.stationNumbers.push(number)
     }
   }
 

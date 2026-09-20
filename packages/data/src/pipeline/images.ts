@@ -15,9 +15,12 @@ export function imageRefs(units: Unit[]): string[] {
   return [...refs]
 }
 
-/** Flat filename safe for the filesystem and a URL path segment. */
+/**
+ * Flat filename safe for the filesystem and a URL path segment: replaces the path separators and
+ * every character that is reserved on Windows (`:?"<>|*`) or significant in a URL (`?#`).
+ */
 export function localImagePath(filename: string): string {
-  return filename.replace(/[/\\:]/g, '_')
+  return filename.replace(/[/\\:?"<>|*#]/g, '_')
 }
 
 export async function scrapeImages(client: WikiClient, units: Unit[], imagesDir: string, outDir: string, log: Log): Promise<ImageManifest> {
