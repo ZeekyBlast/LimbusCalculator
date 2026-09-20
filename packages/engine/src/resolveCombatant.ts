@@ -50,7 +50,7 @@ export function resolveCombatant(self: Combatant, opponent?: Combatant): Resolve
     basePower,
     coinPower,
     coinCount: skill.coinCount,
-    unbreakableCoins: skill.unbreakableCoins.length,
+    unbreakableCoins: countUnbreakableCoins(skill),
     headsChance: (50 + sanity) / 100,
     offenseLevel: self.level + skill.offenseLevelMod,
     defenseLevel: self.level + self.unit.defenseMod,
@@ -69,6 +69,19 @@ export function resolveCombatant(self: Combatant, opponent?: Combatant): Resolve
     effectsApplied,
     effectsUnparsed,
   }
+}
+
+/**
+ * Unbreakable coins are 0-based indices into the skill's coins. Scraped data can repeat an index
+ * or point past the last coin, so only distinct in-range integers count - otherwise the clash
+ * chain would size its coin pool from indices that name no real coin.
+ */
+function countUnbreakableCoins(skill: Skill): number {
+  const seen = new Set<number>()
+  for (const i of skill.unbreakableCoins) {
+    if (Number.isInteger(i) && i >= 0 && i < skill.coinCount) seen.add(i)
+  }
+  return seen.size
 }
 
 function applyUptie(skill: Skill, tier: UptieTier): Skill {

@@ -50,7 +50,7 @@ function toSide(r: ResolvedCombatant): ClashSide {
   return {
     basePower: r.basePower,
     coinPower: r.coinPower,
-    breakableCoins: r.coinCount - r.unbreakableCoins,
+    breakableCoins: Math.max(0, r.coinCount - r.unbreakableCoins),
     unbreakableCoins: r.unbreakableCoins,
     headsChance: r.headsChance,
     offenseLevel: r.offenseLevel,

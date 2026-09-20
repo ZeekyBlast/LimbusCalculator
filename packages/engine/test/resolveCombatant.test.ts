@@ -83,6 +83,13 @@ describe('resolveCombatant', () => {
   it('counts unbreakable coins from the skill', () => {
     expect(resolveCombatant(makeCombatant({ skill: makeSkill({ coinCount: 3, unbreakableCoins: [2] }) })).unbreakableCoins).toBe(1)
   })
+  it('counts only distinct in-range unbreakable coin indices', () => {
+    const count = (unbreakableCoins: number[]) =>
+      resolveCombatant(makeCombatant({ skill: makeSkill({ coinCount: 2, unbreakableCoins }) })).unbreakableCoins
+    expect(count([0, 1, 2])).toBe(2)
+    expect(count([1, 1])).toBe(1)
+    expect(count([-1, 5])).toBe(0)
+  })
 
   it('adds coin-power-additive status (Coin Boost) to coin power', () => {
     const r = resolveCombatant(makeCombatant({ status: { 'coin-boost': { potency: 2, count: 0 } } }))

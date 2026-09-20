@@ -32,6 +32,13 @@ describe('clashReport', () => {
     expect(r.damageTaken.mean).toBe(0)
     expect(r.damageDealt.mean).toBe(30)
   })
+  it('never invents coins from out-of-range unbreakable indices', () => {
+    const a = makeCombatant({ skill: makeSkill({ coinCount: 2, unbreakableCoins: [0, 1, 2] }) })
+    const b = makeCombatant({ unit: makeUnit({ id: 'b', skills: [makeSkill({ basePower: 0, coinPower: 0, coinCount: 1 })] }) })
+    const r = clashReport(a, b)
+    expect(r.coinsLeftIfWin).toHaveLength(3)
+    expect(r.coinsLeftIfWin[2]).toBeCloseTo(1, 12)
+  })
   it('folds expected parry rounds into the parry bonus line', () => {
     const a = makeCombatant({ skill: makeSkill({ basePower: 0, coinPower: 1, coinCount: 1 }) })
     const b = makeCombatant({ unit: makeUnit({ id: 'b', skills: [makeSkill({ basePower: 0, coinPower: 1, coinCount: 1 })] }) })
