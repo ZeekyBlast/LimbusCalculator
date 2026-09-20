@@ -123,3 +123,26 @@ describe('resolveCombatant', () => {
     expect(r.dynamicAsAttacker).toBeCloseTo(0)
   })
 })
+
+describe('type and sin scoped status', () => {
+  it('counts damage-up-slash only when the skill is slash', () => {
+    const status = { 'damage-up-slash': { potency: 2, count: 1 } }
+    const slash = resolveCombatant(makeCombatant({ status, skill: makeSkill({ damageType: 'slash' }) }))
+    const pierce = resolveCombatant(makeCombatant({ status, skill: makeSkill({ damageType: 'pierce' }) }))
+    expect(slash.dynamicAsAttacker).toBeCloseTo(0.2)
+    expect(pierce.dynamicAsAttacker).toBe(0)
+  })
+  it('counts fragile-pierce on the target only when the opponent attacks with pierce', () => {
+    const target = makeCombatant({ status: { 'fragile-pierce': { potency: 3, count: 1 } } })
+    const pierce = makeCombatant({ unit: makeUnit({ id: 'x' }), skill: makeSkill({ damageType: 'pierce' }) })
+    const slash = makeCombatant({ unit: makeUnit({ id: 'x' }), skill: makeSkill({ damageType: 'slash' }) })
+    expect(resolveCombatant(target, pierce).dynamicAsTarget).toBeCloseTo(0.3)
+    expect(resolveCombatant(target, slash).dynamicAsTarget).toBe(0)
+    expect(resolveCombatant(target).dynamicAsTarget).toBeCloseTo(0.3)
+  })
+  it('gates sin variants by the skill sin', () => {
+    const status = { 'power-up-pride': { potency: 1, count: 1 } }
+    expect(resolveCombatant(makeCombatant({ status, skill: makeSkill({ sin: 'pride' }) })).coinRollBonus).toBe(1)
+    expect(resolveCombatant(makeCombatant({ status, skill: makeSkill({ sin: 'wrath' }) })).coinRollBonus).toBe(0)
+  })
+})

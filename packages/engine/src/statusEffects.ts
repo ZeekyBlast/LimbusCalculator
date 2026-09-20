@@ -18,6 +18,44 @@
  * multiplier contribution.
  */
 
+import type { DamageType, Sin, SkillDamageType } from "./types";
+
+/** Type- and sin-scoped status variants: they contribute only when the attacking skill matches. */
+export const SCOPED_STATUS: Readonly<Record<string, { damageType: DamageType } | { sin: Sin }>> = Object.freeze({
+    "fragile-slash": { damageType: "slash" },
+    "fragile-pierce": { damageType: "pierce" },
+    "fragile-blunt": { damageType: "blunt" },
+    "fragile-envy": { sin: "envy" },
+    "fragile-gloom": { sin: "gloom" },
+    "fragile-pride": { sin: "pride" },
+    "fragile-lust": { sin: "lust" },
+    "damage-up-slash": { damageType: "slash" },
+    "damage-up-blunt": { damageType: "blunt" },
+    "damage-up-pierce": { damageType: "pierce" },
+    "damage-up-gluttony": { sin: "gluttony" },
+    "damage-up-envy": { sin: "envy" },
+    "power-up-slash": { damageType: "slash" },
+    "power-up-blunt": { damageType: "blunt" },
+    "power-up-pierce": { damageType: "pierce" },
+    "power-up-envy": { sin: "envy" },
+    "power-up-pride": { sin: "pride" },
+});
+
+export interface AttackShape {
+    damageType: SkillDamageType;
+    sin: Sin;
+}
+
+/**
+ * True unless `effectId` is a scoped variant whose damage type or sin differs from the attacking
+ * skill. With no attack known (a combatant resolved without an opponent) every variant applies.
+ */
+export function isEffectApplicable(effectId: string, attack?: AttackShape): boolean {
+    const scope = SCOPED_STATUS[effectId];
+    if (!scope || !attack) return true;
+    return "damageType" in scope ? scope.damageType === attack.damageType : scope.sin === attack.sin;
+}
+
 export type EffectSlot =
     /** Fragile vs Protection - opposing, clamped to [-1, 1] combined. */
     | "dynamic-additive-fragile-protection"

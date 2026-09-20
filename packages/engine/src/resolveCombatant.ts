@@ -1,4 +1,4 @@
-import { calculateDynamicModifier, getEffectById, sumCoinPowerBonus, sumCoinRollBonus, type EffectStack } from './statusEffects'
+import { calculateDynamicModifier, getEffectById, isEffectApplicable, sumCoinPowerBonus, sumCoinRollBonus, type EffectStack } from './statusEffects'
 import type { Combatant, Condition, Effect, ResolvedCombatant, Skill, UptieTier } from './types'
 
 const ACTIVE_TRIGGERS = new Set<Effect['trigger']>(['on-use', 'passive', 'combat-start'])
@@ -35,8 +35,12 @@ export function resolveCombatant(self: Combatant, opponent?: Combatant): Resolve
   const stacks: EffectStack[] = Object.entries(self.status).map(([effectId, v]) => ({ effectId, stacks: v.potency }))
   // Bucket by registry slot, not by id: every Fragile/Protection variant belongs to the side being
   // hit. Ids missing from the registry fall to the attacker side and contribute 0 there anyway.
-  const targetStacks = stacks.filter(s => getEffectById(s.effectId)?.slot === TARGET_SIDE_SLOT)
-  const attackerStacks = stacks.filter(s => getEffectById(s.effectId)?.slot !== TARGET_SIDE_SLOT)
+  // Scoped variants (Fragile (Slash), Damage Up (Pride), ...) only count for a matching attack:
+  // the attacker's own stacks against its own skill, the Fragile family against the opponent's.
+  const myAttack = { damageType: skill.damageType, sin: skill.sin }
+  const theirAttack = opponent ? { damageType: opponent.skill.damageType, sin: opponent.skill.sin } : undefined
+  const targetStacks = stacks.filter(s => getEffectById(s.effectId)?.slot === TARGET_SIDE_SLOT && isEffectApplicable(s.effectId, theirAttack))
+  const attackerStacks = stacks.filter(s => getEffectById(s.effectId)?.slot !== TARGET_SIDE_SLOT && isEffectApplicable(s.effectId, myAttack))
   // Coin Boost / Coin Drop modify Coin Power itself, so they land after effects and manual overrides.
   coinPower += sumCoinPowerBonus(attackerStacks)
   const poise = self.status['poise'] ?? { potency: 0, count: 0 }

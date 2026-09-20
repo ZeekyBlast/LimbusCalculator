@@ -5,6 +5,7 @@ import {
     calculateDynamicModifier,
     sumCoinRollBonus,
     sumCoinPowerBonus,
+    isEffectApplicable,
     type StatusEffect,
     type EffectStack,
 } from "./statusEffects";
@@ -102,5 +103,24 @@ describe("sumCoinRollBonus / sumCoinPowerBonus", () => {
             { effectId: "coin-drop", stacks: 1 },
         ];
         expect(sumCoinPowerBonus(effects)).toBe(2);
+    });
+});
+
+describe("isEffectApplicable", () => {
+    it("always applies an unscoped status", () => {
+        expect(isEffectApplicable("fragile", { damageType: "slash", sin: "wrath" })).toBe(true);
+        expect(isEffectApplicable("fragile")).toBe(true);
+    });
+    it("gates damage-type variants by the attacking skill's damage type", () => {
+        expect(isEffectApplicable("fragile-slash", { damageType: "slash", sin: "wrath" })).toBe(true);
+        expect(isEffectApplicable("fragile-slash", { damageType: "pierce", sin: "wrath" })).toBe(false);
+        expect(isEffectApplicable("damage-up-blunt", { damageType: "guard", sin: "wrath" })).toBe(false);
+    });
+    it("gates sin variants by the attacking skill's sin", () => {
+        expect(isEffectApplicable("power-up-pride", { damageType: "slash", sin: "pride" })).toBe(true);
+        expect(isEffectApplicable("power-up-pride", { damageType: "slash", sin: "envy" })).toBe(false);
+    });
+    it("applies every scoped variant when the attack is unknown", () => {
+        expect(isEffectApplicable("fragile-envy")).toBe(true);
     });
 });

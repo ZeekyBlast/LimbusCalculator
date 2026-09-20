@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { clashChain, clashPowerLevelBonus, roundOutcome, type ClashSide } from '../src/clashChain'
-import { simulateClash } from '../src/legacy/clash'
+import { simulateClash } from './legacyClashOracle'
 
 function side(over: Partial<ClashSide> = {}): ClashSide {
   return { basePower: 4, coinPower: 3, breakableCoins: 2, unbreakableCoins: 0, headsChance: 0.5, offenseLevel: 45, clashPowerBonus: 0, ...over }
