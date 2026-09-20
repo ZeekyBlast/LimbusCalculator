@@ -47,8 +47,15 @@ function findTemplateEnd(str: string, start: number): number {
   return -1
 }
 
+/** HTML comments are invisible to MediaWiki rendering, so strip them before param splitting: a
+ * comment sitting between two params (or between the name and the first `|`) must not bleed into
+ * whichever param value or name ends up adjacent to it. */
+function stripComments(text: string): string {
+  return text.replace(/<!--[\s\S]*?-->/g, '')
+}
+
 function parseInner(inner: string): Template {
-  const parts = splitTopLevel(inner, '|')
+  const parts = splitTopLevel(stripComments(inner), '|')
   const name = parts[0].trim()
   const params: Record<string, string> = {}
   let positional = 1
@@ -83,8 +90,9 @@ export function findTemplateBlocks(wikitext: string, names: string[]): TemplateB
     const end = findTemplateEnd(wikitext, i)
     if (end === -1) break
     const t = parseInner(wikitext.slice(i + 2, end - 2))
-    // Use the pre-matched name, not t.name: a comment between the template name and its
-    // first `|` (e.g. `{{ABPage\n<!--General Info-->\n|...}}`) would otherwise leak into it.
+    // Use the pre-matched name, not t.name: they agree now that parseInner also strips comments,
+    // but the pre-match has to run first regardless, to decide whether this block is even wanted
+    // before paying for findTemplateEnd's scan.
     blocks.push({ ...t, name, start: i, end })
     i = end
   }

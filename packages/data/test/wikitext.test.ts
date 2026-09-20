@@ -15,6 +15,13 @@ describe('parseTemplate', () => {
   it('ignores trailing text after the closing braces', () => {
     expect(parseTemplate('{{Skill|name=X}} <!-- comment -->')?.params.name).toBe('X')
   })
+  it('strips HTML comments so they cannot bleed into an adjacent param or the name', () => {
+    const t = parseTemplate('{{IDPage|stagger3=20\n<!--Skill1-->\n|next=x}}')
+    expect(t?.params.stagger3).toBe('20')
+    expect(t?.params.next).toBe('x')
+    const named = parseTemplate('{{ABPage\n<!--General Info-->\n|prefix=X}}')
+    expect(named?.name).toBe('ABPage')
+  })
   it('returns null for non-template input', () => {
     expect(parseTemplate('plain text')).toBeNull()
   })
