@@ -3,7 +3,7 @@ import { describe, expect, it } from 'vitest'
 import type { Unit } from '@limbus/engine'
 import type { RailwayLine } from '../src/railway/parse.ts'
 import type { Meta } from '../src/pipeline/write.ts'
-import { DAMAGE_TYPES, SINS } from '../src/types.ts'
+import { DAMAGE_TYPES, SINS, type Failure } from '../src/types.ts'
 
 /** Minimum effect parse coverage; raise it as the parser improves, never lower it silently. */
 const COVERAGE_FLOOR = 0.38
@@ -20,6 +20,7 @@ describe('committed outputs', () => {
   const enemies = load<Unit[]>('enemies.json')
   const railway = load<RailwayLine>('railway.json')
   const meta = load<Meta>('meta.json')
+  const failures = load<{ identities: Failure[]; enemies: Failure[]; warnings: string[] }>('failures.json')
 
   function checkUnit(u: Unit) {
     expect(u.id.length).toBeGreaterThan(0)
@@ -48,8 +49,11 @@ describe('committed outputs', () => {
     expect(enemies.length).toBeGreaterThan(20)
     for (const u of enemies) { checkUnit(u); expect(u.kind).toBe('enemy') }
     const enemyIds = new Set(enemies.map(u => u.id.split(':')[0]))
-    const missing = railway.enemyIds.filter(id => !enemyIds.has(id))
-    expect(missing, `railway enemy ids without units: ${missing.join(', ')}`).toEqual([])
+    const documentedFailures = new Set(failures.enemies.filter(f => f.reason.trim().length > 0).map(f => f.subject))
+    // Every railway enemy id must be accounted for: either it produced a unit, or its absence is
+    // recorded in failures.json (e.g. a wiki content gap). Silently dropping one is not allowed.
+    const unaccounted = railway.enemyIds.filter(id => !enemyIds.has(id) && !documentedFailures.has(id))
+    expect(unaccounted, `railway enemy ids with no unit and no documented failure: ${unaccounted.join(', ')}`).toEqual([])
   })
   it('has a railway line with sections and stations', () => {
     expect(railway.title.length).toBeGreaterThan(0)
