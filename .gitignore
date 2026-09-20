@@ -13,3 +13,6 @@ data/raw/
 
 # Vite public dir junction into data/generated
 ui/public/gamedata
+
+# Subagent-driven-development scratch
+.superpowers/
