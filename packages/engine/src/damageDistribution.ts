@@ -18,6 +18,12 @@ export interface AttackParams {
   dynamicModifier: number
   defenderMaxHp: number
   defenderCurrentHp: number
+  /**
+   * Fractions of max HP in descending order, same convention as `Unit.staggerThresholds`
+   * (e.g. `[0.7, 0.4]`). The sequential crossing walk below assumes this ordering: descending
+   * thresholds produce ascending absolute damage lines, which is what lets it advance a single
+   * forward pointer through `staggerLines` instead of re-scanning on every coin.
+   */
   staggerThresholds: number[]
   staggerMidAttack: boolean
 }

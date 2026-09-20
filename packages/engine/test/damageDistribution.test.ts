@@ -52,6 +52,15 @@ describe('attackDamageDistribution', () => {
     expect(off.mean).toBe(30)
     expect(off.staggerChance).toEqual([1])
   })
+  it('crossing two stagger lines advances the multiplier twice', () => {
+    // 3 coins always heads: 7, 10, 13. Thresholds [0.7, 0.4] of 20 HP => lines at 6 and 12.
+    // Coin 1 (7) crosses line 6 (crossed=1). Coin 2 uses staggerDamageTypeResistanceModifier(1)=1:
+    // floor(10*2)=20, total 27, which crosses line 12 (crossed=2). Coin 3 uses
+    // staggerDamageTypeResistanceModifier(2)=1.5: floor(13*2.5)=32. Total 7+20+32=59.
+    const d = attackDamageDistribution(params({ headsChance: 1, defenderMaxHp: 20, defenderCurrentHp: 20, staggerThresholds: [0.7, 0.4] }))
+    expect(d.mean).toBe(59)
+    expect(d.staggerChance).toEqual([1, 1])
+  })
   it('zero coins deals nothing', () => {
     const d = attackDamageDistribution(params({ coins: 0 }))
     expect(d.mean).toBe(0)
