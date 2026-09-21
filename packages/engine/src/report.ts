@@ -54,6 +54,8 @@ export function winBranch(winner: ResolvedCombatant, loser: ResolvedCombatant): 
 
 /** No clash happened: the prepared statuses as they are. */
 function noBranch(attacker: ResolvedCombatant): Branch {
+  // Safe to return by reference: the walk (attackDamageDistribution's start()) clones the pair
+  // before mutating it, so callers never see this attacker's prepared pair change underneath them.
   return { pair: attacker.statusAfterPrepare, bonuses: attacker.conditionalBonuses }
 }
 
@@ -280,7 +282,7 @@ function guardClash(attacker: Combatant, guard: Combatant, options: ReportOption
   const decided = 1 - round.tie
   const parryRoundsExpected = decided > 0 ? round.tie / decided : 0
   const ctx = attackContext(ra, rg, guard, parryRoundBonus(parryRoundsExpected), options, winBranch(ra, rg))
-  const guardCtx = attackContext(rg, ra, attacker, 0, options)
+  const guardCtx = attackContext(rg, ra, attacker, 0, options, winBranch(rg, ra))
   const parts = round.reductionIfAttackerWins.map(([power, weight]) => ({
     weight,
     summary: attackDamageDistribution({ ...ctx.params, coins: ra.coinCount, powerReduction: power }),

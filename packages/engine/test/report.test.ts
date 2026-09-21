@@ -234,4 +234,24 @@ describe('clash-branch grants', () => {
     expect(r.win).toBe(1)
     expect(r.damageDealt.statusAfter.self.charge).toEqual({ potency: 2, count: 1 })
   })
+  it('a guard clash applies the guard\'s clash-win grants when the guard wins', () => {
+    const winPoise: Effect = { trigger: 'clash-win', scope: 'skill', op: { kind: 'applyStatus', target: 'self', status: 'poise', potency: 3 }, source: '[Clash Win] Gain 3 Poise' }
+    const a = makeCombatant({ skill: makeSkill({ basePower: 1, coinPower: 0, coinCount: 1 }) })
+    const guard = makeCombatant({ unit: makeUnit({ id: 'g', skills: [makeSkill({ damageType: 'guard', basePower: 20, coinPower: 3, coinCount: 1, effects: [winPoise] })] }) })
+    const r = clashReport(a, guard)
+    expect(r.lose).toBe(1)
+    expect(r.damageTaken.statusAfter.self.poise).toEqual({ potency: 3, count: 1 })
+  })
+})
+
+describe('clashReport purity', () => {
+  it('never mutates the combatants\' own status objects (the web hands in its store\'s own objects)', () => {
+    const a = makeCombatant({ status: { poise: { potency: 5, count: 1 } } })
+    const b = makeCombatant({ unit: makeUnit({ id: 'b' }), status: { rupture: { potency: 2, count: 1 } } })
+    const aStatusSnapshot = structuredClone(a.status)
+    const bStatusSnapshot = structuredClone(b.status)
+    clashReport(a, b)
+    expect(a.status).toEqual(aStatusSnapshot)
+    expect(b.status).toEqual(bStatusSnapshot)
+  })
 })
