@@ -1,4 +1,5 @@
 import { statusEffects, type StatusValue } from '@limbus/engine'
+import { NumberField } from './NumberField.tsx'
 
 interface Props { status: Record<string, StatusValue>; onChange: (id: string, value: StatusValue | null) => void }
 
@@ -18,8 +19,8 @@ export function StatusEditor({ status, onChange }: Props) {
             {present.map(id => (
               <tr key={id}>
                 <td className="py-0.5">{nameOf(id)}</td>
-                <td><input type="number" min={0} aria-label={`${nameOf(id)} potency`} value={status[id].potency} onChange={e => onChange(id, { ...status[id], potency: Number(e.target.value) })} className="ledger-number w-full rounded border border-paper-light bg-ink px-1 py-0.5 text-right" /></td>
-                <td><input type="number" min={0} aria-label={`${nameOf(id)} count`} value={status[id].count} onChange={e => onChange(id, { ...status[id], count: Number(e.target.value) })} className="ledger-number w-full rounded border border-paper-light bg-ink px-1 py-0.5 text-right" /></td>
+                <td><NumberField min={0} aria-label={`${nameOf(id)} potency`} value={status[id].potency} onCommit={n => onChange(id, { ...status[id], potency: n })} className="ledger-number w-full rounded border border-paper-light bg-ink px-1 py-0.5 text-right" /></td>
+                <td><NumberField min={0} aria-label={`${nameOf(id)} count`} value={status[id].count} onCommit={n => onChange(id, { ...status[id], count: n })} className="ledger-number w-full rounded border border-paper-light bg-ink px-1 py-0.5 text-right" /></td>
                 <td><button type="button" aria-label={`Remove ${nameOf(id)}`} onClick={() => onChange(id, null)} className="px-1 text-bone-dim hover:text-blood-bright">×</button></td>
               </tr>
             ))}

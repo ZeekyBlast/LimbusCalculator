@@ -1,4 +1,5 @@
 import type { ManualOverrides } from '@limbus/engine'
+import { NumberField } from './NumberField.tsx'
 
 interface Props { manual: ManualOverrides; onChange: (key: keyof ManualOverrides, value: number) => void }
 
@@ -16,7 +17,7 @@ export function ManualEditor({ manual, onChange }: Props) {
         {FIELDS.map(f => (
           <label key={f.key} className="text-xs text-bone-dim">
             {f.label}
-            <input type="number" value={manual[f.key]} onChange={e => onChange(f.key, Number(e.target.value))} className="ledger-number mt-0.5 w-full rounded border border-paper-light bg-ink px-1 py-0.5 text-right text-sm text-bone" />
+            <NumberField value={manual[f.key]} onCommit={n => onChange(f.key, n)} className="ledger-number mt-0.5 w-full rounded border border-paper-light bg-ink px-1 py-0.5 text-right text-sm text-bone" />
           </label>
         ))}
       </div>

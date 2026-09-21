@@ -4,6 +4,7 @@ import { skillAtUptie, type SideKey } from '../lib/setup.ts'
 import { useClashStore } from '../stores/clashStore.ts'
 import { EffectList } from './EffectList.tsx'
 import { ManualEditor } from './ManualEditor.tsx'
+import { NumberField } from './NumberField.tsx'
 import { SkillPicker } from './SkillPicker.tsx'
 import { StatusEditor } from './StatusEditor.tsx'
 import { UnitPicker } from './UnitPicker.tsx'
@@ -28,7 +29,7 @@ export function CombatantCard({ side, data, combatant, resolved }: Props) {
         <>
           <div className="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
             <label className="text-xs text-bone-dim">Level
-              <input type="number" min={1} max={isEnemy ? 200 : data.meta.levelCap} value={setup.level} onChange={e => patchSide(side, { level: Number(e.target.value) })} className={field} />
+              <NumberField min={1} max={isEnemy ? 200 : data.meta.levelCap} value={setup.level} onCommit={n => patchSide(side, { level: n })} className={field} />
             </label>
             {!isEnemy && (
               <label className="text-xs text-bone-dim">Uptie
@@ -39,7 +40,7 @@ export function CombatantCard({ side, data, combatant, resolved }: Props) {
             )}
             {!isEnemy && (
               <label className="text-xs text-bone-dim">SP
-                <input type="number" min={-45} max={45} value={setup.sanity} onChange={e => patchSide(side, { sanity: Number(e.target.value) })} className={field} />
+                <NumberField min={-45} max={45} value={setup.sanity} onCommit={n => patchSide(side, { sanity: n })} className={field} />
               </label>
             )}
             <label className="text-xs text-bone-dim">Current HP
