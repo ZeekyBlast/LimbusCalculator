@@ -1,8 +1,9 @@
 import { resolveCombatant } from '@limbus/engine'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import { CombatantCard } from '../components/CombatantCard.tsx'
+import { RollOnce } from '../components/RollOnce.tsx'
+import { VerdictPanel } from '../components/VerdictPanel.tsx'
 import type { GameData } from '../lib/data.ts'
-import { pct } from '../lib/format.ts'
 import { href, navigate } from '../lib/router.ts'
 import { toCombatant } from '../lib/setup.ts'
 import { decodeSetup, encodeSetup } from '../lib/setupCodec.ts'
@@ -58,13 +59,18 @@ export function ClashScreen({ data, search }: Props) {
         <CombatantCard side="a" data={data} combatant={a} resolved={resolvedA} />
         <CombatantCard side="b" data={data} combatant={b} resolved={resolvedB} />
       </div>
-      {/* Task 9 replaces this summary with <VerdictPanel> and <RollOnce>. */}
-      <section className="mt-6 rounded border border-paper-light bg-paper p-4" aria-live="polite">
-        {!a?.skill || !b?.skill ? <p className="text-bone-dim">Pick a unit and a skill on both sides to compute the clash.</p>
-          : report.error ? <p className="text-blood-bright">{report.error}</p>
-          : !report.result ? <p className="text-bone-dim">Computing…</p>
-          : <p className="ledger-number text-lg">Win {pct(report.result.win)} · Draw {pct(report.result.draw)} · Lose {pct(report.result.lose)}</p>}
-      </section>
+      {!a?.skill || !b?.skill ? (
+        <section className="mt-6 rounded border border-paper-light bg-paper p-4"><p className="text-bone-dim">Pick a unit and a skill on both sides to compute the clash.</p></section>
+      ) : report.error ? (
+        <section className="mt-6 rounded border border-paper-light bg-paper p-4"><p className="text-blood-bright">{report.error}</p></section>
+      ) : !report.result ? (
+        <section className="mt-6 rounded border border-paper-light bg-paper p-4"><p className="text-bone-dim">Computing…</p></section>
+      ) : (
+        <>
+          <VerdictPanel report={report.result} a={a} b={b} />
+          <RollOnce a={a} b={b} report={report.result} options={options} />
+        </>
+      )}
     </div>
   )
 }
