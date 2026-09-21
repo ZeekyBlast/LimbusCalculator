@@ -2,6 +2,7 @@ import { DataStatus } from './components/DataStatus.tsx'
 import { useGameData, type GameData } from './lib/data.ts'
 import { href, onLinkClick, useRoute, type Route } from './lib/router.ts'
 import { ClashScreen } from './screens/ClashScreen.tsx'
+import { RailwayScreen } from './screens/RailwayScreen.tsx'
 
 function NavLink({ to, active, children }: { to: '/' | '/railway'; active: boolean; children: string }) {
   return (
@@ -17,15 +18,9 @@ function NavLink({ to, active, children }: { to: '/' | '/railway'; active: boole
 }
 
 function RouteBody({ route, data }: { route: Route; data: GameData }) {
-  // Task 10 replaces the railway branch with <RailwayScreen>.
   if (route.name === 'not-found') return <p className="text-bone-dim">No page at <code>{route.path}</code>.</p>
   if (route.name === 'clash') return <ClashScreen data={data} search={route.search} />
-  return (
-    <section>
-      <h1 className="font-[family-name:var(--font-display)] text-4xl uppercase tracking-wide text-gold">Railway Planner</h1>
-      <p className="mt-2 text-bone-dim">{data.enemies.length} enemy parts loaded for {data.railway.title}.</p>
-    </section>
-  )
+  return <RailwayScreen data={data} search={route.search} />
 }
 
 export function App() {
