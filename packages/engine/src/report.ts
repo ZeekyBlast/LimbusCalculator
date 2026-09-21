@@ -115,19 +115,22 @@ export function sampleClash(a: Combatant, b: Combatant, options: ReportOptions =
 export function attackContext(attacker: ResolvedCombatant, target: ResolvedCombatant, targetCombatant: Combatant, parryBonus: number, options: ReportOptions): AttackContext {
   const mult = damageMultipliers(attacker, targetCombatant)
   const params: AttackContext['params'] = {
-    basePower: attacker.basePower,
-    coinPower: attacker.coinPower,
-    coinRollBonus: attacker.coinRollBonus,
+    coinCount: attacker.coinCount,
+    unbreakableCoins: attacker.unbreakableCoinIndices,
+    basePower: attacker.flat.basePower,
+    coinPower: attacker.flat.coinPower,
     headsChance: attacker.headsChance,
-    critChance: attacker.critChance,
-    poiseCount: attacker.poiseCount,
     critModifier: criticalDamageModifier(),
     sinResistance: resistanceModifier(mult.sin),
     damageTypeResistance: resistanceModifier(mult.damageType),
     offenseDefenseAdvantage: offenseDefenseAdvantage(attacker.offenseLevel, target.defenseLevel),
     parryBonus,
-    dynamicModifier: attacker.dynamicAsAttacker + target.dynamicAsTarget + attacker.damagePercent,
-    critOnlyModifier: attacker.critOnlyModifier,
+    dynamicModifier: attacker.flat.damagePercent,
+    status: attacker.statusAfterPrepare,
+    attackerSkill: { damageType: attacker.damageType, sin: attacker.sin },
+    coinEffects: attacker.coinEffects,
+    conditionalBonuses: attacker.conditionalBonuses,
+    attackEndGrants: attacker.grants.attackEnd,
     defenderMaxHp: target.maxHp,
     defenderCurrentHp: target.currentHp,
     staggerThresholds: targetCombatant.unit.staggerThresholds,
@@ -141,7 +144,7 @@ export function attackContext(attacker: ResolvedCombatant, target: ResolvedComba
     { label: 'Damage type resistance', value: params.damageTypeResistance, source: `x${mult.damageType} ${attacker.damageType} on target` },
     { label: 'Offense-defense advantage', value: params.offenseDefenseAdvantage, source: `offense ${attacker.offenseLevel} vs defense ${target.defenseLevel}` },
     { label: 'Parry bonus', value: parryBonus, source: 'expected parry rounds x 0.03' },
-    { label: 'Dynamic modifier', value: params.dynamicModifier, source: 'Damage Up/Down, Fragile/Protection, damage % effects' },
+    { label: 'Dynamic modifier', value: attacker.dynamicAsAttacker + target.dynamicAsTarget + attacker.damagePercent, source: 'Damage Up/Down, Fragile/Protection, damage % effects' },
     { label: 'Crit chance', value: attacker.critChance, source: 'Poise potency x 5%' },
   ]
   return { params, breakdown }

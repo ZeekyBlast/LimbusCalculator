@@ -177,6 +177,8 @@ export interface DamageSummary {
   perCoinMean: number[]
   histogram: [number, number][]
   staggerChance: number[]
+  /** Expected statuses on both sides after the attack (`self` = attacker, `target` = defender). */
+  statusAfter: StatusAfter
 }
 
 export interface BreakdownLine { label: string; value: number; source: string }
