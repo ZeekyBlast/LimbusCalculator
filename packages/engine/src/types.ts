@@ -163,6 +163,10 @@ export interface ClashReport {
   damageDealt: DamageSummary
   /** Damage B deals to A, conditional on B winning. */
   damageTaken: DamageSummary
+  /**
+   * Modifiers of side A's own skill as used for damageDealt. On a guard clash the last line is
+   * the expected guard reduction, whichever side guards.
+   */
   breakdown: BreakdownLine[]
 }
 

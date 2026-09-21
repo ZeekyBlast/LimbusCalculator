@@ -61,7 +61,7 @@ export function clashReport(a: Combatant, b: Combatant, options: ReportOptions =
       coinsLeftIfWin: oneHot(g.guardCoins).map(p => p * g.guardWins),
       coinsLeftIfLose: oneHot(g.attackerCoins).map(p => p * g.attackerWins),
       parryRoundsExpected: g.parryRoundsExpected,
-      damageDealt: g.noDamage, damageTaken: g.attackDamage, breakdown: g.breakdown,
+      damageDealt: g.noDamage, damageTaken: g.attackDamage, breakdown: g.guardBreakdown,
     }
   }
   const ra = resolveCombatant(a, b)
@@ -240,7 +240,10 @@ interface GuardClash {
   attackDamage: DamageSummary
   /** The guard's (empty) attack, shaped like a real summary so consumers need no special case. */
   noDamage: DamageSummary
+  /** The attacker's own modifier breakdown, plus the expected guard reduction. */
   breakdown: BreakdownLine[]
+  /** The guard's own modifier breakdown, plus the expected guard reduction. */
+  guardBreakdown: BreakdownLine[]
 }
 
 function guardClash(attacker: Combatant, guard: Combatant, options: ReportOptions): GuardClash {
@@ -250,6 +253,7 @@ function guardClash(attacker: Combatant, guard: Combatant, options: ReportOption
   const decided = 1 - round.tie
   const parryRoundsExpected = decided > 0 ? round.tie / decided : 0
   const ctx = attackContext(ra, rg, guard, parryRoundBonus(parryRoundsExpected), options)
+  const guardCtx = attackContext(rg, ra, attacker, 0, options)
   const parts = round.reductionIfAttackerWins.map(([power, weight]) => ({
     weight,
     summary: attackDamageDistribution({ ...ctx.params, coins: ra.coinCount, powerReduction: power }),
@@ -257,7 +261,8 @@ function guardClash(attacker: Combatant, guard: Combatant, options: ReportOption
   const attackDamage = parts.length > 0 ? mixDistributions(parts) : attackDamageDistribution({ ...ctx.params, coins: 0 })
   const expectedReduction = round.reductionIfAttackerWins.reduce((s, [power, weight]) => s + power * weight, 0)
   const breakdown = [...ctx.breakdown, { label: 'Guard reduction', value: expectedReduction, source: 'guard final power given the guard lost; absorbed by the earliest coins' }]
-  const noDamage = attackDamageDistribution({ ...attackContext(rg, ra, attacker, 0, options).params, coins: 0 })
+  const guardBreakdown = [...guardCtx.breakdown, { label: 'Guard reduction', value: expectedReduction, source: 'this guard\'s final power given it lost; taken off the opponent\'s attack' }]
+  const noDamage = attackDamageDistribution({ ...guardCtx.params, coins: 0 })
   return {
     attackerWins: decided > 0 ? round.attackerWins / decided : 0,
     guardWins: decided > 0 ? round.guardWins / decided : 0,
@@ -268,6 +273,7 @@ function guardClash(attacker: Combatant, guard: Combatant, options: ReportOption
     attackDamage,
     noDamage,
     breakdown,
+    guardBreakdown,
   }
 }
 

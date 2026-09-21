@@ -96,6 +96,8 @@ describe('guard clash (spec 6.2)', () => {
     expect(r.lose).toBeCloseTo(0.75)
     expect(r.damageDealt.mean).toBe(0)
     expect(r.damageTaken.mean).toBeCloseTo(2)
+    expect(r.breakdown.find(l => l.label === 'Base power')?.value).toBe(4)
+    expect(r.breakdown.find(l => l.label === 'Guard reduction')?.value).toBeCloseTo(4 * 2 / 3 + 6 / 3)
   })
   it('reports a guaranteed draw when every outcome ties', () => {
     const a = makeCombatant({ skill: makeSkill({ basePower: 4, coinPower: 0, coinCount: 1 }) })
