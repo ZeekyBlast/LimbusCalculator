@@ -51,8 +51,9 @@ export function RailwayScreen({ data, search }: Props) {
         : team.length === 0 ? <p className="text-bone-dim">Add identities to the team to see the matchup grid for §{section.number} wave {wave.number}.</p>
         : units.length === 0 ? <p className="text-bone-dim">This wave has no enemy data.</p>
         : grid.error ? <p className="text-blood-bright">{grid.error}</p>
-        : !grid.result ? <p className="text-bone-dim" aria-live="polite">Computing {team.length} identities against {units.length} parts…</p>
-        : <MatchupGridView data={data} grid={grid.result} team={team} wave={units} onCell={openCell} />}
+        : !grid.result || grid.result.columns.length !== units.length
+          ? <p className="text-bone-dim" aria-live="polite">Computing {team.length} identities against {units.length} parts…</p>
+        : <MatchupGridView data={data} grid={grid.result} team={team} onCell={openCell} />}
     </div>
   )
 }

@@ -10,7 +10,11 @@ function useEngineCall<T>(run: (() => Promise<T>) | undefined, deps: unknown[]):
   useEffect(() => {
     const mine = ++token.current
     if (!run) { setState({ pending: false }); return }
-    setState(s => ({ ...s, pending: true }))
+    // Drop the previous result rather than carrying it through the pending window. The inputs the
+    // caller renders next to it have already changed, so a kept result would be read against the
+    // new ones: the clash verdict would show the previous pairing's numbers under the new names,
+    // and the matchup grid would index the new wave's columns into the old grid and throw.
+    setState({ pending: true })
     run().then(
       result => { if (token.current === mine) setState({ result, pending: false }) },
       (e: unknown) => { if (token.current === mine) setState({ error: e instanceof Error ? e.message : String(e), pending: false }) },
