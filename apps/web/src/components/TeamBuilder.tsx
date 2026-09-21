@@ -1,6 +1,7 @@
 import type { UptieTier } from '@limbus/engine'
 import type { GameData } from '../lib/data.ts'
 import { TEAM_SIZE, useTeamStore } from '../stores/teamStore.ts'
+import { NumberField } from './NumberField.tsx'
 import { UnitPicker } from './UnitPicker.tsx'
 
 const field = 'ledger-number mt-0.5 w-full rounded border border-paper-light bg-ink px-1 py-0.5 text-right text-sm text-bone'
@@ -26,7 +27,7 @@ export function TeamBuilder({ data }: { data: GameData }) {
                   <select value={slot.uptie} onChange={e => patchSlot(i, { uptie: Number(e.target.value) as UptieTier })} className={field}>{[1, 2, 3, 4].map(t => <option key={t} value={t}>{t}</option>)}</select>
                 </label>
                 <label className="flex-1 text-xs text-bone-dim">Level
-                  <input type="number" min={1} max={data.meta.levelCap} value={slot.level} onChange={e => patchSlot(i, { level: Number(e.target.value) })} className={field} />
+                  <NumberField min={1} max={data.meta.levelCap} value={slot.level} onCommit={n => patchSlot(i, { level: n })} className={field} />
                 </label>
                 <button type="button" onClick={() => setSlot(i, null)} aria-label={`Clear slot ${i + 1}`} className="px-2 py-1 text-bone-dim hover:text-blood-bright">×</button>
               </div>

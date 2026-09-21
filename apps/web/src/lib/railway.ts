@@ -27,8 +27,15 @@ export function pairingSetup(slot: TeamSlot, rowSkillId: string, part: Unit, col
   return { a, b, staggerMidAttack }
 }
 
-export function selectedEncounter(railway: RailwayLine, search: URLSearchParams): { section: RailwaySection; wave: RailwayWave } {
-  const section = railway.sections.find(s => s.number === Number(search.get('section'))) ?? railway.sections[0]
+/**
+ * The section and wave a URL asks for, falling back to what the scrape actually has: an unknown
+ * section number lands on the first section, and a section with no waves yet (the Line is scraped
+ * ahead of its stations opening) hands over to the first section that has some. `wave` is undefined
+ * only when no section on the Line has a wave at all.
+ */
+export function selectedEncounter(railway: RailwayLine, search: URLSearchParams): { section: RailwaySection; wave: RailwayWave | undefined } {
+  const requested = railway.sections.find(s => s.number === Number(search.get('section'))) ?? railway.sections[0]
+  const section = requested.waves.length > 0 ? requested : railway.sections.find(s => s.waves.length > 0) ?? requested
   const wave = section.waves.find(w => w.number === Number(search.get('wave'))) ?? section.waves[0]
   return { section, wave }
 }

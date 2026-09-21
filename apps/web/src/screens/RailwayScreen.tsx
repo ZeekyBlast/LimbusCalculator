@@ -1,3 +1,4 @@
+import type { Unit } from '@limbus/engine'
 import { useMemo } from 'react'
 import { MatchupGridView } from '../components/MatchupGridView.tsx'
 import { StationPicker } from '../components/StationPicker.tsx'
@@ -12,6 +13,9 @@ import { useTeamStore, type TeamSlot } from '../stores/teamStore.ts'
 
 interface Props { data: GameData; search: URLSearchParams }
 
+// Hoisted so a section with no waves keeps one stable identity for the grid's dependencies.
+const NO_ENCOUNTER: { units: Unit[]; missingIds: string[] } = { units: [], missingIds: [] }
+
 export function RailwayScreen({ data, search }: Props) {
   const { section, wave } = selectedEncounter(data.railway, search)
   const slots = useTeamStore(s => s.slots)
@@ -19,7 +23,7 @@ export function RailwayScreen({ data, search }: Props) {
 
   const filledSlots = useMemo(() => slots.filter((s): s is TeamSlot => s !== null), [slots])
   const team = useMemo(() => filledSlots.flatMap(s => { const c = slotCombatant(s, data); return c ? [c] : [] }), [filledSlots, data])
-  const { units, missingIds } = useMemo(() => waveUnits(data, wave), [data, wave])
+  const { units, missingIds } = useMemo(() => (wave ? waveUnits(data, wave) : NO_ENCOUNTER), [data, wave])
   const options = useMemo(() => ({ staggerMidAttack }), [staggerMidAttack])
   const grid = useMatchupGrid(team, units, options)
 
@@ -43,7 +47,8 @@ export function RailwayScreen({ data, search }: Props) {
         <TeamBuilder data={data} />
       </div>
       {missingIds.length > 0 && <p className="text-xs text-blood-bright">No stat block on the wiki for enemy id{missingIds.length > 1 ? 's' : ''} {missingIds.join(', ')}; not shown in the grid.</p>}
-      {team.length === 0 ? <p className="text-bone-dim">Add identities to the team to see the matchup grid for §{section.number} wave {wave.number}.</p>
+      {!wave ? <p className="text-bone-dim">No encounter data for this section.</p>
+        : team.length === 0 ? <p className="text-bone-dim">Add identities to the team to see the matchup grid for §{section.number} wave {wave.number}.</p>
         : units.length === 0 ? <p className="text-bone-dim">This wave has no enemy data.</p>
         : grid.error ? <p className="text-blood-bright">{grid.error}</p>
         : !grid.result ? <p className="text-bone-dim" aria-live="polite">Computing {team.length} identities against {units.length} parts…</p>

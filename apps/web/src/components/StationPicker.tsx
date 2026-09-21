@@ -1,7 +1,7 @@
 import type { GameData, RailwaySection, RailwayWave } from '../lib/data.ts'
 import { portraitUrl } from '../lib/images.ts'
 
-interface Props { data: GameData; section: RailwaySection; wave: RailwayWave; onSelect: (section: number, wave: number) => void }
+interface Props { data: GameData; section: RailwaySection; wave: RailwayWave | undefined; onSelect: (section: number, wave: number) => void }
 
 function EnemyChips({ data, ids }: { data: GameData; ids: string[] }) {
   return (
@@ -46,7 +46,7 @@ export function StationPicker({ data, section, wave, onSelect }: Props) {
               <ol className="mt-1 ml-6 grid gap-2">
                 {s.waves.map(w => (
                   <li key={w.number}>
-                    <button type="button" aria-pressed={w.number === wave.number} onClick={() => onSelect(s.number, w.number)} className={`mb-1 text-xs uppercase tracking-widest ${w.number === wave.number ? 'text-gold-bright' : 'text-bone-dim hover:text-bone'}`}>
+                    <button type="button" aria-pressed={w.number === wave?.number} onClick={() => onSelect(s.number, w.number)} className={`mb-1 text-xs uppercase tracking-widest ${w.number === wave?.number ? 'text-gold-bright' : 'text-bone-dim hover:text-bone'}`}>
                       Wave {w.number}
                     </button>
                     <EnemyChips data={data} ids={w.enemyIds} />
