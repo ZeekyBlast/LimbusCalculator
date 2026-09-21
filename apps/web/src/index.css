@@ -7,17 +7,19 @@
   --color-gold: #c9a227;
   --color-gold-bright: #e8c766;
   --color-blood: #8c1c1c;
-  --color-blood-bright: #b8332f;
+  --color-blood-bright: #e0534e;
   --color-bone: #e4dfd3;
   --color-bone-dim: #a8a196;
 
-  --color-sin-wrath: #c8452b;
+  /* Badge fills. Text on them must clear 4.5:1: wrath, pride and envy carry bone (#e4dfd3) so they
+     are held dark enough for it; the four light fills carry ink (#0b0b0d) instead. See Badges.tsx. */
+  --color-sin-wrath: #ab3a24;
   --color-sin-lust: #e07a2c;
   --color-sin-sloth: #d9b53a;
   --color-sin-gluttony: #5aa64a;
   --color-sin-gloom: #3fa1a6;
-  --color-sin-pride: #3b6fc4;
-  --color-sin-envy: #8e4bb5;
+  --color-sin-pride: #3260aa;
+  --color-sin-envy: #8345a7;
 
   --font-display: 'Big Shoulders Display', sans-serif;
   --font-body: 'IBM Plex Sans', sans-serif;
