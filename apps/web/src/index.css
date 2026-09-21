@@ -1,0 +1,71 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #0b0b0d;
+  --color-paper: #1c1a17;
+  --color-paper-light: #262320;
+  --color-gold: #c9a227;
+  --color-gold-bright: #e8c766;
+  --color-blood: #8c1c1c;
+  --color-blood-bright: #b8332f;
+  --color-bone: #e4dfd3;
+  --color-bone-dim: #a8a196;
+
+  --color-sin-wrath: #c8452b;
+  --color-sin-lust: #e07a2c;
+  --color-sin-sloth: #d9b53a;
+  --color-sin-gluttony: #5aa64a;
+  --color-sin-gloom: #3fa1a6;
+  --color-sin-pride: #3b6fc4;
+  --color-sin-envy: #8e4bb5;
+
+  --font-display: 'Big Shoulders Display', sans-serif;
+  --font-body: 'IBM Plex Sans', sans-serif;
+  --font-mono: 'IBM Plex Mono', monospace;
+}
+
+:root { color-scheme: dark; }
+
+body {
+  margin: 0;
+  background: var(--color-ink);
+  color: var(--color-bone);
+  font-family: var(--font-body);
+  background-image: repeating-linear-gradient(180deg, rgba(201, 162, 39, 0.02) 0px, rgba(201, 162, 39, 0.02) 1px, transparent 1px, transparent 32px);
+}
+
+::selection { background: var(--color-gold); color: var(--color-ink); }
+*:focus-visible { outline: 2px solid var(--color-gold-bright); outline-offset: 2px; }
+
+/* Ledger-style tabular numerals for every stat and damage readout. */
+.ledger-number { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+
+/* Rubber-stamp verdict mark. */
+.stamp {
+  font-family: var(--font-display);
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  border: 3px solid currentColor;
+  border-radius: 6px;
+  padding: 0.25em 0.6em;
+  display: inline-block;
+  transform: rotate(-4deg);
+  animation: stamp-in 0.35s ease-out both;
+}
+@keyframes stamp-in {
+  0% { opacity: 0; transform: rotate(-4deg) scale(1.6); }
+  60% { opacity: 1; transform: rotate(-4deg) scale(0.94); }
+  100% { opacity: 1; transform: rotate(-4deg) scale(1); }
+}
+
+/* Coin reveal. */
+.coin-flip { animation: coin-spin 0.5s ease-out both; }
+@keyframes coin-spin {
+  0% { transform: rotateX(0deg); opacity: 0; }
+  100% { transform: rotateX(720deg); opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stamp, .coin-flip { animation: none; opacity: 1; transform: none; }
+}

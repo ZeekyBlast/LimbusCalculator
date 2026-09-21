@@ -19,3 +19,7 @@ ui/public/gamedata
 
 # Scraped images (regenerate with npm run scrape:images -w @limbus/data)
 packages/data/images/
+
+# Copied from packages/data by apps/web/scripts/sync-data.mjs
+apps/web/public/data/
+apps/web/public/images/
