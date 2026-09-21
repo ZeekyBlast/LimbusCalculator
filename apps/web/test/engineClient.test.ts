@@ -7,6 +7,7 @@ import { makeSkill, makeUnit } from './fixtures.ts'
 /** Runs the worker body inline, asynchronously, like a real worker would. */
 class FakeWorker implements WorkerLike {
   onmessage: ((e: MessageEvent<EngineResponse>) => void) | null = null
+  onerror: ((e: ErrorEvent) => void) | null = null
   sent: EngineRequest[] = []
   postMessage(req: EngineRequest): void {
     this.sent.push(req)
@@ -28,6 +29,14 @@ describe('EngineClient', () => {
     expect(clash.win + clash.lose + clash.draw).toBeCloseTo(1)
     expect(hit.damage.mean).toBeGreaterThan(0)
     expect(worker.sent.map(r => r.id)).toEqual([1, 2])
+  })
+  it('rejects every in-flight request when the worker itself fails', async () => {
+    const worker = new FakeWorker()
+    const client = new EngineClient(worker)
+    // Reject before the queued microtask answers, so the request is genuinely still in flight.
+    const inFlight = client.clash(combatant('a'), combatant('b'))
+    worker.onerror?.({ message: 'boom' } as ErrorEvent)
+    await expect(inFlight).rejects.toThrow(/boom/)
   })
   it('rejects with the engine error message', async () => {
     const client = new EngineClient(new FakeWorker())

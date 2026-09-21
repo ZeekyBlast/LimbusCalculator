@@ -4,6 +4,7 @@ import type { EngineRequest, EngineResponse } from './engineMessages.ts'
 export interface WorkerLike {
   postMessage(message: EngineRequest): void
   onmessage: ((event: MessageEvent<EngineResponse>) => void) | null
+  onerror: ((event: ErrorEvent) => void) | null
   terminate(): void
 }
 
@@ -29,6 +30,13 @@ export class EngineClient {
       this.pending.delete(res.id)
       if (res.ok) entry.resolve(res.result as never)
       else entry.reject(new Error(res.error))
+    }
+    // A worker that fails to load or throws outside a request answers nothing, so every request
+    // already in flight would hang forever. Fail them all instead.
+    this.worker.onerror = event => {
+      const err = new Error(`engine worker failed: ${event.message || 'unknown error'}`)
+      for (const entry of this.pending.values()) entry.reject(err)
+      this.pending.clear()
     }
   }
 

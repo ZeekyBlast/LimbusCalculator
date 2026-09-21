@@ -7,7 +7,7 @@ export interface EngineResult<T> { result?: T; error?: string; pending: boolean 
 function useEngineCall<T>(run: (() => Promise<T>) | undefined, deps: unknown[]): EngineResult<T> {
   const [state, setState] = useState<EngineResult<T>>({ pending: run !== undefined })
   const token = useRef(0)
-  useEffect(() => {
+  const start = () => {
     const mine = ++token.current
     if (!run) { setState({ pending: false }); return }
     // Drop the previous result rather than carrying it through the pending window. The inputs the
@@ -19,8 +19,11 @@ function useEngineCall<T>(run: (() => Promise<T>) | undefined, deps: unknown[]):
       result => { if (token.current === mine) setState({ result, pending: false }) },
       (e: unknown) => { if (token.current === mine) setState({ error: e instanceof Error ? e.message : String(e), pending: false }) },
     )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, deps)
+  }
+  // `deps` belongs to the caller - each hook below keys its request on its own inputs - so the
+  // linter cannot see an array literal here and cannot check the list for us.
+  // oxlint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(start, deps)
   return state
 }
 
