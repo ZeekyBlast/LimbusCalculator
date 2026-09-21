@@ -69,6 +69,10 @@ export type EffectSlot =
     | "coin-roll-additive"
     /** Heads-gated Coin Power modifier (Coin Boost, Coin Drop) - applies to the coin roll, not G/H. */
     | "coin-power-additive"
+    /** Poise: crit chance and count consumed per crit; read by the attack walk, not by sumSlot. */
+    | "poise"
+    /** Rupture: fixed damage on every hit while count lasts; read by the attack walk, not by sumSlot. */
+    | "ailment-rupture"
     /** Stack-tracking only; no direct formula effect (or formula not yet verified). */
     | "counter";
 
@@ -93,6 +97,15 @@ export interface EffectStack {
 }
 
 export const statusEffects: StatusEffect[] = [
+    {
+        id: "poise",
+        name: "Poise",
+        slot: "poise",
+        formulaStatus: "verified",
+        description:
+            "Crit chance = Potency x 5%; each critical hit consumes 1 Count and deals x1.2 damage (https://limbuscompany.wiki.gg/wiki/Poise). " +
+            "Read by the attack walk coin by coin; contributes nothing to calculateDynamicModifier.",
+    },
     { id: "fragile", name: "Fragile", slot: "dynamic-additive-fragile-protection", sign: "positive", perStackValue: 0.1, formulaStatus: "verified" },
     { id: "protection", name: "Protection", slot: "dynamic-additive-fragile-protection", sign: "negative", perStackValue: 0.1, formulaStatus: "verified" },
     { id: "damage-up", name: "Damage Up", slot: "dynamic-additive-damage-up-down", sign: "positive", perStackValue: 0.1, formulaStatus: "verified" },
@@ -131,11 +144,11 @@ export const statusEffects: StatusEffect[] = [
     {
         id: "rupture",
         name: "Rupture",
-        slot: "counter",
+        slot: "ailment-rupture",
         formulaStatus: "verified",
         description:
-            "Same Potency/Count mechanic as Bleed (see formula/fixedDamageAilment.ts's resolveRuptureTrigger), but triggers once per hit (each coin that connects). " +
-            "Deliberately kept out of calculateDynamicModifier for the same reason as Bleed.",
+            "\"When hit by an attack, take fixed damage by the effect's Potency. Then, reduce its Count by 1.\" (https://limbuscompany.wiki.gg/wiki/Rupture). " +
+            "Applied by the attack walk as unscaled fixed damage per landing coin; deliberately kept out of calculateDynamicModifier.",
     },
 
     // Added for skillEffectGrants.ts's auto-apply feature - type/sin-scoped Fragile/Damage Up/

@@ -91,6 +91,19 @@ export interface Skill {
 
 export interface StatusValue { potency: number; count: number }
 
+/** Every status on one side, keyed by registry id (or the raw id the scraper emitted). */
+export type StatusState = Record<string, StatusValue>
+
+/** Working statuses of the two sides of one attack or one prepare: `self` is the side whose lines are being applied. */
+export interface SidePair { self: StatusState; target: StatusState }
+
+/**
+ * Expected leftover statuses after an attack, weighted like the histogram. `varies` lists
+ * `"self:<id>"` / `"target:<id>"` entries whose value differs between paths; an id absent on
+ * some paths counts as potency 0, count 0 on those paths.
+ */
+export interface StatusAfter { self: StatusState; target: StatusState; varies: string[] }
+
 export interface ManualOverrides {
   coinPower: number
   basePower: number
