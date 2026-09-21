@@ -2,24 +2,27 @@
 
 @theme {
   --color-ink: #0b0b0d;
+  --color-ink-2: #131215;
   --color-paper: #1c1a17;
   --color-paper-light: #262320;
+  --color-paper-edge: #35302a;
   --color-gold: #c9a227;
   --color-gold-bright: #e8c766;
+  --color-gold-dim: #8a6f1c;
   --color-blood: #8c1c1c;
   --color-blood-bright: #e0534e;
   --color-bone: #e4dfd3;
   --color-bone-dim: #a8a196;
+  --color-bone-faint: #706a60;
 
-  /* Badge fills. Text on them must clear 4.5:1: wrath, pride and envy carry bone (#e4dfd3) so they
-     are held dark enough for it; the four light fills carry ink (#0b0b0d) instead. See Badges.tsx. */
-  --color-sin-wrath: #ab3a24;
+  /* Sin colours are used as swatches and stripes only, never as text fills. */
+  --color-sin-wrath: #c8452b;
   --color-sin-lust: #e07a2c;
   --color-sin-sloth: #d9b53a;
   --color-sin-gluttony: #5aa64a;
   --color-sin-gloom: #3fa1a6;
-  --color-sin-pride: #3260aa;
-  --color-sin-envy: #8345a7;
+  --color-sin-pride: #3b6fc4;
+  --color-sin-envy: #8e4bb5;
 
   --font-display: 'Big Shoulders Display', sans-serif;
   --font-body: 'IBM Plex Sans', sans-serif;
@@ -33,35 +36,112 @@ body {
   background: var(--color-ink);
   color: var(--color-bone);
   font-family: var(--font-body);
-  background-image: repeating-linear-gradient(180deg, rgba(201, 162, 39, 0.02) 0px, rgba(201, 162, 39, 0.02) 1px, transparent 1px, transparent 32px);
+  font-size: 15px;
+  line-height: 1.5;
+  background-image:
+    radial-gradient(1200px 600px at 20% -10%, rgba(201, 162, 39, 0.07), transparent 60%),
+    radial-gradient(900px 500px at 100% 0%, rgba(140, 28, 28, 0.06), transparent 60%);
+  background-attachment: fixed;
 }
 
 ::selection { background: var(--color-gold); color: var(--color-ink); }
 *:focus-visible { outline: 2px solid var(--color-gold-bright); outline-offset: 2px; }
+img { display: block; }
 
-/* Ledger-style tabular numerals for every stat and damage readout. */
-.ledger-number { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+/* Type roles */
+.display { font-family: var(--font-display); font-weight: 700; letter-spacing: 0.01em; line-height: 0.95; }
+.num, .ledger-number { font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+.label { font-size: 12px; color: var(--color-bone-dim); line-height: 1.2; }
 
-/* Rubber-stamp verdict mark. */
+/* Surfaces */
+.panel {
+  background: var(--color-paper);
+  border-radius: 14px;
+  box-shadow: inset 0 1px 0 rgba(228, 223, 211, 0.06), 0 18px 44px rgba(0, 0, 0, 0.45);
+}
+.slab {
+  background: linear-gradient(180deg, #17161a 0%, #101013 100%);
+  border-top: 3px solid var(--color-gold);
+  border-radius: 14px;
+  box-shadow: 0 28px 70px rgba(0, 0, 0, 0.6);
+}
+.well { background: var(--color-ink-2); border-radius: 10px; }
+
+/* Controls */
+.field {
+  height: 40px;
+  width: 100%;
+  background: var(--color-ink);
+  border: 1px solid var(--color-paper-edge);
+  border-radius: 8px;
+  padding: 0 12px;
+  color: var(--color-bone);
+  font-size: 15px;
+}
+.field:focus { border-color: var(--color-gold); outline: none; box-shadow: 0 0 0 3px rgba(201, 162, 39, 0.22); }
+.field::placeholder { color: var(--color-bone-faint); }
+.btn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  height: 38px; padding: 0 14px; border-radius: 8px;
+  border: 1px solid var(--color-paper-edge); background: var(--color-paper-light);
+  color: var(--color-bone); font-size: 14px; font-weight: 500; cursor: pointer; white-space: nowrap;
+}
+.btn:hover { border-color: var(--color-gold-dim); }
+.btn-gold { background: var(--color-gold); border-color: var(--color-gold); color: var(--color-ink); font-weight: 600; }
+.btn-gold:hover { background: var(--color-gold-bright); border-color: var(--color-gold-bright); }
+.btn-quiet { background: transparent; border-color: transparent; color: var(--color-bone-dim); }
+.btn-quiet:hover { color: var(--color-bone); border-color: var(--color-paper-edge); }
+.seg { display: inline-flex; border: 1px solid var(--color-paper-edge); border-radius: 8px; overflow: hidden; background: var(--color-ink); }
+.seg > button { height: 38px; min-width: 40px; padding: 0 12px; font-size: 14px; color: var(--color-bone-dim); background: transparent; border: 0; cursor: pointer; }
+.seg > button + button { border-left: 1px solid var(--color-paper-edge); }
+.seg > button:hover { color: var(--color-bone); }
+.seg > button[aria-pressed="true"] { background: var(--color-gold); color: var(--color-ink); font-weight: 600; }
+.tile {
+  display: flex; align-items: center; gap: 12px; width: 100%; text-align: left;
+  padding: 8px 10px; border-radius: 10px; border: 1px solid transparent; background: transparent; cursor: pointer; color: inherit;
+}
+.tile:hover { background: var(--color-paper-light); }
+.tile[aria-pressed="true"] { background: var(--color-paper-light); border-color: var(--color-gold); box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35); }
+
+/* Sin swatches */
+.sin { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 600; color: var(--color-bone-dim); text-transform: capitalize; }
+.sin::before { content: ''; width: 10px; height: 10px; border-radius: 3px; background: var(--sin); box-shadow: 0 0 0 1px rgba(0, 0, 0, 0.4); }
+.type { font-size: 12px; font-weight: 600; color: var(--color-bone-dim); text-transform: capitalize; }
+
+/* Hero art on identity cards */
+.hero { position: relative; aspect-ratio: 16 / 7; overflow: hidden; background: var(--color-ink); }
+.hero > img { width: 100%; height: 100%; object-fit: cover; object-position: center 20%; }
+.hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(28, 26, 23, 0) 35%, rgba(28, 26, 23, 0.72) 78%, var(--color-paper) 100%); pointer-events: none; }
+.hero-title { position: absolute; left: 20px; right: 20px; bottom: 12px; z-index: 1; }
+
+/* Collapsible sections */
+details.section > summary { list-style: none; cursor: pointer; display: flex; align-items: center; justify-content: space-between; padding: 10px 0; font-size: 14px; font-weight: 500; color: var(--color-bone); }
+details.section > summary::-webkit-details-marker { display: none; }
+details.section > summary::after { content: '+'; color: var(--color-bone-dim); font-size: 18px; line-height: 1; }
+details.section[open] > summary::after { content: '−'; }
+details.section + details.section { border-top: 1px solid var(--color-paper-edge); }
+
+/* Verdict stamp */
 .stamp {
   font-family: var(--font-display);
   font-weight: 800;
+  font-size: 28px;
   letter-spacing: 0.12em;
   text-transform: uppercase;
   border: 3px solid currentColor;
   border-radius: 6px;
-  padding: 0.25em 0.6em;
+  padding: 0.15em 0.5em;
   display: inline-block;
-  transform: rotate(-4deg);
+  transform: rotate(-5deg);
   animation: stamp-in 0.35s ease-out both;
 }
 @keyframes stamp-in {
-  0% { opacity: 0; transform: rotate(-4deg) scale(1.6); }
-  60% { opacity: 1; transform: rotate(-4deg) scale(0.94); }
-  100% { opacity: 1; transform: rotate(-4deg) scale(1); }
+  0% { opacity: 0; transform: rotate(-5deg) scale(1.6); }
+  60% { opacity: 1; transform: rotate(-5deg) scale(0.94); }
+  100% { opacity: 1; transform: rotate(-5deg) scale(1); }
 }
 
-/* Coin reveal. */
+/* Coin reveal */
 .coin-flip { animation: coin-spin 0.5s ease-out both; }
 @keyframes coin-spin {
   0% { transform: rotateX(0deg); opacity: 0; }

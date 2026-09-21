@@ -1,84 +1,71 @@
-import type { ClashReport, Combatant } from '@limbus/engine'
+import type { ClashReport, Combatant, ReportOptions } from '@limbus/engine'
 import { num, pct } from '../lib/format.ts'
 import { verdictFor } from '../lib/verdict.ts'
 import { Stamp } from './Badges.tsx'
 import { DamageBand } from './DamageBand.tsx'
+import { RollOnce } from './RollOnce.tsx'
 
-interface Props { report: ClashReport; a: Combatant; b: Combatant }
+interface Props { report: ClashReport; a: Combatant; b: Combatant; options: ReportOptions }
 
 const fmtValue = (label: string, value: number) =>
   label === 'Heads chance' || label === 'Crit chance' ? pct(value) : Number.isInteger(value) ? String(value) : value.toFixed(3)
 
-/** Everything the report says, in ledger order: verdict, odds, damage dealt, coins, stagger, damage taken, then side A's modifier breakdown across the full width. */
-export function VerdictPanel({ report, a, b }: Props) {
+/** The answer: win chance first, then what the damage looks like either way, then how it was computed. */
+export function VerdictPanel({ report, a, b, options }: Props) {
   const verdict = verdictFor(report)
   const thresholds = b.unit.staggerThresholds
   // coinsLeftIfWin is a joint distribution (sums to `win`); show it conditional on winning.
   const coinsLeft = report.coinsLeftIfWin.map((p, coins) => ({ coins, p: report.win > 0 ? p / report.win : 0 })).filter(x => x.p > 0.0005)
   return (
-    <section className="mt-6 rounded border border-paper-light bg-paper p-4" aria-live="polite">
-      <div className="flex flex-wrap items-center gap-6">
+    <aside className="slab p-5 sm:p-6" aria-live="polite">
+      <div className="flex items-start justify-between gap-4">
         <div>
-          <div className="text-xs uppercase tracking-widest text-bone-dim">Side A wins</div>
-          <div className="ledger-number text-5xl text-gold-bright">{pct(report.win)}</div>
+          <div className="text-sm text-bone-dim">{a.unit.name} wins the clash</div>
+          <div className="display text-[84px] text-gold-bright">{pct(report.win)}</div>
         </div>
-        <div className="ledger-number grid text-sm text-bone-dim">
-          <span>Draw {pct(report.draw)}</span>
-          <span>Lose {pct(report.lose)}</span>
-          <span>Expected parry rounds {report.parryRoundsExpected.toFixed(2)}</span>
+        <div className="pt-4"><Stamp tone={verdict.tone}>{verdict.text}</Stamp></div>
+      </div>
+      <dl className="num mt-2 grid grid-cols-3 gap-3 text-sm">
+        <div><dt className="label">Draw</dt><dd className="text-bone">{pct(report.draw)}</dd></div>
+        <div><dt className="label">Loses</dt><dd className="text-bone">{pct(report.lose)}</dd></div>
+        <div><dt className="label">Parry rounds</dt><dd className="text-bone">{report.parryRoundsExpected.toFixed(2)}</dd></div>
+      </dl>
+
+      <div className="mt-6 grid gap-5 border-t border-paper-edge pt-5">
+        <DamageBand summary={report.damageDealt} label={`Damage to ${b.unit.name} if ${a.unit.name} wins`} />
+        <div className="flex flex-wrap gap-x-5 gap-y-1 text-xs text-bone-dim">
+          {report.damageDealt.perCoinMean.map((m, i) => <span key={i} className="num">Coin {i + 1}: <span className="text-bone">{m.toFixed(1)}</span></span>)}
+          {coinsLeft.length > 0 && <span className="num">Coins left: {coinsLeft.map(x => `${x.coins} (${pct(x.p, 0)})`).join(', ')}</span>}
         </div>
-        <div className="ml-auto"><Stamp tone={verdict.tone}>{verdict.text}</Stamp></div>
+        {thresholds.length > 0 && (
+          <ul className="grid gap-1 text-sm">
+            {thresholds.map((t, i) => (
+              <li key={i} className="flex justify-between"><span className="text-bone-dim">Staggers at {pct(t, 0)} HP</span><span className="num">{pct(report.damageDealt.staggerChance[i] ?? 0)}</span></li>
+            ))}
+          </ul>
+        )}
+        <DamageBand summary={report.damageTaken} label={`Damage to ${a.unit.name} if ${b.unit.name} wins`} tone="blood" />
+        <p className="text-xs text-bone-faint">Max HP {num(b.unit.hp)} for {b.unit.name}, {num(a.unit.hp)} for {a.unit.name}. Damage figures assume that side won the clash.</p>
       </div>
 
-      <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        <div>
-          <DamageBand summary={report.damageDealt} label={`Damage to ${b.unit.name} if A wins`} />
-          {report.damageDealt.perCoinMean.length > 0 && (
-            <table className="mt-3 w-full text-sm">
-              <thead className="text-[10px] uppercase tracking-widest text-bone-dim"><tr><th className="text-left">Coin</th><th className="text-right">Mean damage</th></tr></thead>
-              <tbody className="ledger-number">
-                {report.damageDealt.perCoinMean.map((m, i) => <tr key={i}><td>Coin {i + 1}</td><td className="text-right">{m.toFixed(1)}</td></tr>)}
-              </tbody>
-            </table>
-          )}
-          {thresholds.length > 0 && (
-            <ul className="mt-3 grid gap-0.5 text-sm">
-              {thresholds.map((t, i) => (
-                <li key={i} className="flex justify-between"><span className="text-bone-dim">Crosses the {pct(t, 0)} HP stagger line</span><span className="ledger-number">{pct(report.damageDealt.staggerChance[i] ?? 0)}</span></li>
-              ))}
-            </ul>
-          )}
-          {coinsLeft.length > 0 && (
-            <p className="ledger-number mt-3 text-xs text-bone-dim">Coins left if A wins: {coinsLeft.map(x => `${x.coins} (${pct(x.p, 0)})`).join(', ')}</p>
-          )}
-          <p className="ledger-number mt-2 text-xs text-bone-dim">Max HP {num(b.unit.hp)} for {b.unit.name}</p>
-        </div>
-        <div>
-          <DamageBand summary={report.damageTaken} label={`Damage to ${a.unit.name} if B wins`} />
-          <p className="ledger-number mt-2 text-xs text-bone-dim">Max HP {num(a.unit.hp)} for {a.unit.name}</p>
-        </div>
+      <div className="mt-5 border-t border-paper-edge pt-5">
+        <RollOnce a={a} b={b} report={report} options={options} />
       </div>
 
-      <p className="mt-4 text-xs text-bone-dim">Damage figures are conditional on that side winning; unopposed hits use every coin.</p>
-
-      {/* The breakdown is side A's own skill, not side B's, so it sits under both bands rather than
-          in the damage-taken column where it read as B's modifiers. */}
-      <div className="mt-6 border-t border-paper-light pt-4">
-        <h3 className="text-xs uppercase tracking-widest text-bone-dim">Side A modifiers · {a.unit.name} — {a.skill?.name ?? ''}</h3>
+      <details className="mt-5 border-t border-paper-edge pt-4">
+        <summary className="cursor-pointer text-sm text-bone-dim">How this was computed</summary>
+        <div className="mt-2 text-xs text-bone-dim">{a.unit.name}, {a.skill?.name ?? ''}</div>
         <table className="mt-2 w-full text-sm">
-          <thead className="text-[10px] uppercase tracking-widest text-bone-dim"><tr><th className="text-left">Modifier</th><th className="text-right">Value</th><th className="text-left pl-3">Source</th></tr></thead>
           <tbody>
             {report.breakdown.map(line => (
-              <tr key={line.label} className="border-t border-paper-light/60">
-                <td className="py-0.5">{line.label}</td>
-                <td className="ledger-number text-right">{fmtValue(line.label, line.value)}</td>
-                <td className="pl-3 text-xs text-bone-dim">{line.source}</td>
+              <tr key={line.label} className="border-t border-paper-edge/70">
+                <td className="py-1.5 pr-2">{line.label}<span className="block text-xs text-bone-faint">{line.source}</span></td>
+                <td className="num py-1.5 text-right align-top">{fmtValue(line.label, line.value)}</td>
               </tr>
             ))}
           </tbody>
         </table>
-        <p className="mt-2 text-xs text-bone-dim">These modifiers feed the damage side A deals; on a guard clash the last line is the expected guard reduction.</p>
-      </div>
-    </section>
+      </details>
+    </aside>
   )
 }

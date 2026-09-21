@@ -11,7 +11,7 @@ function NavLink({ to, active, children }: { to: '/' | '/railway'; active: boole
       href={href(to)}
       onClick={onLinkClick}
       aria-current={active ? 'page' : undefined}
-      className={`px-3 py-1 text-sm uppercase tracking-widest ${active ? 'text-gold-bright border-b-2 border-gold' : 'text-bone-dim hover:text-bone'}`}
+      className={`rounded-lg px-3 py-1.5 text-sm font-medium ${active ? 'bg-paper-light text-gold-bright' : 'text-bone-dim hover:text-bone'}`}
     >
       {children}
     </a>
@@ -28,12 +28,12 @@ export function App() {
   const route = useRoute()
   const { data, error } = useGameData()
   return (
-    <div className="mx-auto max-w-6xl px-4 py-6">
-      <header className="mb-8 flex flex-wrap items-baseline justify-between gap-4 border-b border-paper-light pb-3">
-        <a href={href('/')} onClick={onLinkClick} className="font-[family-name:var(--font-display)] text-2xl font-bold uppercase tracking-wider text-bone">
-          Limbus Calculator
+    <div className="mx-auto max-w-[1400px] px-4 py-5 sm:px-6">
+      <header className="mb-6 flex items-center justify-between gap-4">
+        <a href={href('/')} onClick={onLinkClick} className="display text-2xl text-bone">
+          Limbus <span className="text-gold">Calculator</span>
         </a>
-        <nav className="flex gap-2">
+        <nav className="flex gap-1 rounded-xl bg-ink-2 p-1">
           <NavLink to="/" active={route.name === 'clash'}>Clash</NavLink>
           <NavLink to="/railway" active={route.name === 'railway'}>Railway</NavLink>
         </nav>

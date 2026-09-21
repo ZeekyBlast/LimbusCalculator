@@ -7,29 +7,32 @@ import { DamageTypeBadge, SinBadge } from './Badges.tsx'
 
 interface Props { unit: Unit; value: string | null; uptie: UptieTier; images: ImageManifest; onPick: (skillId: string) => void }
 
-/** One button per skill, showing the numbers at the chosen uptie. */
+/** One tile per skill, showing the numbers at the chosen uptie. */
 export function SkillPicker({ unit, value, uptie, images, onPick }: Props) {
-  if (unit.skills.length === 0) return <p className="mt-3 text-sm text-bone-dim">This part has no skills; it can only be attacked.</p>
+  if (unit.skills.length === 0) return <p className="text-sm text-bone-dim">This part has no skills. It can be attacked but never clashes.</p>
   return (
-    <div className="mt-3 grid gap-1">
+    <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-1">
       {unit.skills.map(raw => {
         const s = skillAtUptie(raw, uptie)
         const icon = skillIconUrl(images, s)
-        const active = s.id === value
         return (
-          <button
-            key={s.id}
-            type="button"
-            aria-pressed={active}
-            onClick={() => onPick(s.id)}
-            className={`flex items-center gap-3 rounded border px-2 py-1.5 text-left text-sm ${active ? 'border-gold bg-paper-light' : 'border-paper-light hover:border-bone-dim'}`}
-          >
-            <span className="h-8 w-8 shrink-0 overflow-hidden rounded bg-ink">{icon && <img src={icon} alt="" loading="lazy" className="h-full w-full object-cover" />}</span>
-            <span className="w-12 shrink-0 text-[10px] uppercase tracking-widest text-bone-dim">{slotLabel(s)}</span>
-            <span className="min-w-0 flex-1 truncate">{s.name}</span>
-            <span className="ledger-number shrink-0 text-xs text-bone-dim">{s.basePower}<span className="text-gold">+{s.coinPower}</span>×{s.coinCount}</span>
-            <SinBadge sin={s.sin} />
-            <DamageTypeBadge type={s.damageType} />
+          <button key={s.id} type="button" aria-pressed={s.id === value} onClick={() => onPick(s.id)} className="tile">
+            <span className="h-11 w-11 shrink-0 overflow-hidden rounded-lg bg-ink">{icon && <img src={icon} alt="" loading="lazy" className="h-full w-full object-cover" />}</span>
+            <span className="min-w-0 flex-1">
+              <span className="flex min-w-0 items-baseline gap-2">
+                <span className="num shrink-0 text-xs text-bone-faint">{slotLabel(s)}</span>
+                <span className="min-w-0 truncate text-[15px]">{s.name}</span>
+              </span>
+              <span className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-1">
+                <SinBadge sin={s.sin} />
+                <DamageTypeBadge type={s.damageType} />
+              </span>
+            </span>
+            <span className="num shrink-0 text-right text-[15px] leading-tight">
+              <span className="text-bone">{s.basePower}</span>
+              <span className="text-gold"> +{s.coinPower}</span>
+              <span className="block text-xs text-bone-dim">{s.coinCount} coin{s.coinCount === 1 ? '' : 's'}</span>
+            </span>
           </button>
         )
       })}

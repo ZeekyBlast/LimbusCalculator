@@ -10,30 +10,22 @@ const nameOf = (id: string) => OPTIONS.find(o => o.id === id)?.name ?? id
 export function StatusEditor({ status, onChange }: Props) {
   const present = Object.keys(status)
   return (
-    <div className="mt-3">
-      <span className="block text-xs uppercase tracking-widest text-bone-dim">Status</span>
-      {present.length > 0 && (
-        <table className="mt-1 w-full text-sm">
-          <thead className="text-[10px] uppercase tracking-widest text-bone-dim"><tr><th className="text-left">Effect</th><th className="w-20">Potency</th><th className="w-20">Count</th><th className="w-8" /></tr></thead>
-          <tbody>
-            {present.map(id => (
-              <tr key={id}>
-                <td className="py-0.5">{nameOf(id)}</td>
-                <td><NumberField min={0} aria-label={`${nameOf(id)} potency`} value={status[id].potency} onCommit={n => onChange(id, { ...status[id], potency: n })} className="ledger-number w-full rounded border border-paper-light bg-ink px-1 py-0.5 text-right" /></td>
-                <td><NumberField min={0} aria-label={`${nameOf(id)} count`} value={status[id].count} onCommit={n => onChange(id, { ...status[id], count: n })} className="ledger-number w-full rounded border border-paper-light bg-ink px-1 py-0.5 text-right" /></td>
-                <td><button type="button" aria-label={`Remove ${nameOf(id)}`} onClick={() => onChange(id, null)} className="px-1 text-bone-dim hover:text-blood-bright">×</button></td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      )}
+    <div className="grid gap-2 pb-3">
+      {present.map(id => (
+        <div key={id} className="grid grid-cols-[minmax(0,1fr)_84px_84px_32px] items-end gap-2">
+          <span className="truncate pb-2 text-[15px]">{nameOf(id)}</span>
+          <label className="label">Potency<NumberField min={0} value={status[id].potency} onCommit={n => onChange(id, { ...status[id], potency: n })} className="field num mt-1 h-9 text-right" /></label>
+          <label className="label">Count<NumberField min={0} value={status[id].count} onCommit={n => onChange(id, { ...status[id], count: n })} className="field num mt-1 h-9 text-right" /></label>
+          <button type="button" aria-label={`Remove ${nameOf(id)}`} onClick={() => onChange(id, null)} className="btn btn-quiet h-9 w-8 px-0 text-lg">×</button>
+        </div>
+      ))}
       <select
         value=""
         aria-label="Add status"
         onChange={e => { if (e.target.value) onChange(e.target.value, { potency: 1, count: 1 }) }}
-        className="mt-1 w-full rounded border border-paper-light bg-paper px-2 py-1 text-sm text-bone-dim"
+        className="field h-9 text-sm text-bone-dim"
       >
-        <option value="">Add status…</option>
+        <option value="">Add a status effect…</option>
         {OPTIONS.filter(o => !present.includes(o.id)).map(o => <option key={o.id} value={o.id}>{o.name}</option>)}
       </select>
     </div>

@@ -16,6 +16,10 @@ interface Props { data: GameData; search: URLSearchParams }
 // Hoisted so a section with no waves keeps one stable identity for the grid's dependencies.
 const NO_ENCOUNTER: { units: Unit[]; missingIds: string[] } = { units: [], missingIds: [] }
 
+function Note({ children }: { children: string }) {
+  return <p className="panel p-6 text-sm text-bone-dim">{children}</p>
+}
+
 export function RailwayScreen({ data, search }: Props) {
   const { section, wave } = selectedEncounter(data.railway, search)
   const slots = useTeamStore(s => s.slots)
@@ -41,18 +45,18 @@ export function RailwayScreen({ data, search }: Props) {
   }
 
   return (
-    <div className="grid gap-4">
-      <div className="grid gap-4 lg:grid-cols-[minmax(0,2fr)_minmax(0,3fr)]">
+    <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-5">
+      <div className="grid min-w-0 grid-cols-[minmax(0,1fr)] gap-5 xl:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
         <StationPicker data={data} section={section} wave={wave} onSelect={select} />
         <TeamBuilder data={data} />
       </div>
-      {missingIds.length > 0 && <p className="text-xs text-blood-bright">No stat block on the wiki for enemy id{missingIds.length > 1 ? 's' : ''} {missingIds.join(', ')}; not shown in the grid.</p>}
-      {!wave ? <p className="text-bone-dim">No encounter data for this section.</p>
-        : team.length === 0 ? <p className="text-bone-dim">Add identities to the team to see the matchup grid for §{section.number} wave {wave.number}.</p>
-        : units.length === 0 ? <p className="text-bone-dim">This wave has no enemy data.</p>
-        : grid.error ? <p className="text-blood-bright">{grid.error}</p>
+      {missingIds.length > 0 && <p className="text-xs text-bone-dim">The wiki has no stat block for enemy id{missingIds.length > 1 ? 's' : ''} {missingIds.join(', ')}, so {missingIds.length > 1 ? 'they are' : 'it is'} left out of the grid.</p>}
+      {!wave ? <Note>No encounter data for this section.</Note>
+        : team.length === 0 ? <Note>{`Add identities to your team to see how every skill fares against section ${section.number}, wave ${wave.number}.`}</Note>
+        : units.length === 0 ? <Note>This wave has no enemy data.</Note>
+        : grid.error ? <Note>{grid.error}</Note>
         : !grid.result || grid.result.columns.length !== units.length
-          ? <p className="text-bone-dim" aria-live="polite">Computing {team.length} identities against {units.length} parts…</p>
+          ? <p className="panel p-6 text-sm text-bone-dim" aria-live="polite">Computing {team.length} identities against {units.length} parts…</p>
         : <MatchupGridView data={data} grid={grid.result} team={team} onCell={openCell} />}
     </div>
   )

@@ -8,19 +8,19 @@ const FIELDS: { key: keyof ManualOverrides; label: string }[] = [
   { key: 'clashPower', label: 'Clash power' }, { key: 'damagePercent', label: 'Damage %' },
 ]
 
-/** Flat adjustments for anything the parser or the data does not carry (spec 10: Railway-specific buffs). */
+/** Flat adjustments for anything the parser or the data does not carry (Railway-only buffs, for instance). */
 export function ManualEditor({ manual, onChange }: Props) {
   return (
-    <div className="mt-3">
-      <span className="block text-xs uppercase tracking-widest text-bone-dim">Manual overrides</span>
-      <div className="mt-1 grid grid-cols-2 gap-2 sm:grid-cols-4">
+    <div className="pb-3">
+      <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
         {FIELDS.map(f => (
-          <label key={f.key} className="text-xs text-bone-dim">
+          <label key={f.key} className="label">
             {f.label}
-            <NumberField value={manual[f.key]} onCommit={n => onChange(f.key, n)} className="ledger-number mt-0.5 w-full rounded border border-paper-light bg-ink px-1 py-0.5 text-right text-sm text-bone" />
+            <NumberField value={manual[f.key]} onCommit={n => onChange(f.key, n)} className="field num mt-1 h-9 text-right" />
           </label>
         ))}
       </div>
+      <p className="mt-2 text-xs text-bone-faint">Added on top of the skill's numbers. Use these for buffs the wiki text does not carry.</p>
     </div>
   )
 }
