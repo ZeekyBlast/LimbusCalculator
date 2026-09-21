@@ -2,7 +2,7 @@ import type { ClashReport, DamageSummary } from '@limbus/engine'
 import { describe, expect, it } from 'vitest'
 import { bandGeometry, verdictFor } from '../src/lib/verdict.ts'
 
-const summary = (over: Partial<DamageSummary>): DamageSummary => ({ mean: 0, p10: 0, p50: 0, p90: 0, max: 0, perCoinMean: [], histogram: [[0, 1]], staggerChance: [], ...over })
+const summary = (over: Partial<DamageSummary>): DamageSummary => ({ mean: 0, p10: 0, p50: 0, p90: 0, max: 0, perCoinMean: [], histogram: [[0, 1]], staggerChance: [], statusAfter: { self: {}, target: {}, varies: [] }, ...over })
 const report = (win: number, lose: number, draw: number): ClashReport => ({
   win, lose, draw, coinsLeftIfWin: [], coinsLeftIfLose: [], parryRoundsExpected: 0,
   damageDealt: summary({}), damageTaken: summary({}), breakdown: [],

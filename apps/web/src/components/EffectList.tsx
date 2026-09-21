@@ -1,22 +1,35 @@
 import type { Effect, Passive, ResolvedCombatant, Skill } from '@limbus/engine'
-import { effectStatus, type EffectStatus } from '../lib/effectStatus.ts'
+import { effectStatus, type EffectMark, type EffectStatus } from '../lib/effectStatus.ts'
 
 interface Props { skill: Skill; passives: Passive[]; resolved: ResolvedCombatant }
 
-const MARK: Record<EffectStatus, { text: string; dot: string; body: string }> = {
-  applied: { text: 'applied', dot: 'bg-gold-bright', body: 'text-bone' },
-  inactive: { text: 'not active', dot: 'bg-bone-faint', body: 'text-bone-dim' },
-  unparsed: { text: 'not modeled', dot: 'bg-paper-edge', body: 'text-bone-faint' },
+const MARK: Record<EffectStatus, { dot: string; body: string }> = {
+  applied: { dot: 'bg-gold-bright', body: 'text-bone' },
+  'per-coin': { dot: 'bg-gold-bright', body: 'text-bone' },
+  pending: { dot: 'bg-gold-dim', body: 'text-bone-dim' },
+  inactive: { dot: 'bg-bone-faint', body: 'text-bone-dim' },
+  unparsed: { dot: 'bg-paper-edge', body: 'text-bone-faint' },
+}
+
+function markText(mark: EffectMark): string {
+  switch (mark.status) {
+    case 'applied': return 'applied'
+    case 'per-coin': return mark.coin === undefined ? 'applied per coin' : `applied on coin ${mark.coin + 1}`
+    case 'pending': return 'applied later'
+    case 'inactive': return 'not active'
+    case 'unparsed': return 'not modeled'
+  }
 }
 
 function Line({ effect, resolved }: { effect: Effect; resolved: ResolvedCombatant }) {
-  const mark = MARK[effectStatus(effect, resolved)]
+  const mark = effectStatus(effect, resolved)
+  const look = MARK[mark.status]
   const scope = effect.scope === 'skill' ? '' : `Coin ${effect.scope.coin + 1}: `
   return (
     <li className="grid grid-cols-[10px_minmax(0,1fr)_auto] items-baseline gap-x-3 text-sm">
-      <span className={`mt-1.5 h-2 w-2 rounded-full ${mark.dot}`} aria-hidden />
-      <span className={mark.body}>{scope}{effect.source}</span>
-      <span className="text-xs text-bone-faint">{mark.text}</span>
+      <span className={`mt-1.5 h-2 w-2 rounded-full ${look.dot}`} aria-hidden />
+      <span className={look.body}>{scope}{effect.source}</span>
+      <span className="text-xs text-bone-faint">{markText(mark)}</span>
     </li>
   )
 }

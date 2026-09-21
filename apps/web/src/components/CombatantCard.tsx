@@ -28,7 +28,8 @@ export function CombatantCard({ side, data, combatant, resolved }: Props) {
   const unit = combatant?.unit
   const isEnemy = unit?.kind === 'enemy'
   const art = unit && portraitUrl(data.images, unit)
-  const applied = resolved?.effectsApplied.length ?? 0
+  const applied = (resolved?.effectsApplied.length ?? 0) + (resolved?.effectsPerCoin.length ?? 0)
+  const pending = resolved?.effectsPending.length ?? 0
   const notModeled = resolved?.effectsUnparsed.length ?? 0
   const statusCount = Object.keys(setup.status).length
 
@@ -106,7 +107,7 @@ export function CombatantCard({ side, data, combatant, resolved }: Props) {
                 <details className="section">
                   <summary>
                     Effect text
-                    <span className="text-xs text-bone-dim"><span className="text-gold-bright">{applied} applied</span>{notModeled > 0 && <> · {notModeled} not modeled</>}</span>
+                    <span className="text-xs text-bone-dim"><span className="text-gold-bright">{applied} applied</span>{pending > 0 && <> · {pending} later</>}{notModeled > 0 && <> · {notModeled} not modeled</>}</span>
                   </summary>
                   <EffectList skill={skillAtUptie(combatant.skill, setup.uptie)} passives={unit.passives} resolved={resolved} />
                 </details>
