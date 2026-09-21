@@ -125,6 +125,21 @@ describe('powerReduction', () => {
     const d = attackDamageDistribution(params({ coins: 2, headsChance: 1, powerReduction: 3 }))
     expect(d.mean).toBe(14)
   })
+  it('a zero roll is absorbed rather than falling back to the 1-damage floor', () => {
+    // Rolls are 0, so every coin is fully absorbed while any reduction is left: 0 damage, not 1.
+    const d = attackDamageDistribution(params({ coins: 2, basePower: 0, coinPower: 0, headsChance: 1, powerReduction: 3 }))
+    expect(d.histogram).toEqual([[0, 1]])
+    expect(d.perCoinMean).toEqual([0, 0])
+  })
+  it('a negative roll absorbs nothing, leaving the reduction for the coins behind it', () => {
+    // Rolls are -2. Neither coin may credit its negative roll back into the pool, so the 5 points
+    // of reduction survive both coins and both deal 0.
+    const d = attackDamageDistribution(params({ coins: 2, basePower: -2, coinPower: 0, headsChance: 1, powerReduction: 5 }))
+    expect(d.histogram).toEqual([[0, 1]])
+    expect(d.perCoinMean).toEqual([0, 0])
+    const s = sampleAttack(params({ coins: 2, basePower: -2, coinPower: 0, headsChance: 1, powerReduction: 5 }), () => 0)
+    expect(s.coins.map(c => c.damage)).toEqual([0, 0])
+  })
   it('zero reduction is the unchanged distribution', () => {
     expect(attackDamageDistribution(params({ powerReduction: 0 }))).toEqual(attackDamageDistribution(params()))
   })

@@ -99,6 +99,26 @@ describe('guard clash (spec 6.2)', () => {
     expect(r.breakdown.find(l => l.label === 'Base power')?.value).toBe(4)
     expect(r.breakdown.find(l => l.label === 'Guard reduction')?.value).toBeCloseTo(4 * 2 / 3 + 6 / 3)
   })
+  // Level bonus (spec 6.2): floor(max(offense - defense, 0) / 3) to whichever side is ahead.
+  it('adds the guard level bonus when the guard out-levels the attacker', () => {
+    const lowAttacker = makeCombatant({ level: 30, skill: makeSkill({ id: 'atk', basePower: 5, coinPower: 3, coinCount: 1 }) })
+    const highGuard = makeCombatant({ level: 40, unit: makeUnit({ id: 'g' }), skill: makeSkill({ id: 'grd', damageType: 'guard', basePower: 4, coinPower: 2, coinCount: 1 }) })
+    // Attacker 5 or 8, no bonus. Guard 4 or 6 plus floor(10/3) = 3, so 7 or 9. Only (8, 7) loses
+    // the guard, so the guard's final power given it lost is always 7.
+    const r = clashReport(lowAttacker, highGuard)
+    expect(r.win).toBeCloseTo(0.25)
+    expect(r.lose).toBeCloseTo(0.75)
+    expect(r.breakdown.find(l => l.label === 'Guard reduction')?.value).toBeCloseTo(7)
+  })
+  it('adds the attacker level bonus when the attacker out-levels the guard', () => {
+    const highAttacker = makeCombatant({ level: 40, skill: makeSkill({ id: 'atk', basePower: 5, coinPower: 3, coinCount: 1 }) })
+    const lowGuard = makeCombatant({ level: 30, unit: makeUnit({ id: 'g' }), skill: makeSkill({ id: 'grd', damageType: 'guard', basePower: 4, coinPower: 2, coinCount: 1 }) })
+    // Attacker 5 or 8 plus floor(10/3) = 3, so 8 or 11, always over the guard's 4 or 6: a certain
+    // win, and the guard's power is 4 or 6 at 50% each, expected 5.
+    const r = clashReport(highAttacker, lowGuard)
+    expect(r.win).toBe(1)
+    expect(r.breakdown.find(l => l.label === 'Guard reduction')?.value).toBeCloseTo(5)
+  })
   it('reports a guaranteed draw when every outcome ties', () => {
     const a = makeCombatant({ skill: makeSkill({ basePower: 4, coinPower: 0, coinCount: 1 }) })
     const g = makeCombatant({ unit: makeUnit({ id: 'g' }), skill: makeSkill({ damageType: 'guard', basePower: 4, coinPower: 0, coinCount: 1 }) })

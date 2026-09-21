@@ -61,10 +61,15 @@ function staggerLinesFor(p: AttackParams): { lines: number[]; alreadyCrossed: nu
   return { lines, alreadyCrossed }
 }
 
-/** Takes as much of `left` as this coin's roll can absorb. `absorbed` means the whole roll went. */
+/**
+ * Takes as much of `left` as this coin's roll can absorb. `absorbed` means the whole roll went, so
+ * the coin deals nothing - including a roll of 0 or below, which must not slip past the reduction
+ * and pick up the 1-damage floor. `used` is clamped at 0 so a negative roll cannot credit power
+ * back into the pool and leave more reduction for the coins behind it.
+ */
 function absorb(roll: number, left: number): { roll: number; left: number; absorbed: boolean } {
-  const used = Math.min(roll, left)
-  return { roll: roll - used, left: left - used, absorbed: used > 0 && roll - used <= 0 }
+  const used = Math.max(0, Math.min(roll, left))
+  return { roll: roll - used, left: left - used, absorbed: left > 0 && roll - used <= 0 }
 }
 
 /** Damage of one coin given its (possibly reduced) roll and the walk state before it. */
