@@ -3,10 +3,10 @@ import { NumberField } from './NumberField.tsx'
 
 interface Props { status: Record<string, StatusValue>; onChange: (id: string, value: StatusValue | null) => void }
 
-const OPTIONS: { id: string; name: string }[] = [{ id: 'poise', name: 'Poise' }, ...statusEffects.map(e => ({ id: e.id, name: e.name }))]
+const OPTIONS: { id: string; name: string }[] = statusEffects.map(e => ({ id: e.id, name: e.name }))
 const nameOf = (id: string) => OPTIONS.find(o => o.id === id)?.name ?? id
 
-/** Potency / count per status stack. Poise drives crit chance; the rest come from the engine registry. */
+/** Potency / count per status stack. Every option comes from the engine registry; Poise drives crit chance, Rupture ticks on hit. */
 export function StatusEditor({ status, onChange }: Props) {
   const present = Object.keys(status)
   return (

@@ -33,10 +33,13 @@ export function RollOnce({ a, b, report, options }: Props) {
           {sample.attack && (
             <ol className="mt-3 flex flex-wrap gap-2">
               {sample.attack.coins.map((c, i) => (
-                <li key={i} className={`coin-flip w-[72px] rounded-lg border p-2 text-center ${c.heads ? 'border-gold/60 bg-gold/10' : 'border-paper-edge bg-ink'}`} style={{ animationDelay: `${i * 120}ms` }}>
+                <li key={c.index} className={`coin-flip w-[84px] rounded-lg border p-2 text-center ${c.heads ? 'border-gold/60 bg-gold/10' : 'border-paper-edge bg-ink'}`} style={{ animationDelay: `${i * 120}ms` }}>
+                  <div className="text-[11px] text-bone-faint">Coin {c.index + 1}</div>
                   <div className={`text-[11px] ${c.heads ? 'text-gold-bright' : 'text-bone-dim'}`}>{c.heads ? 'Heads' : 'Tails'}{c.crit ? ' · crit' : ''}</div>
                   <div className="num text-xl leading-tight">{num(c.damage)}</div>
+                  {c.rupture > 0 && <div className="num text-[11px] text-blood-bright">+{num(c.rupture)} rupture</div>}
                   <div className="num text-[11px] text-bone-faint">roll {c.roll}</div>
+                  {c.grants.length > 0 && <div className="mt-1 text-[10px] leading-tight text-bone-dim">{c.grants.join(' · ')}</div>}
                 </li>
               ))}
               <li className="grid w-[72px] place-items-center rounded-lg border border-gold/50 p-2 text-center">

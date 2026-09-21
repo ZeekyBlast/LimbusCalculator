@@ -1,5 +1,6 @@
 import type { ClashReport, Combatant, ReportOptions } from '@limbus/engine'
 import { num, pct } from '../lib/format.ts'
+import { statusRows, type StatusRow } from '../lib/statusAfter.ts'
 import { verdictFor } from '../lib/verdict.ts'
 import { Stamp } from './Badges.tsx'
 import { DamageBand } from './DamageBand.tsx'
@@ -10,12 +11,33 @@ interface Props { report: ClashReport; a: Combatant; b: Combatant; options: Repo
 const fmtValue = (label: string, value: number) =>
   label === 'Heads chance' || label === 'Crit chance' ? pct(value) : Number.isInteger(value) ? String(value) : value.toFixed(3)
 
+function AfterSkill({ name, rows }: { name: string; rows: StatusRow[] }) {
+  return (
+    <div className="min-w-0">
+      <div className="text-xs text-bone-dim">{name}</div>
+      {rows.length === 0 ? <div className="text-sm text-bone-faint">No statuses</div> : (
+        <ul className="mt-1 grid gap-0.5 text-sm">
+          {rows.map(r => (
+            <li key={r.id} className="flex justify-between gap-3">
+              <span className="min-w-0 truncate">{r.name}{r.varies && <span className="ml-1 text-xs text-bone-faint">varies</span>}</span>
+              <span className="num shrink-0 text-bone">{r.potency} <span className="text-bone-faint">×</span> {r.count}</span>
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  )
+}
+
 /** The answer: win chance first, then what the damage looks like either way, then how it was computed. */
 export function VerdictPanel({ report, a, b, options }: Props) {
   const verdict = verdictFor(report)
   const thresholds = b.unit.staggerThresholds
   // coinsLeftIfWin is a joint distribution (sums to `win`); show it conditional on winning.
   const coinsLeft = report.coinsLeftIfWin.map((p, coins) => ({ coins, p: report.win > 0 ? p / report.win : 0 })).filter(x => x.p > 0.0005)
+  const after = report.damageDealt.statusAfter
+  const afterA = statusRows(after.self, after.varies, 'self')
+  const afterB = statusRows(after.target, after.varies, 'target')
   return (
     <aside className="slab p-5 sm:p-6" aria-live="polite">
       <div className="flex items-start justify-between gap-4">
@@ -45,6 +67,14 @@ export function VerdictPanel({ report, a, b, options }: Props) {
           </ul>
         )}
         <DamageBand summary={report.damageTaken} label={`Damage to ${a.unit.name} if ${b.unit.name} wins`} tone="blood" />
+        <div className="border-t border-paper-edge pt-4">
+          <div className="text-sm text-bone-dim">After this skill, if {a.unit.name} wins</div>
+          <div className="mt-2 grid grid-cols-2 gap-4">
+            <AfterSkill name={a.unit.name} rows={afterA} />
+            <AfterSkill name={b.unit.name} rows={afterB} />
+          </div>
+          <p className="mt-2 text-xs text-bone-faint">Potency × count, averaged over every way the coins can land. "Varies" means it differs between outcomes.</p>
+        </div>
         <p className="text-xs text-bone-faint">Max HP {num(b.unit.hp)} for {b.unit.name}, {num(a.unit.hp)} for {a.unit.name}. Damage figures assume that side won the clash.</p>
       </div>
 
