@@ -6,7 +6,8 @@ import { offenseDefenseAdvantage } from './offenseDefenseAdvantage'
 import { parryRoundBonus } from './parryBonus'
 import { resistanceModifier } from './resistance'
 import { resolveCombatant } from './resolveCombatant'
-import type { BreakdownLine, ClashReport, Combatant, DamageSummary, ResolvedCombatant, Skill, UnopposedReport } from './types'
+import { clonePair, grant, type GrantOp } from './statusState'
+import type { BreakdownLine, ClashReport, Combatant, DamageSummary, Effect, ResolvedCombatant, SidePair, Skill, UnopposedReport } from './types'
 
 export interface ReportOptions { staggerMidAttack?: boolean }
 
@@ -31,6 +32,29 @@ export function damageMultipliers(attacker: ResolvedCombatant, target: Combatant
     sin: target.unit.resistances.sin[attacker.sin],
     damageType: dt === 'slash' || dt === 'pierce' || dt === 'blunt' ? target.unit.resistances.damageType[dt] : 1,
   }
+}
+
+/** The statuses and extra bonuses a branch attacks with. */
+export interface Branch { pair: SidePair; bonuses: Effect[] }
+
+const isGrant = (e: Effect): e is Effect & { op: GrantOp } => e.op.kind === 'applyStatus'
+
+/**
+ * The branch where `winner` won the clash: the winner's [Clash Win] lines and the loser's
+ * [Clash Lose] lines land on the winner's prepared pair (`self` = winner). Grants update the
+ * statuses; the winner's flat ops join its per-coin bonuses. The loser's flat ops change a skill
+ * that never attacks and are ignored.
+ */
+export function winBranch(winner: ResolvedCombatant, loser: ResolvedCombatant): Branch {
+  const pair = clonePair(winner.statusAfterPrepare)
+  for (const e of winner.grants.clashWin) if (isGrant(e)) grant(pair, e.op, 'self')
+  for (const e of loser.grants.clashLose) if (isGrant(e)) grant(pair, e.op, 'target')
+  return { pair, bonuses: [...winner.conditionalBonuses, ...winner.grants.clashWin.filter(e => !isGrant(e))] }
+}
+
+/** No clash happened: the prepared statuses as they are. */
+function noBranch(attacker: ResolvedCombatant): Branch {
+  return { pair: attacker.statusAfterPrepare, bonuses: attacker.conditionalBonuses }
 }
 
 function isAttackSkill(skill: Skill | undefined): boolean {
@@ -68,8 +92,8 @@ export function clashReport(a: Combatant, b: Combatant, options: ReportOptions =
   const rb = resolveCombatant(b, a)
   const chain = clashChain(toSide(ra), toSide(rb))
   const parryBonus = parryRoundBonus(chain.parryRoundsExpected)
-  const dealt = conditionalDamage(ra, rb, b, chain.coinsLeftIfWin, chain.win, parryBonus, options)
-  const taken = conditionalDamage(rb, ra, a, chain.coinsLeftIfLose, chain.lose, parryBonus, options)
+  const dealt = conditionalDamage(ra, rb, b, chain.coinsLeftIfWin, chain.win, parryBonus, options, winBranch(ra, rb))
+  const taken = conditionalDamage(rb, ra, a, chain.coinsLeftIfLose, chain.lose, parryBonus, options, winBranch(rb, ra))
   return {
     win: chain.win,
     lose: chain.lose,
@@ -107,12 +131,12 @@ export function sampleClash(a: Combatant, b: Combatant, options: ReportOptions =
   const rw = resolveCombatant(winner, loser)
   const rl = resolveCombatant(loser, winner)
   const guardReduction = isGuard(loser.skill) ? sampleWeighted(guardRound(rw, rl).reductionIfAttackerWins, rng()) : 0
-  const ctx = attackContext(rw, rl, loser, parryRoundBonus(report.parryRoundsExpected), options)
+  const ctx = attackContext(rw, rl, loser, parryRoundBonus(report.parryRoundsExpected), options, winBranch(rw, rl))
   return { outcome, coinsLeft, guardReduction, attack: sampleAttack({ ...ctx.params, coins: coinsLeft, powerReduction: guardReduction }, rng) }
 }
 
 /** Everything the damage stage needs except the coin count, plus the modifier breakdown. */
-export function attackContext(attacker: ResolvedCombatant, target: ResolvedCombatant, targetCombatant: Combatant, parryBonus: number, options: ReportOptions): AttackContext {
+export function attackContext(attacker: ResolvedCombatant, target: ResolvedCombatant, targetCombatant: Combatant, parryBonus: number, options: ReportOptions, branch: Branch = noBranch(attacker)): AttackContext {
   const mult = damageMultipliers(attacker, targetCombatant)
   const params: AttackContext['params'] = {
     coinCount: attacker.coinCount,
@@ -126,10 +150,10 @@ export function attackContext(attacker: ResolvedCombatant, target: ResolvedComba
     offenseDefenseAdvantage: offenseDefenseAdvantage(attacker.offenseLevel, target.defenseLevel),
     parryBonus,
     dynamicModifier: attacker.flat.damagePercent,
-    status: attacker.statusAfterPrepare,
+    status: branch.pair,
     attackerSkill: { damageType: attacker.damageType, sin: attacker.sin },
     coinEffects: attacker.coinEffects,
-    conditionalBonuses: attacker.conditionalBonuses,
+    conditionalBonuses: branch.bonuses,
     attackEndGrants: attacker.grants.attackEnd,
     defenderMaxHp: target.maxHp,
     defenderCurrentHp: target.currentHp,
@@ -255,7 +279,7 @@ function guardClash(attacker: Combatant, guard: Combatant, options: ReportOption
   const round = guardRound(ra, rg)
   const decided = 1 - round.tie
   const parryRoundsExpected = decided > 0 ? round.tie / decided : 0
-  const ctx = attackContext(ra, rg, guard, parryRoundBonus(parryRoundsExpected), options)
+  const ctx = attackContext(ra, rg, guard, parryRoundBonus(parryRoundsExpected), options, winBranch(ra, rg))
   const guardCtx = attackContext(rg, ra, attacker, 0, options)
   const parts = round.reductionIfAttackerWins.map(([power, weight]) => ({
     weight,
@@ -288,8 +312,9 @@ function conditionalDamage(
   totalWeight: number,
   parryBonus: number,
   options: ReportOptions,
+  branch: Branch = noBranch(attacker),
 ): { summary: DamageSummary; breakdown: BreakdownLine[] } {
-  const { params, breakdown } = attackContext(attacker, target, targetCombatant, parryBonus, options)
+  const { params, breakdown } = attackContext(attacker, target, targetCombatant, parryBonus, options, branch)
   // Guard, Evade and other non-damaging skills still clash, but they land no attack: report a
   // zero summary rather than running the attack math on a damage type the target cannot resist.
   const dt = attacker.damageType

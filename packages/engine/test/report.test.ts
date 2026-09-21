@@ -1,5 +1,6 @@
 import { describe, expect, it } from 'vitest'
 import { clashReport, sampleClash, unopposedReport } from '../src/report'
+import type { Effect } from '../src/types'
 import { makeCombatant, makeSkill, makeUnit } from './fixtures'
 
 describe('unopposedReport', () => {
@@ -168,5 +169,69 @@ describe('sampleClash', () => {
     expect(s.outcome).toBe('win')
     expect([4, 6]).toContain(s.guardReduction)
     expect(s.attack?.coins[0].roll).toBe(8 - s.guardReduction)
+  })
+})
+
+describe('clash-branch grants', () => {
+  // Charge is inert, so its leftover is the same on every path; Poise would be consumed on crit paths.
+  const winCharge: Effect = { trigger: 'clash-win', scope: 'skill', op: { kind: 'applyStatus', target: 'self', status: 'charge', potency: 2 }, source: '[Clash Win] Gain 2 Charge' }
+  const winDamage: Effect = { trigger: 'clash-win', scope: 'skill', op: { kind: 'damagePercent', delta: 0.5 }, source: '[Clash Win] +50% damage' }
+  const loseBind: Effect = { trigger: 'clash-lose', scope: 'skill', op: { kind: 'applyStatus', target: 'target', status: 'bind', potency: 1 }, source: '[Clash Lose] Inflict 1 Bind' }
+
+  it('applies the winner\'s clash-win grants to the win branch only', () => {
+    const a = makeCombatant({ skill: makeSkill({ coinCount: 1, effects: [winCharge] }) })
+    const b = makeCombatant({ unit: makeUnit({ id: 'b', skills: [makeSkill({ coinCount: 1, effects: [winCharge] })] }) })
+    const r = clashReport(a, b)
+    expect(r.damageDealt.statusAfter.self.charge).toEqual({ potency: 2, count: 1 })
+    expect(r.damageDealt.statusAfter.target.charge).toBeUndefined()
+    expect(r.damageTaken.statusAfter.self.charge).toEqual({ potency: 2, count: 1 })
+    expect(r.damageTaken.statusAfter.target.charge).toBeUndefined()
+  })
+  it('a clash-win grant changes damageDealt, and the unopposed report ignores it', () => {
+    const critWin: Effect = { trigger: 'clash-win', scope: 'skill', op: { kind: 'applyStatus', target: 'self', status: 'poise', potency: 20 }, source: '[Clash Win] Gain 20 Poise' }
+    const a = makeCombatant({ sanity: 45, skill: makeSkill({ basePower: 30, coinPower: 0, coinCount: 1, effects: [critWin] }) })
+    const b = makeCombatant({ unit: makeUnit({ id: 'b' }) })
+    const r = clashReport(a, b)
+    expect(r.win).toBe(1)
+    // Certain crit at 20 Poise: 30 x 1.2 = 36.
+    expect(r.damageDealt.mean).toBe(36)
+    expect(unopposedReport(a, b).damage.mean).toBe(30)
+    expect(unopposedReport(a, b).damage.statusAfter.self.poise).toBeUndefined()
+  })
+  it('clash-win flat ops raise the winner\'s damage on the win branch', () => {
+    const a = makeCombatant({ sanity: 45, skill: makeSkill({ basePower: 30, coinPower: 0, coinCount: 1, effects: [winDamage] }) })
+    const b = makeCombatant({ unit: makeUnit({ id: 'b' }) })
+    expect(clashReport(a, b).damageDealt.mean).toBe(45)
+    expect(unopposedReport(a, b).damage.mean).toBe(30)
+  })
+  it('the loser\'s clash-lose grants land on the winner\'s branch', () => {
+    const a = makeCombatant({ skill: makeSkill({ basePower: 30, coinPower: 0, coinCount: 1 }) })
+    const b = makeCombatant({ unit: makeUnit({ id: 'b', skills: [makeSkill({ coinCount: 1, effects: [loseBind] })] }) })
+    const r = clashReport(a, b)
+    expect(r.win).toBe(1)
+    expect(r.damageDealt.statusAfter.self.bind).toEqual({ potency: 1, count: 1 })
+  })
+  it('leftovers carry the prepared statuses and the per-coin grants through the mix', () => {
+    const inflict: Effect = { trigger: 'on-hit', scope: { coin: 0 }, op: { kind: 'applyStatus', target: 'target', status: 'bleed', potency: 2 }, source: '[On Hit] Inflict 2 Bleed' }
+    const a = makeCombatant({ sanity: 45, skill: makeSkill({ basePower: 30, coinPower: 0, coinCount: 1, effects: [inflict] }), status: { charge: { potency: 3, count: 1 } } })
+    const b = makeCombatant({ unit: makeUnit({ id: 'b' }) })
+    const r = clashReport(a, b)
+    expect(r.damageDealt.statusAfter.self.charge).toEqual({ potency: 3, count: 1 })
+    expect(r.damageDealt.statusAfter.target.bleed).toEqual({ potency: 2, count: 1 })
+  })
+  it('sampleClash reports the sampled leftovers from the winner\'s view', () => {
+    const a = makeCombatant({ sanity: 45, skill: makeSkill({ basePower: 30, coinPower: 0, coinCount: 1, effects: [winCharge] }) })
+    const b = makeCombatant({ unit: makeUnit({ id: 'b' }) })
+    const s = sampleClash(a, b, {}, () => 0)
+    expect(s.outcome).toBe('win')
+    expect(s.attack?.statusAfter.self.charge).toEqual({ potency: 2, count: 1 })
+    expect(s.attack?.coins[0].index).toBe(0)
+  })
+  it('a guard clash applies the attacker\'s clash-win grants when the guard loses', () => {
+    const a = makeCombatant({ sanity: 45, skill: makeSkill({ basePower: 20, coinPower: 3, coinCount: 1, effects: [winCharge] }) })
+    const guard = makeCombatant({ unit: makeUnit({ id: 'g', skills: [makeSkill({ damageType: 'guard', basePower: 4, coinPower: 2, coinCount: 1 })] }) })
+    const r = clashReport(a, guard)
+    expect(r.win).toBe(1)
+    expect(r.damageDealt.statusAfter.self.charge).toEqual({ potency: 2, count: 1 })
   })
 })
