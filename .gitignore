@@ -8,7 +8,7 @@ dist/
 .impeccable/
 
 # Old scrape output kept locally; the old scraper was deleted in Plan 3
-data/
+/data/
 
 # Subagent-driven-development scratch
 .superpowers/
