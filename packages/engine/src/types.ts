@@ -150,6 +150,22 @@ export interface ResolvedCombatant {
   damageType: SkillDamageType
   effectsApplied: string[]
   effectsUnparsed: string[]
+  /** Parsed per-coin lines (and skill-level hit-trigger grants, which act on every coin): applied by the attack walk. */
+  effectsPerCoin: string[]
+  /** Parsed skill-level lines that act only on the clash result or at attack end. */
+  effectsPending: string[]
+  /** Skill + uptie + manual + unconditional pre-clash flat ops. Stacks and standing conditions are added per coin by the walk. */
+  flat: { basePower: number; coinPower: number; damagePercent: number }
+  /** Skill-level flat ops the walk re-evaluates before every coin: conditional lines and crit-only damage lines. */
+  conditionalBonuses: Effect[]
+  /** Parsed effects by 0-based coin index at the resolved uptie; length = coinCount. */
+  coinEffects: Effect[][]
+  /** Skill-level lines by the moment they fire; the report applies clashWin/clashLose per branch, the walk applies attackEnd. */
+  grants: { clashWin: Effect[]; clashLose: Effect[]; attackEnd: Effect[] }
+  /** Working statuses after every pre-clash grant of both sides: `self` is this combatant, `target` the opponent. */
+  statusAfterPrepare: SidePair
+  /** Distinct in-range 0-based Unbreakable coin indices, ascending. */
+  unbreakableCoinIndices: number[]
 }
 
 export interface DamageSummary {

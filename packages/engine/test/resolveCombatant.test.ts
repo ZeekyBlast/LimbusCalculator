@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest'
 import { resolveCombatant } from '../src/resolveCombatant'
 import { effect, makeCombatant, makeSkill, makeUnit } from './fixtures'
+import type { Effect } from '../src/types'
 
 describe('resolveCombatant', () => {
   it('maps flat stats, sanity, and levels', () => {
@@ -58,22 +59,24 @@ describe('resolveCombatant', () => {
     expect(r.coinPower).toBe(3)
     expect(r.effectsUnparsed).toEqual(['Reuse the final Coin'])
   })
-  it('surfaces coin-scoped effects as unparsed instead of dropping them', () => {
+  it('collects coin-scoped effects into coinEffects/effectsPerCoin instead of the flat totals', () => {
     const skill = makeSkill({ effects: [
       effect({ kind: 'coinPower', delta: 3 }, { scope: { coin: 1 }, source: 'On Coin 2: +3 Coin Power' }),
     ] })
     const r = resolveCombatant(makeCombatant({ skill }))
     expect(r.coinPower).toBe(3)
-    expect(r.effectsUnparsed).toEqual(['On Coin 2: +3 Coin Power'])
+    expect(r.effectsUnparsed).toEqual([])
+    expect(r.effectsPerCoin).toEqual(['On Coin 2: +3 Coin Power'])
     expect(r.effectsApplied).toEqual([])
   })
-  it('skips applyStatus ops without recording them as applied or unparsed', () => {
+  it('applies an unconditional on-use applyStatus op as a pre-clash grant', () => {
     const skill = makeSkill({ effects: [
       effect({ kind: 'applyStatus', target: 'target', status: 'bleed', potency: 2, count: 3 }, { source: 'Inflict 2 Bleed' }),
     ] })
     const r = resolveCombatant(makeCombatant({ skill }))
-    expect(r.effectsApplied).toEqual([])
+    expect(r.effectsApplied).toEqual(['Inflict 2 Bleed'])
     expect(r.effectsUnparsed).toEqual([])
+    expect(r.statusAfterPrepare.target.bleed).toEqual({ potency: 2, count: 3 })
   })
   it('applies passive effects from the unit', () => {
     const unit = makeUnit({ passives: [{ name: 'P', text: 'x', effects: [effect({ kind: 'damagePercent', delta: 0.1 }, { trigger: 'passive' })] }] })
@@ -159,5 +162,112 @@ describe('combatant without a skill', () => {
     expect(r.offenseLevel).toBe(c.level)
     expect(r.defenseLevel).toBe(c.level)
     expect(r.effectsApplied).toEqual([])
+  })
+})
+
+describe('resolveCombatant prepare', () => {
+  const poiseAtLeast5 = { stat: 'poise', side: 'self' as const, field: 'potency' as const, op: '>=' as const, value: 5 }
+  const gainPoise = (potency: number): Effect => effect({ kind: 'applyStatus', target: 'self', status: 'poise', potency }, { source: `[On Use] Gain ${potency} Poise` })
+  const bonusAtPoise: Effect = effect({ kind: 'coinPower', delta: 1 }, { condition: poiseAtLeast5, source: 'At 5+ Poise, Coin Power +1' })
+
+  it('evaluates standing conditions after on-use grants, whatever the line order', () => {
+    for (const effects of [[bonusAtPoise, gainPoise(5)], [gainPoise(5), bonusAtPoise]]) {
+      const r = resolveCombatant(makeCombatant({ skill: makeSkill({ effects }) }))
+      expect(r.coinPower).toBe(4)
+      expect(r.flat.coinPower).toBe(3)
+      expect(r.statusAfterPrepare.self.poise).toEqual({ potency: 5, count: 1 })
+      expect(r.effectsApplied).toEqual(expect.arrayContaining([bonusAtPoise.source, gainPoise(5).source]))
+      expect(r.conditionalBonuses).toEqual([bonusAtPoise])
+    }
+  })
+  it('keeps a standing condition that does not hold in conditionalBonuses but out of the totals and the applied list', () => {
+    const r = resolveCombatant(makeCombatant({ skill: makeSkill({ effects: [bonusAtPoise, gainPoise(4)] }) }))
+    expect(r.coinPower).toBe(3)
+    expect(r.conditionalBonuses).toEqual([bonusAtPoise])
+    expect(r.effectsApplied).toEqual([gainPoise(4).source])
+  })
+  it('a count grant before the roll lets an entered zero-count Poise crit', () => {
+    const skill = makeSkill({ effects: [effect({ kind: 'applyStatus', target: 'self', status: 'poise', count: 2 })] })
+    const r = resolveCombatant(makeCombatant({ skill, status: { poise: { potency: 20, count: 0 } } }))
+    expect(r.poiseCount).toBe(2)
+    expect(r.critChance).toBe(1)
+    expect(r.statusAfterPrepare.self.poise).toEqual({ potency: 20, count: 2 })
+  })
+  it('target-directed pre-clash grants land on the opponent from either side of the resolve', () => {
+    const inflict = effect({ kind: 'applyStatus', target: 'target', status: 'fragile', potency: 2 })
+    const a = makeCombatant({ skill: makeSkill({ effects: [inflict] }) })
+    const b = makeCombatant({ unit: makeUnit({ id: 'b' }) })
+    expect(resolveCombatant(a, b).statusAfterPrepare.target.fragile).toEqual({ potency: 2, count: 1 })
+    expect(resolveCombatant(b, a).statusAfterPrepare.self.fragile).toEqual({ potency: 2, count: 1 })
+    expect(resolveCombatant(b, a).dynamicAsTarget).toBeCloseTo(0.2)
+    expect(resolveCombatant(a, b).dynamicAsTarget).toBe(0)
+  })
+  it('conditional grants see every unconditional grant but not each other', () => {
+    const chargeAtPoise = effect({ kind: 'applyStatus', target: 'self', status: 'charge', count: 1 }, { condition: poiseAtLeast5, source: 'At 5+ Poise gain 1 Charge' })
+    const poiseAtCharge = effect({ kind: 'applyStatus', target: 'self', status: 'poise', potency: 5 }, { condition: { stat: 'charge', side: 'self', field: 'count', op: '>=', value: 1 }, source: 'At 1+ Charge gain 5 Poise' })
+    const withGrant = resolveCombatant(makeCombatant({ skill: makeSkill({ effects: [chargeAtPoise, gainPoise(5)] }) }))
+    expect(withGrant.statusAfterPrepare.self.charge).toEqual({ potency: 1, count: 1 })
+    const circular = resolveCombatant(makeCombatant({ skill: makeSkill({ effects: [chargeAtPoise, poiseAtCharge] }) }))
+    expect(circular.statusAfterPrepare.self).toEqual({})
+  })
+  it('a target condition with no opponent is false, even one an absent status would satisfy', () => {
+    const cond = { stat: 'rupture', side: 'target' as const, field: 'potency' as const, op: '<=' as const, value: 3 }
+    const r = resolveCombatant(makeCombatant({ skill: makeSkill({ effects: [effect({ kind: 'coinPower', delta: 1 }, { condition: cond })] }) }))
+    expect(r.coinPower).toBe(3)
+  })
+  it('collects per-coin lines by coin index and lists them as per-coin', () => {
+    const c0 = effect({ kind: 'applyStatus', target: 'target', status: 'rupture', potency: 3 }, { trigger: 'on-hit', scope: { coin: 0 }, source: '[On Hit] Inflict 3 Rupture' })
+    const c1 = effect({ kind: 'damagePercent', delta: 0.1 }, { scope: { coin: 1 }, source: 'Deal +10% damage' })
+    const past = effect({ kind: 'coinPower', delta: 9 }, { scope: { coin: 7 }, source: 'ghost coin' })
+    const r = resolveCombatant(makeCombatant({ skill: makeSkill({ coinCount: 2, effects: [c0, c1, past] }) }))
+    expect(r.coinEffects).toEqual([[c0], [c1]])
+    expect(r.effectsPerCoin).toEqual([c0.source, c1.source, past.source])
+    expect(r.effectsUnparsed).toEqual([])
+    expect(r.coinPower).toBe(3)
+  })
+  it('copies skill-level hit-trigger grants onto every coin', () => {
+    const hit = effect({ kind: 'applyStatus', target: 'target', status: 'bleed', potency: 1 }, { trigger: 'on-hit', source: '[On Hit] Inflict 1 Bleed' })
+    const r = resolveCombatant(makeCombatant({ skill: makeSkill({ coinCount: 2, effects: [hit] }) }))
+    expect(r.coinEffects).toEqual([[hit], [hit]])
+    expect(r.effectsPerCoin).toEqual([hit.source])
+  })
+  it('sorts clash-win, clash-lose and attack-end lines into grants and lists them as pending', () => {
+    const win = effect({ kind: 'applyStatus', target: 'self', status: 'poise', potency: 4 }, { trigger: 'clash-win', source: '[Clash Win] Gain 4 Poise' })
+    const winDamage = effect({ kind: 'damagePercent', delta: 0.2 }, { trigger: 'clash-win', source: '[Clash Win] +20% damage' })
+    const lose = effect({ kind: 'applyStatus', target: 'target', status: 'bind', potency: 1 }, { trigger: 'clash-lose', source: '[Clash Lose] Inflict 1 Bind' })
+    const end = effect({ kind: 'applyStatus', target: 'self', status: 'charge', count: 2 }, { trigger: 'attack-end', source: '[Attack End] Gain 2 Charge' })
+    const r = resolveCombatant(makeCombatant({ skill: makeSkill({ effects: [win, winDamage, lose, end] }) }))
+    expect(r.grants).toEqual({ clashWin: [win, winDamage], clashLose: [lose], attackEnd: [end] })
+    expect(r.effectsPending).toEqual([win.source, winDamage.source, lose.source, end.source])
+    expect(r.effectsApplied).toEqual([])
+    expect(r.damagePercent).toBe(0)
+    expect(r.statusAfterPrepare.self).toEqual({})
+  })
+  it('routes crit-only skill damage into conditionalBonuses and the per-coin list, not the totals', () => {
+    const critDamage = effect({ kind: 'damagePercent', delta: 0.3 }, { trigger: 'on-crit', source: '+30% damage on crit' })
+    const r = resolveCombatant(makeCombatant({ skill: makeSkill({ effects: [critDamage] }) }))
+    expect(r.conditionalBonuses).toEqual([critDamage])
+    expect(r.effectsPerCoin).toEqual([critDamage.source])
+    expect(r.damagePercent).toBe(0)
+  })
+  it('flat excludes stacks that the totals include', () => {
+    const r = resolveCombatant(makeCombatant({ status: { 'coin-boost': { potency: 1, count: 0 }, 'power-up': { potency: 2, count: 0 } } }))
+    expect(r.flat).toEqual({ basePower: 4, coinPower: 3, damagePercent: 0 })
+    expect(r.coinPower).toBe(4)
+    expect(r.coinRollBonus).toBe(2)
+  })
+  it('lists unbreakable coin indices distinct, in range and ascending', () => {
+    const r = resolveCombatant(makeCombatant({ skill: makeSkill({ coinCount: 3, unbreakableCoins: [2, 0, 0, 9, -1] }) }))
+    expect(r.unbreakableCoinIndices).toEqual([0, 2])
+    expect(r.unbreakableCoins).toBe(2)
+  })
+  it('a combatant without a skill still prepares its statuses and takes the opponent\'s grants', () => {
+    const inflict = effect({ kind: 'applyStatus', target: 'target', status: 'fragile', potency: 1 })
+    const part = makeCombatant({ skill: undefined, status: { protection: { potency: 1, count: 0 } } })
+    const foe = makeCombatant({ unit: makeUnit({ id: 'f' }), skill: makeSkill({ effects: [inflict] }) })
+    const r = resolveCombatant(part, foe)
+    expect(r.statusAfterPrepare.self).toEqual({ protection: { potency: 1, count: 0 }, fragile: { potency: 1, count: 1 } })
+    expect(r.coinEffects).toEqual([])
+    expect(r.dynamicAsTarget).toBeCloseTo(0)
   })
 })
