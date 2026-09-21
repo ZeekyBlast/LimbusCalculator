@@ -1,4 +1,5 @@
 import { DataStatus } from './components/DataStatus.tsx'
+import { ErrorBoundary } from './components/ErrorBoundary.tsx'
 import { useGameData, type GameData } from './lib/data.ts'
 import { href, onLinkClick, useRoute, type Route } from './lib/router.ts'
 import { ClashScreen } from './screens/ClashScreen.tsx'
@@ -39,7 +40,7 @@ export function App() {
       </header>
       {error && <p role="alert" className="text-blood-bright">Could not load game data: {error}</p>}
       {!data && !error && <p className="text-bone-dim">Loading data…</p>}
-      {data && <RouteBody route={route} data={data} />}
+      {data && <ErrorBoundary><RouteBody route={route} data={data} /></ErrorBoundary>}
       {data && <DataStatus data={data} />}
     </div>
   )

@@ -9,7 +9,7 @@ interface Props { report: ClashReport; a: Combatant; b: Combatant }
 const fmtValue = (label: string, value: number) =>
   label === 'Heads chance' || label === 'Crit chance' ? pct(value) : Number.isInteger(value) ? String(value) : value.toFixed(3)
 
-/** Everything the report says, in ledger order: verdict, odds, damage dealt, coins, stagger, damage taken, breakdown. */
+/** Everything the report says, in ledger order: verdict, odds, damage dealt, coins, stagger, damage taken, then side A's modifier breakdown across the full width. */
 export function VerdictPanel({ report, a, b }: Props) {
   const verdict = verdictFor(report)
   const thresholds = b.unit.staggerThresholds
@@ -51,23 +51,33 @@ export function VerdictPanel({ report, a, b }: Props) {
           {coinsLeft.length > 0 && (
             <p className="ledger-number mt-3 text-xs text-bone-dim">Coins left if A wins: {coinsLeft.map(x => `${x.coins} (${pct(x.p, 0)})`).join(', ')}</p>
           )}
+          <p className="ledger-number mt-2 text-xs text-bone-dim">Max HP {num(b.unit.hp)} for {b.unit.name}</p>
         </div>
         <div>
           <DamageBand summary={report.damageTaken} label={`Damage to ${a.unit.name} if B wins`} />
-          <table className="mt-3 w-full text-sm">
-            <thead className="text-[10px] uppercase tracking-widest text-bone-dim"><tr><th className="text-left">Modifier</th><th className="text-right">Value</th><th className="text-left pl-3">Source</th></tr></thead>
-            <tbody>
-              {report.breakdown.map(line => (
-                <tr key={line.label} className="border-t border-paper-light/60">
-                  <td className="py-0.5">{line.label}</td>
-                  <td className="ledger-number text-right">{fmtValue(line.label, line.value)}</td>
-                  <td className="pl-3 text-xs text-bone-dim">{line.source}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          <p className="mt-2 text-xs text-bone-dim">Damage figures are conditional on that side winning; unopposed hits use every coin. Max HP {num(b.unit.hp)} for {b.unit.name}.</p>
+          <p className="ledger-number mt-2 text-xs text-bone-dim">Max HP {num(a.unit.hp)} for {a.unit.name}</p>
         </div>
+      </div>
+
+      <p className="mt-4 text-xs text-bone-dim">Damage figures are conditional on that side winning; unopposed hits use every coin.</p>
+
+      {/* The breakdown is side A's own skill, not side B's, so it sits under both bands rather than
+          in the damage-taken column where it read as B's modifiers. */}
+      <div className="mt-6 border-t border-paper-light pt-4">
+        <h3 className="text-xs uppercase tracking-widest text-bone-dim">Side A modifiers · {a.unit.name} — {a.skill?.name ?? ''}</h3>
+        <table className="mt-2 w-full text-sm">
+          <thead className="text-[10px] uppercase tracking-widest text-bone-dim"><tr><th className="text-left">Modifier</th><th className="text-right">Value</th><th className="text-left pl-3">Source</th></tr></thead>
+          <tbody>
+            {report.breakdown.map(line => (
+              <tr key={line.label} className="border-t border-paper-light/60">
+                <td className="py-0.5">{line.label}</td>
+                <td className="ledger-number text-right">{fmtValue(line.label, line.value)}</td>
+                <td className="pl-3 text-xs text-bone-dim">{line.source}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+        <p className="mt-2 text-xs text-bone-dim">These modifiers feed the damage side A deals; on a guard clash the last line is the expected guard reduction.</p>
       </div>
     </section>
   )
