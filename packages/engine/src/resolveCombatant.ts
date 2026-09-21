@@ -64,8 +64,12 @@ export function resolveCombatant(self: Combatant, opponent?: Combatant): Resolve
   for (const e of mine) {
     if (e.op.kind === 'unparsed') { effectsUnparsed.push(e.source); continue }
     if (e.scope !== 'skill') {
-      if (e.scope.coin < coinCount) coinEffects[e.scope.coin].push(e)
-      effectsPerCoin.push(e.source)
+      if (e.scope.coin >= 0 && e.scope.coin < coinCount) {
+        coinEffects[e.scope.coin].push(e)
+        effectsPerCoin.push(e.source)
+      } else {
+        effectsUnparsed.push(e.source)
+      }
       continue
     }
     if (HIT.has(e.trigger) && isGrant(e)) {

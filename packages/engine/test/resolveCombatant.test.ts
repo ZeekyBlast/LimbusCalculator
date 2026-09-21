@@ -221,8 +221,8 @@ describe('resolveCombatant prepare', () => {
     const past = effect({ kind: 'coinPower', delta: 9 }, { scope: { coin: 7 }, source: 'ghost coin' })
     const r = resolveCombatant(makeCombatant({ skill: makeSkill({ coinCount: 2, effects: [c0, c1, past] }) }))
     expect(r.coinEffects).toEqual([[c0], [c1]])
-    expect(r.effectsPerCoin).toEqual([c0.source, c1.source, past.source])
-    expect(r.effectsUnparsed).toEqual([])
+    expect(r.effectsPerCoin).toEqual([c0.source, c1.source])
+    expect(r.effectsUnparsed).toEqual([past.source])
     expect(r.coinPower).toBe(3)
   })
   it('copies skill-level hit-trigger grants onto every coin', () => {
