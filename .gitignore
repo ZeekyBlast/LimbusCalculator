@@ -7,12 +7,8 @@ dist/
 .claude/
 .impeccable/
 
-# Generated/scraped data - regenerate via data/scraper/*.mjs, don't commit as source
-data/generated/
-data/raw/
-
-# Vite public dir junction into data/generated
-ui/public/gamedata
+# Old scrape output kept locally; the old scraper was deleted in Plan 3
+data/
 
 # Subagent-driven-development scratch
 .superpowers/

@@ -1,0 +1,50 @@
+name: deploy
+on:
+  push:
+    branches: [main, master]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: true
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      # packages/data/images is git-ignored (292 MB). Cache it by the manifest hash; a miss downloads
+      # every portrait and icon from the wiki at one request per second (about 45 minutes).
+      - name: Restore wiki images
+        id: images
+        uses: actions/cache@v4
+        with:
+          path: packages/data/images
+          key: wiki-images-${{ hashFiles('packages/data/out/images.json') }}
+      - name: Download wiki images (cache miss)
+        if: steps.images.outputs.cache-hit != 'true'
+        run: npm run scrape:images -w @limbus/data
+      - name: Build site
+        run: npm run build -w @limbus/web
+        env:
+          VITE_BASE: /${{ github.event.repository.name }}/
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: apps/web/dist
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v4
