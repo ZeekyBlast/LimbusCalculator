@@ -1,0 +1,1137 @@
+{
+  "chain:clash": {
+    "win": 0.5135759837852849,
+    "lose": 0.48642401621471515,
+    "draw": 0,
+    "coinsLeftIfWin": [
+      0,
+      0.14092647022758684,
+      0.3726495135576981
+    ],
+    "coinsLeftIfLose": [
+      0,
+      0.028185294045517378,
+      0.1285736491118349,
+      0.32966507305736287
+    ],
+    "parryRoundsExpected": 0.8471080325233252,
+    "breakdown": [
+      {
+        "label": "Base power",
+        "value": 4,
+        "source": "skill + uptie + effects + manual"
+      },
+      {
+        "label": "Coin power",
+        "value": 3,
+        "source": "skill + uptie + effects + manual"
+      },
+      {
+        "label": "Heads chance",
+        "value": 0.7,
+        "source": "50 + SP, clamped to [-45, 45]"
+      },
+      {
+        "label": "Sin resistance",
+        "value": 0,
+        "source": "x1 wrath on target"
+      },
+      {
+        "label": "Damage type resistance",
+        "value": 0,
+        "source": "x1 slash on target"
+      },
+      {
+        "label": "Offense-defense advantage",
+        "value": 0,
+        "source": "offense 45 vs defense 45"
+      },
+      {
+        "label": "Parry bonus",
+        "value": 0.025413240975699757,
+        "source": "expected parry rounds x 0.03"
+      },
+      {
+        "label": "Dynamic modifier",
+        "value": 0,
+        "source": "Damage Up/Down, Fragile/Protection, damage % effects"
+      },
+      {
+        "label": "Crit chance",
+        "value": 0,
+        "source": "Poise potency x 5%"
+      }
+    ],
+    "damageDealt": {
+      "mean": 12.04990051647481,
+      "p10": 7,
+      "p50": 14,
+      "p90": 17,
+      "max": 17,
+      "perCoinTotal": 12.049900516474807,
+      "histogram": [
+        [
+          4,
+          0.08232071281189729
+        ],
+        [
+          7,
+          0.19208166322776032
+        ],
+        [
+          8,
+          0.06530378615643084
+        ],
+        [
+          11,
+          0.15237550103167194
+        ],
+        [
+          14,
+          0.15237550103167194
+        ],
+        [
+          17,
+          0.3555428357405678
+        ]
+      ],
+      "staggerChance": [
+        0,
+        0
+      ]
+    },
+    "damageTaken": {
+      "mean": 15.727056779423714,
+      "p10": 6,
+      "p50": 14,
+      "p90": 29,
+      "max": 33,
+      "perCoinTotal": 15.727056779423712,
+      "histogram": [
+        [
+          3,
+          0.0347663270389297
+        ],
+        [
+          6,
+          0.09515671952313509
+        ],
+        [
+          7,
+          0.023177551359286466
+        ],
+        [
+          9,
+          0.14639009055210428
+        ],
+        [
+          10,
+          0.0634378130154234
+        ],
+        [
+          13,
+          0.09759339370140284
+        ],
+        [
+          14,
+          0.0634378130154234
+        ],
+        [
+          17,
+          0.09759339370140284
+        ],
+        [
+          18,
+          0.04229187534361561
+        ],
+        [
+          21,
+          0.16265565616900474
+        ],
+        [
+          25,
+          0.0650622624676019
+        ],
+        [
+          29,
+          0.06506226246760191
+        ],
+        [
+          33,
+          0.04337484164506794
+        ]
+      ],
+      "staggerChance": []
+    }
+  },
+  "chain:unopposed": {
+    "breakdown": [
+      {
+        "label": "Base power",
+        "value": 4,
+        "source": "skill + uptie + effects + manual"
+      },
+      {
+        "label": "Coin power",
+        "value": 3,
+        "source": "skill + uptie + effects + manual"
+      },
+      {
+        "label": "Heads chance",
+        "value": 0.7,
+        "source": "50 + SP, clamped to [-45, 45]"
+      },
+      {
+        "label": "Sin resistance",
+        "value": 0,
+        "source": "x1 wrath on target"
+      },
+      {
+        "label": "Damage type resistance",
+        "value": 0,
+        "source": "x1 slash on target"
+      },
+      {
+        "label": "Offense-defense advantage",
+        "value": 0,
+        "source": "offense 45 vs defense 45"
+      },
+      {
+        "label": "Parry bonus",
+        "value": 0,
+        "source": "expected parry rounds x 0.03"
+      },
+      {
+        "label": "Dynamic modifier",
+        "value": 0,
+        "source": "Damage Up/Down, Fragile/Protection, damage % effects"
+      },
+      {
+        "label": "Crit chance",
+        "value": 0,
+        "source": "Poise potency x 5%"
+      }
+    ],
+    "damage": {
+      "mean": 14.299999999999999,
+      "p10": 11,
+      "p50": 14,
+      "p90": 17,
+      "max": 17,
+      "perCoinTotal": 14.299999999999999,
+      "histogram": [
+        [
+          8,
+          0.09000000000000002
+        ],
+        [
+          11,
+          0.21000000000000002
+        ],
+        [
+          14,
+          0.21000000000000002
+        ],
+        [
+          17,
+          0.48999999999999994
+        ]
+      ],
+      "staggerChance": [
+        0,
+        0
+      ]
+    }
+  },
+  "unbreakable:clash": {
+    "win": 0.8242424242424242,
+    "lose": 0.17575757575757575,
+    "draw": 0,
+    "coinsLeftIfWin": [
+      0,
+      0,
+      0.1575757575757576,
+      0.6666666666666666
+    ],
+    "coinsLeftIfLose": [
+      0,
+      0.0393939393939394,
+      0.13636363636363635
+    ],
+    "parryRoundsExpected": 0.9787878787878788,
+    "breakdown": [
+      {
+        "label": "Base power",
+        "value": 4,
+        "source": "skill + uptie + effects + manual"
+      },
+      {
+        "label": "Coin power",
+        "value": 3,
+        "source": "skill + uptie + effects + manual"
+      },
+      {
+        "label": "Heads chance",
+        "value": 0.5,
+        "source": "50 + SP, clamped to [-45, 45]"
+      },
+      {
+        "label": "Sin resistance",
+        "value": 0,
+        "source": "x1 wrath on target"
+      },
+      {
+        "label": "Damage type resistance",
+        "value": 0,
+        "source": "x1 slash on target"
+      },
+      {
+        "label": "Offense-defense advantage",
+        "value": 0,
+        "source": "offense 45 vs defense 45"
+      },
+      {
+        "label": "Parry bonus",
+        "value": 0.029363636363636363,
+        "source": "expected parry rounds x 0.03"
+      },
+      {
+        "label": "Dynamic modifier",
+        "value": 0,
+        "source": "Damage Up/Down, Fragile/Protection, damage % effects"
+      },
+      {
+        "label": "Crit chance",
+        "value": 0,
+        "source": "Poise potency x 5%"
+      }
+    ],
+    "damageDealt": {
+      "mean": 19.375,
+      "p10": 12,
+      "p50": 21,
+      "p90": 30,
+      "max": 30,
+      "perCoinTotal": 19.375,
+      "histogram": [
+        [
+          8,
+          0.04779411764705883
+        ],
+        [
+          11,
+          0.04779411764705883
+        ],
+        [
+          12,
+          0.10110294117647059
+        ],
+        [
+          14,
+          0.04779411764705883
+        ],
+        [
+          15,
+          0.10110294117647059
+        ],
+        [
+          17,
+          0.04779411764705883
+        ],
+        [
+          18,
+          0.10110294117647059
+        ],
+        [
+          21,
+          0.20220588235294118
+        ],
+        [
+          24,
+          0.10110294117647059
+        ],
+        [
+          27,
+          0.10110294117647059
+        ],
+        [
+          30,
+          0.10110294117647059
+        ]
+      ],
+      "staggerChance": []
+    },
+    "damageTaken": {
+      "mean": 10.931034482758621,
+      "p10": 4,
+      "p50": 11,
+      "p90": 17,
+      "max": 17,
+      "perCoinTotal": 10.931034482758621,
+      "histogram": [
+        [
+          4,
+          0.1120689655172414
+        ],
+        [
+          7,
+          0.1120689655172414
+        ],
+        [
+          8,
+          0.1939655172413793
+        ],
+        [
+          11,
+          0.1939655172413793
+        ],
+        [
+          14,
+          0.1939655172413793
+        ],
+        [
+          17,
+          0.1939655172413793
+        ]
+      ],
+      "staggerChance": []
+    }
+  },
+  "unbreakable:unopposed": {
+    "breakdown": [
+      {
+        "label": "Base power",
+        "value": 4,
+        "source": "skill + uptie + effects + manual"
+      },
+      {
+        "label": "Coin power",
+        "value": 3,
+        "source": "skill + uptie + effects + manual"
+      },
+      {
+        "label": "Heads chance",
+        "value": 0.5,
+        "source": "50 + SP, clamped to [-45, 45]"
+      },
+      {
+        "label": "Sin resistance",
+        "value": 0,
+        "source": "x1 wrath on target"
+      },
+      {
+        "label": "Damage type resistance",
+        "value": 0,
+        "source": "x1 slash on target"
+      },
+      {
+        "label": "Offense-defense advantage",
+        "value": 0,
+        "source": "offense 45 vs defense 45"
+      },
+      {
+        "label": "Parry bonus",
+        "value": 0,
+        "source": "expected parry rounds x 0.03"
+      },
+      {
+        "label": "Dynamic modifier",
+        "value": 0,
+        "source": "Damage Up/Down, Fragile/Protection, damage % effects"
+      },
+      {
+        "label": "Crit chance",
+        "value": 0,
+        "source": "Poise potency x 5%"
+      }
+    ],
+    "damage": {
+      "mean": 21,
+      "p10": 12,
+      "p50": 21,
+      "p90": 30,
+      "max": 30,
+      "perCoinTotal": 21,
+      "histogram": [
+        [
+          12,
+          0.125
+        ],
+        [
+          15,
+          0.125
+        ],
+        [
+          18,
+          0.125
+        ],
+        [
+          21,
+          0.25
+        ],
+        [
+          24,
+          0.125
+        ],
+        [
+          27,
+          0.125
+        ],
+        [
+          30,
+          0.125
+        ]
+      ],
+      "staggerChance": []
+    }
+  },
+  "guard:clash": {
+    "win": 0.6666666666666666,
+    "lose": 0.3333333333333333,
+    "draw": 0,
+    "coinsLeftIfWin": [
+      0,
+      0,
+      0.6666666666666666
+    ],
+    "coinsLeftIfLose": [
+      0,
+      0.3333333333333333
+    ],
+    "parryRoundsExpected": 0.3333333333333333,
+    "breakdown": [
+      {
+        "label": "Base power",
+        "value": 5,
+        "source": "skill + uptie + effects + manual"
+      },
+      {
+        "label": "Coin power",
+        "value": 3,
+        "source": "skill + uptie + effects + manual"
+      },
+      {
+        "label": "Heads chance",
+        "value": 0.5,
+        "source": "50 + SP, clamped to [-45, 45]"
+      },
+      {
+        "label": "Sin resistance",
+        "value": 0,
+        "source": "x1 wrath on target"
+      },
+      {
+        "label": "Damage type resistance",
+        "value": 0,
+        "source": "x1 slash on target"
+      },
+      {
+        "label": "Offense-defense advantage",
+        "value": 0,
+        "source": "offense 45 vs defense 45"
+      },
+      {
+        "label": "Parry bonus",
+        "value": 0.009999999999999998,
+        "source": "expected parry rounds x 0.03"
+      },
+      {
+        "label": "Dynamic modifier",
+        "value": 0,
+        "source": "Damage Up/Down, Fragile/Protection, damage % effects"
+      },
+      {
+        "label": "Crit chance",
+        "value": 0,
+        "source": "Poise potency x 5%"
+      },
+      {
+        "label": "Guard reduction",
+        "value": 6.5,
+        "source": "guard final power given the guard lost; absorbed by the earliest coins"
+      }
+    ],
+    "damageDealt": {
+      "mean": 8,
+      "p10": 4,
+      "p50": 7,
+      "p90": 13,
+      "max": 13,
+      "perCoinTotal": 8,
+      "histogram": [
+        [
+          2,
+          0.0625
+        ],
+        [
+          4,
+          0.1875
+        ],
+        [
+          5,
+          0.0625
+        ],
+        [
+          7,
+          0.1875
+        ],
+        [
+          8,
+          0.0625
+        ],
+        [
+          10,
+          0.1875
+        ],
+        [
+          11,
+          0.0625
+        ],
+        [
+          13,
+          0.1875
+        ]
+      ],
+      "staggerChance": []
+    },
+    "damageTaken": {
+      "mean": 0,
+      "p10": 0,
+      "p50": 0,
+      "p90": 0,
+      "max": 0,
+      "perCoinTotal": 0,
+      "histogram": [
+        [
+          0,
+          1
+        ]
+      ],
+      "staggerChance": []
+    }
+  },
+  "guard:unopposed": {
+    "breakdown": [
+      {
+        "label": "Base power",
+        "value": 5,
+        "source": "skill + uptie + effects + manual"
+      },
+      {
+        "label": "Coin power",
+        "value": 3,
+        "source": "skill + uptie + effects + manual"
+      },
+      {
+        "label": "Heads chance",
+        "value": 0.5,
+        "source": "50 + SP, clamped to [-45, 45]"
+      },
+      {
+        "label": "Sin resistance",
+        "value": 0,
+        "source": "x1 wrath on target"
+      },
+      {
+        "label": "Damage type resistance",
+        "value": 0,
+        "source": "x1 slash on target"
+      },
+      {
+        "label": "Offense-defense advantage",
+        "value": 0,
+        "source": "offense 45 vs defense 45"
+      },
+      {
+        "label": "Parry bonus",
+        "value": 0,
+        "source": "expected parry rounds x 0.03"
+      },
+      {
+        "label": "Dynamic modifier",
+        "value": 0,
+        "source": "Damage Up/Down, Fragile/Protection, damage % effects"
+      },
+      {
+        "label": "Crit chance",
+        "value": 0,
+        "source": "Poise potency x 5%"
+      }
+    ],
+    "damage": {
+      "mean": 14.5,
+      "p10": 10,
+      "p50": 13,
+      "p90": 19,
+      "max": 19,
+      "perCoinTotal": 14.5,
+      "histogram": [
+        [
+          10,
+          0.25
+        ],
+        [
+          13,
+          0.25
+        ],
+        [
+          16,
+          0.25
+        ],
+        [
+          19,
+          0.25
+        ]
+      ],
+      "staggerChance": []
+    }
+  },
+  "resist:clash": {
+    "win": 0.9833333333333334,
+    "lose": 0.016666666666666666,
+    "draw": 0,
+    "coinsLeftIfWin": [
+      0,
+      0.06666666666666667,
+      0.9166666666666666
+    ],
+    "coinsLeftIfLose": [
+      0,
+      0,
+      0.016666666666666666
+    ],
+    "parryRoundsExpected": 0.5365079365079365,
+    "breakdown": [
+      {
+        "label": "Base power",
+        "value": 4,
+        "source": "skill + uptie + effects + manual"
+      },
+      {
+        "label": "Coin power",
+        "value": 3,
+        "source": "skill + uptie + effects + manual"
+      },
+      {
+        "label": "Heads chance",
+        "value": 0.5,
+        "source": "50 + SP, clamped to [-45, 45]"
+      },
+      {
+        "label": "Sin resistance",
+        "value": -0.25,
+        "source": "x0.5 wrath on target"
+      },
+      {
+        "label": "Damage type resistance",
+        "value": 1,
+        "source": "x2 slash on target"
+      },
+      {
+        "label": "Offense-defense advantage",
+        "value": 0.2857142857142857,
+        "source": "offense 50 vs defense 40"
+      },
+      {
+        "label": "Parry bonus",
+        "value": 0.016095238095238093,
+        "source": "expected parry rounds x 0.03"
+      },
+      {
+        "label": "Dynamic modifier",
+        "value": 0,
+        "source": "Damage Up/Down, Fragile/Protection, damage % effects"
+      },
+      {
+        "label": "Crit chance",
+        "value": 0,
+        "source": "Poise potency x 5%"
+      }
+    ],
+    "damageDealt": {
+      "mean": 24.050847457627118,
+      "p10": 16,
+      "p50": 22,
+      "p90": 34,
+      "max": 34,
+      "perCoinTotal": 24.050847457627118,
+      "histogram": [
+        [
+          8,
+          0.03389830508474576
+        ],
+        [
+          14,
+          0.03389830508474576
+        ],
+        [
+          16,
+          0.2330508474576271
+        ],
+        [
+          22,
+          0.2330508474576271
+        ],
+        [
+          28,
+          0.2330508474576271
+        ],
+        [
+          34,
+          0.2330508474576271
+        ]
+      ],
+      "staggerChance": []
+    },
+    "damageTaken": {
+      "mean": 8.25,
+      "p10": 4,
+      "p50": 7,
+      "p90": 12,
+      "max": 12,
+      "perCoinTotal": 8.25,
+      "histogram": [
+        [
+          4,
+          0.25
+        ],
+        [
+          7,
+          0.25
+        ],
+        [
+          10,
+          0.25
+        ],
+        [
+          12,
+          0.25
+        ]
+      ],
+      "staggerChance": []
+    }
+  },
+  "resist:unopposed": {
+    "breakdown": [
+      {
+        "label": "Base power",
+        "value": 4,
+        "source": "skill + uptie + effects + manual"
+      },
+      {
+        "label": "Coin power",
+        "value": 3,
+        "source": "skill + uptie + effects + manual"
+      },
+      {
+        "label": "Heads chance",
+        "value": 0.5,
+        "source": "50 + SP, clamped to [-45, 45]"
+      },
+      {
+        "label": "Sin resistance",
+        "value": -0.25,
+        "source": "x0.5 wrath on target"
+      },
+      {
+        "label": "Damage type resistance",
+        "value": 1,
+        "source": "x2 slash on target"
+      },
+      {
+        "label": "Offense-defense advantage",
+        "value": 0.2857142857142857,
+        "source": "offense 50 vs defense 40"
+      },
+      {
+        "label": "Parry bonus",
+        "value": 0,
+        "source": "expected parry rounds x 0.03"
+      },
+      {
+        "label": "Dynamic modifier",
+        "value": 0,
+        "source": "Damage Up/Down, Fragile/Protection, damage % effects"
+      },
+      {
+        "label": "Crit chance",
+        "value": 0,
+        "source": "Poise potency x 5%"
+      }
+    ],
+    "damage": {
+      "mean": 25,
+      "p10": 16,
+      "p50": 22,
+      "p90": 34,
+      "max": 34,
+      "perCoinTotal": 25,
+      "histogram": [
+        [
+          16,
+          0.25
+        ],
+        [
+          22,
+          0.25
+        ],
+        [
+          28,
+          0.25
+        ],
+        [
+          34,
+          0.25
+        ]
+      ],
+      "staggerChance": []
+    }
+  },
+  "lowhp:clash": {
+    "win": 0.9916666666666667,
+    "lose": 0.008333333333333333,
+    "draw": 0,
+    "coinsLeftIfWin": [
+      0,
+      0.008333333333333333,
+      0.06666666666666667,
+      0.9166666666666666
+    ],
+    "coinsLeftIfLose": [
+      0,
+      0.008333333333333333
+    ],
+    "parryRoundsExpected": 0.39999999999999997,
+    "breakdown": [
+      {
+        "label": "Base power",
+        "value": 4,
+        "source": "skill + uptie + effects + manual"
+      },
+      {
+        "label": "Coin power",
+        "value": 3,
+        "source": "skill + uptie + effects + manual"
+      },
+      {
+        "label": "Heads chance",
+        "value": 0.5,
+        "source": "50 + SP, clamped to [-45, 45]"
+      },
+      {
+        "label": "Sin resistance",
+        "value": 0,
+        "source": "x1 wrath on target"
+      },
+      {
+        "label": "Damage type resistance",
+        "value": 0,
+        "source": "x1 slash on target"
+      },
+      {
+        "label": "Offense-defense advantage",
+        "value": 0,
+        "source": "offense 45 vs defense 45"
+      },
+      {
+        "label": "Parry bonus",
+        "value": 0.011999999999999999,
+        "source": "expected parry rounds x 0.03"
+      },
+      {
+        "label": "Dynamic modifier",
+        "value": 0,
+        "source": "Damage Up/Down, Fragile/Protection, damage % effects"
+      },
+      {
+        "label": "Crit chance",
+        "value": 0,
+        "source": "Poise potency x 5%"
+      }
+    ],
+    "damageDealt": {
+      "mean": 50.01680672268907,
+      "p10": 30,
+      "p50": 51,
+      "p90": 74,
+      "max": 74,
+      "perCoinTotal": 50.01680672268907,
+      "histogram": [
+        [
+          10,
+          0.004201680672268907
+        ],
+        [
+          17,
+          0.004201680672268907
+        ],
+        [
+          20,
+          0.01680672268907563
+        ],
+        [
+          27,
+          0.01680672268907563
+        ],
+        [
+          30,
+          0.11554621848739495
+        ],
+        [
+          34,
+          0.01680672268907563
+        ],
+        [
+          37,
+          0.11554621848739495
+        ],
+        [
+          42,
+          0.01680672268907563
+        ],
+        [
+          44,
+          0.11554621848739495
+        ],
+        [
+          51,
+          0.11554621848739495
+        ],
+        [
+          52,
+          0.11554621848739495
+        ],
+        [
+          59,
+          0.11554621848739495
+        ],
+        [
+          67,
+          0.11554621848739495
+        ],
+        [
+          74,
+          0.11554621848739495
+        ]
+      ],
+      "staggerChance": [
+        0,
+        0
+      ]
+    },
+    "damageTaken": {
+      "mean": 5.5,
+      "p10": 4,
+      "p50": 4,
+      "p90": 7,
+      "max": 7,
+      "perCoinTotal": 5.5,
+      "histogram": [
+        [
+          4,
+          0.5
+        ],
+        [
+          7,
+          0.5
+        ]
+      ],
+      "staggerChance": []
+    }
+  },
+  "lowhp:unopposed": {
+    "breakdown": [
+      {
+        "label": "Base power",
+        "value": 4,
+        "source": "skill + uptie + effects + manual"
+      },
+      {
+        "label": "Coin power",
+        "value": 3,
+        "source": "skill + uptie + effects + manual"
+      },
+      {
+        "label": "Heads chance",
+        "value": 0.5,
+        "source": "50 + SP, clamped to [-45, 45]"
+      },
+      {
+        "label": "Sin resistance",
+        "value": 0,
+        "source": "x1 wrath on target"
+      },
+      {
+        "label": "Damage type resistance",
+        "value": 0,
+        "source": "x1 slash on target"
+      },
+      {
+        "label": "Offense-defense advantage",
+        "value": 0,
+        "source": "offense 45 vs defense 45"
+      },
+      {
+        "label": "Parry bonus",
+        "value": 0,
+        "source": "expected parry rounds x 0.03"
+      },
+      {
+        "label": "Dynamic modifier",
+        "value": 0,
+        "source": "Damage Up/Down, Fragile/Protection, damage % effects"
+      },
+      {
+        "label": "Crit chance",
+        "value": 0,
+        "source": "Poise potency x 5%"
+      }
+    ],
+    "damage": {
+      "mean": 51.75,
+      "p10": 30,
+      "p50": 51,
+      "p90": 74,
+      "max": 74,
+      "perCoinTotal": 51.75,
+      "histogram": [
+        [
+          30,
+          0.125
+        ],
+        [
+          37,
+          0.125
+        ],
+        [
+          44,
+          0.125
+        ],
+        [
+          51,
+          0.125
+        ],
+        [
+          52,
+          0.125
+        ],
+        [
+          59,
+          0.125
+        ],
+        [
+          67,
+          0.125
+        ],
+        [
+          74,
+          0.125
+        ]
+      ],
+      "staggerChance": [
+        0,
+        0
+      ]
+    }
+  }
+}
